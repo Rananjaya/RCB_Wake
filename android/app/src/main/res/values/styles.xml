@@ -11,13 +11,26 @@
     </style>
 
     <style name="TimePickerMidnight" parent="@android:style/Theme.Material.Dialog.Alert">
+        <item name="android:timePickerStyle">@style/TimePickerMidnight.Clock</item>
         <item name="android:colorAccent">@color/midnight_primary</item>
         <item name="android:windowBackground">@color/midnight_elevated</item>
         <item name="android:textColorPrimary">#F8F5FF</item>
         <item name="android:textColorSecondary">#AAA1BB</item>
     </style>
 
+    <style name="TimePickerMidnight.Clock" parent="@android:style/Widget.Material.TimePicker">
+        <item name="android:headerBackground">@color/midnight_surface</item>
+        <item name="android:numbersBackgroundColor">@color/midnight_background</item>
+        <item name="android:numbersSelectorColor">@color/midnight_primary</item>
+    </style>
+
+    <style name="TimePickerPink.Clock" parent="@android:style/Widget.Material.Light.TimePicker">
+        <item name="android:headerBackground">#FBE3EA</item>
+        <item name="android:numbersSelectorColor">#C2577F</item>
+    </style>
+
     <style name="TimePickerPink" parent="@android:style/Theme.Material.Light.Dialog.Alert">
+        <item name="android:timePickerStyle">@style/TimePickerPink.Clock</item>
         <item name="android:colorAccent">#C2577F</item>
         <item name="android:windowBackground">#FFFBF6</item>
     </style>

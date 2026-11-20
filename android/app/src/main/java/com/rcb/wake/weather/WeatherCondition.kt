@@ -1,7 +1,7 @@
 package com.rcb.wake.weather
 
 /** Coarse weather categories mapped from WMO weather interpretation codes (as used by Open-Meteo). */
-enum class WeatherCondition { CLEAR, PARTLY_CLOUDY, CLOUDY, FOG, DRIZZLE, RAIN, SNOW, THUNDERSTORM }
+enum class WeatherCondition { CLEAR, PARTLY_CLOUDY, CLOUDY, FOG, DRIZZLE, RAIN, SHOWERS, SNOW, SNOW_SHOWERS, THUNDERSTORM }
 
 object WeatherCodes {
     fun condition(wmoCode: Int): WeatherCondition = when (wmoCode) {
@@ -10,8 +10,10 @@ object WeatherCodes {
         3 -> WeatherCondition.CLOUDY
         45, 48 -> WeatherCondition.FOG
         in 51..57 -> WeatherCondition.DRIZZLE
-        in 61..67, in 80..82 -> WeatherCondition.RAIN
-        in 71..77, 85, 86 -> WeatherCondition.SNOW
+        in 61..67 -> WeatherCondition.RAIN
+        in 80..82 -> WeatherCondition.SHOWERS
+        in 71..77 -> WeatherCondition.SNOW
+        85, 86 -> WeatherCondition.SNOW_SHOWERS
         in 95..99 -> WeatherCondition.THUNDERSTORM
         else -> WeatherCondition.CLOUDY
     }

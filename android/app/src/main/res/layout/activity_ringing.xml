@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="32dp">
+    android:paddingBottom="24dp">
 
     <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
 
@@ -42,6 +42,7 @@
     <TextView
         android:id="@+id/label"
         android:layout_width="wrap_content"
+        android:layout_marginHorizontal="28dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
@@ -62,6 +63,7 @@
     <Button
         android:id="@+id/dismiss"
         android:layout_width="match_parent"
+        android:layout_marginHorizontal="28dp"
         android:layout_height="64dp"
         android:background="@drawable/ringing_button"
         android:text="@string/action_dismiss"
@@ -71,6 +73,7 @@
     <Button
         android:id="@+id/snooze"
         android:layout_width="match_parent"
+        android:layout_marginHorizontal="28dp"
         android:layout_height="64dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/ringing_button"

@@ -28,4 +28,6 @@
     <string name="wx_rain">மழை</string>
     <string name="wx_snow">பனி</string>
     <string name="wx_thunder">இடியுடன் மழை</string>
+    <string name="wx_showers">ஆங்காங்கே மழை</string>
+    <string name="wx_snow_showers">ஆங்காங்கே பனிப்பொழிவு</string>
 </resources>

@@ -148,7 +148,9 @@ class ClockWidgetProvider : AppWidgetProvider() {
             WeatherCondition.CLOUDY -> R.drawable.ic_wx_cloudy
             WeatherCondition.FOG -> R.drawable.ic_wx_fog
             WeatherCondition.DRIZZLE, WeatherCondition.RAIN -> R.drawable.ic_wx_rain
+            WeatherCondition.SHOWERS -> if (w.isDay) R.drawable.ic_wx_showers_day else R.drawable.ic_wx_showers_night
             WeatherCondition.SNOW -> R.drawable.ic_wx_snow
+            WeatherCondition.SNOW_SHOWERS -> if (w.isDay) R.drawable.ic_wx_snow_showers_day else R.drawable.ic_wx_snow_showers_night
             WeatherCondition.THUNDERSTORM -> R.drawable.ic_wx_thunder
         }
     }
@@ -178,7 +180,9 @@ data class WidgetContent(
                 WeatherCondition.CLOUDY -> R.string.wx_cloudy
                 WeatherCondition.FOG -> R.string.wx_fog
                 WeatherCondition.DRIZZLE, WeatherCondition.RAIN -> R.string.wx_rain
+                WeatherCondition.SHOWERS -> R.string.wx_showers
                 WeatherCondition.SNOW -> R.string.wx_snow
+                WeatherCondition.SNOW_SHOWERS -> R.string.wx_snow_showers
                 WeatherCondition.THUNDERSTORM -> R.string.wx_thunder
                 null -> null
             }?.let(c::getString).orEmpty()

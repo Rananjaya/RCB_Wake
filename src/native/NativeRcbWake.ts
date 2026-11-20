@@ -148,7 +148,7 @@ export type Settings = {
 export type WeatherInfo = {
   city: string;
   temperatureCelsius: number;
-  /** `CLEAR` | `PARTLY_CLOUDY` | `CLOUDY` | `FOG` | `DRIZZLE` | `RAIN` | `SNOW` | `THUNDERSTORM` */
+  /** `CLEAR` | `PARTLY_CLOUDY` | `CLOUDY` | `FOG` | `DRIZZLE` | `RAIN` | `SHOWERS` | `SNOW` | `SNOW_SHOWERS` | `THUNDERSTORM` */
   condition: string;
   isDay: boolean;
   fetchedAt: number;

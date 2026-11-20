@@ -28,4 +28,6 @@
     <string name="wx_rain">වැසි</string>
     <string name="wx_snow">හිම</string>
     <string name="wx_thunder">ගිගුරුම් සහිත වැසි</string>
+    <string name="wx_showers">ඉඳහිට වැසි</string>
+    <string name="wx_snow_showers">ඉඳහිට හිම</string>
 </resources>

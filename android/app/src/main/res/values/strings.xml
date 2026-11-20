@@ -29,4 +29,6 @@
     <string name="wx_rain">Rain</string>
     <string name="wx_snow">Snow</string>
     <string name="wx_thunder">Thunderstorm</string>
+    <string name="wx_showers">Scattered showers</string>
+    <string name="wx_snow_showers">Scattered snow showers</string>
 </resources>

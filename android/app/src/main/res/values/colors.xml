@@ -1,5 +1,6 @@
 <resources>
     <color name="midnight_background">#100D1C</color>
+    <color name="midnight_surface">#1D1830</color>
     <color name="midnight_elevated">#28213B</color>
     <color name="midnight_primary">#A855F7</color>
 </resources>
