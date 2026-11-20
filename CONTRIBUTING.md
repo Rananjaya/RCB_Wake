@@ -55,6 +55,27 @@ using the manual scenarios in [docs/testing.md](docs/testing.md).
   `docs:`, `test:`, `refactor:`, `chore:` …) with short, descriptive messages.
 - **Docs.** Update the relevant file in `docs/` in the same pull request as the code.
 
+## AI-assisted contributions
+
+You may use AI coding assistants (code completion, chat assistants, agents) when contributing, as
+long as you:
+
+- **Disclose it** in the "AI assistance disclosure" section of the pull request template — which
+  tools you used and for what. Pull requests without the disclosure section filled in will not be
+  reviewed.
+- **Take full responsibility** for the result. You must understand, test and be able to explain
+  every line you submit; "the AI wrote it" is not an answer in review.
+- **Own the rights.** Do not submit generated code or assets that reproduce third-party code,
+  icons, sounds or text under incompatible licences or terms (for example proprietary icon sets).
+  If a tool suggests something that looks copied, rewrite it or leave it out.
+- **Keep alarm logic reviewed by a human.** Changes to scheduling, ringing, timers and receivers
+  must be tested on a device or emulator as described in [docs/testing.md](docs/testing.md).
+- **Keep tool files out of the repository.** Do not commit assistant configuration, prompts or
+  transcripts (for example `CLAUDE.md`, `.cursor/`, `AGENTS.md`); they are listed in `.gitignore`.
+
+Maintainers may ask for changes, additional tests, or close pull requests that do not meet these
+rules.
+
 ## Translations
 
 Translations live in `src/i18n/<language>.ts` and
