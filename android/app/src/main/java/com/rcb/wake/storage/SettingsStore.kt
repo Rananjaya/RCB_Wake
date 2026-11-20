@@ -33,8 +33,11 @@ data class WakeSettings(
     val sleepReminderEnabled: Boolean,
     val sleepGoalMinutes: Int,
     val sleepReminderLeadMinutes: Int,
+    /** Device 12/24-hour preference, captured when settings are loaded. */
+    val systemIs24Hour: Boolean = false,
 ) {
-    val is24Hour get() = timeFormat == "24"
+    /** `system` follows the device setting; `12` or `24` override it. */
+    val is24Hour get() = timeFormat == "24" || (timeFormat == "system" && systemIs24Hour)
 }
 
 /** User preferences. Stored natively because the ringing screen needs them without JavaScript. */
@@ -58,11 +61,10 @@ object SettingsStore {
     fun load(context: Context): WakeSettings {
         val p = AppStorage.settings(context)
         val systemLanguage = Locale.getDefault().language.takeIf { it in LANGUAGES } ?: "en"
-        val systemFormat = if (DateFormat.is24HourFormat(context)) "24" else "12"
         return WakeSettings(
             theme = p.getString("theme", THEME_MIDNIGHT)!!,
             accentColor = p.getString("accentColor", "default")!!,
-            timeFormat = p.getString("timeFormat", systemFormat)!!,
+            timeFormat = p.getString("timeFormat", "system")!!,
             language = p.getString("language", systemLanguage)!!,
             defaultSoundUri = p.getString("defaultSoundUri", AlarmSounds.DEFAULT_URI)!!,
             defaultSoundName = p.getString("defaultSoundName", AlarmSounds.DEFAULT_NAME)!!,
@@ -81,13 +83,14 @@ object SettingsStore {
             sleepReminderEnabled = p.getBoolean("sleepReminderEnabled", false),
             sleepGoalMinutes = p.getInt("sleepGoalMinutes", 8 * 60),
             sleepReminderLeadMinutes = p.getInt("sleepReminderLeadMinutes", 30),
+            systemIs24Hour = DateFormat.is24HourFormat(context),
         )
     }
 
     fun save(context: Context, s: WakeSettings): WakeSettings {
         require(s.theme in THEMES) { "unknown theme" }
         require(s.accentColor == "default" || s.accentColor in ACCENTS) { "unknown accent" }
-        require(s.timeFormat == "12" || s.timeFormat == "24") { "unknown time format" }
+        require(s.timeFormat in setOf("system", "12", "24")) { "unknown time format" }
         require(s.language in LANGUAGES) { "unknown language" }
         require(s.defaultSnoozeMinutes in AlarmLimits.MIN_SNOOZE_MINUTES..AlarmLimits.MAX_SNOOZE_MINUTES) { "snooze" }
         require(s.defaultChallengeDifficulty in ChallengeDifficulty.ALL) { "difficulty" }

@@ -113,13 +113,13 @@ class ClockWidgetProvider : AppWidgetProvider() {
         private fun build(context: Context, layout: Layout, content: WidgetContent): RemoteViews {
             val views = RemoteViews(context.packageName, layout.resId)
             if (layout.splitClock) {
-                views.setTimeFormat(R.id.widget_hour, if (content.is24Hour) "HH" else "hh")
-                views.setTimeFormat(R.id.widget_minute, "mm")
+                views.setTimeFormat(R.id.widget_hour, content.pattern("hh", "HH"))
+                views.setTimeFormat(R.id.widget_minute, "mm" to "mm")
             } else {
-                views.setTimeFormat(R.id.widget_time, if (content.is24Hour) "HH:mm" else "h:mm")
+                views.setTimeFormat(R.id.widget_time, content.pattern("h:mm", "HH:mm"))
             }
             if (layout.date) {
-                views.setTimeFormat(R.id.widget_date, if (layout == Layout.SMALL) "EEE d" else "MMM, EEEE d")
+                views.setTimeFormat(R.id.widget_date, (if (layout == Layout.SMALL) "EEE d" else "MMM, EEEE d").let { it to it })
             }
             if (layout.alarm) {
                 views.setViewVisibility(R.id.widget_alarm, if (content.alarmText != null) View.VISIBLE else View.GONE)
@@ -149,9 +149,10 @@ class ClockWidgetProvider : AppWidgetProvider() {
             return views
         }
 
-        private fun RemoteViews.setTimeFormat(viewId: Int, pattern: String) {
-            setCharSequence(viewId, "setFormat12Hour", pattern)
-            setCharSequence(viewId, "setFormat24Hour", pattern)
+        /** TextClock uses format12 or format24 according to the device's live 12/24-hour setting. */
+        private fun RemoteViews.setTimeFormat(viewId: Int, patterns: Pair<String, String>) {
+            setCharSequence(viewId, "setFormat12Hour", patterns.first)
+            setCharSequence(viewId, "setFormat24Hour", patterns.second)
         }
 
         fun weatherIcon(w: WeatherSnapshot): Int = when (w.condition) {
@@ -171,6 +172,8 @@ class ClockWidgetProvider : AppWidgetProvider() {
 /** Everything the widget shows besides the system-driven clock. */
 data class WidgetContent(
     val is24Hour: Boolean,
+    /** `system`, `12` or `24` from settings. */
+    val timeFormat: String,
     val alarmText: String?,
     val weather: WeatherSnapshot?,
     val temperatureText: String,
@@ -178,6 +181,13 @@ data class WidgetContent(
     val event: CalendarEvent?,
     val eventText: String?,
 ) {
+    /** 12/24-hour TextClock patterns: both when following the device, otherwise the forced one. */
+    fun pattern(twelve: String, twentyFour: String): Pair<String, String> = when (timeFormat) {
+        "12" -> twelve to twelve
+        "24" -> twentyFour to twentyFour
+        else -> twelve to twentyFour
+    }
+
     companion object {
         fun load(context: Context): WidgetContent {
             val settings = SettingsStore.load(context)
@@ -204,6 +214,7 @@ data class WidgetContent(
             val eventText = event?.let { formatEvent(c, it, settings.is24Hour) }
             return WidgetContent(
                 is24Hour = settings.is24Hour,
+                timeFormat = settings.timeFormat,
                 alarmText = alarmText,
                 weather = weather,
                 temperatureText = weather?.let { WeatherCodes.formatTemperature(it.temperatureCelsius, settings.temperatureUnit) }.orEmpty(),

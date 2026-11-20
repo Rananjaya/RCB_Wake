@@ -45,7 +45,7 @@ export function SleepReminderSettings() {
   const alarms = useAlarmStore(s => s.alarms);
   const set = (patch: Parameters<typeof update>[0]) =>
     update(patch).catch(() => undefined);
-  const is24 = settings.timeFormat === '24';
+  const is24 = settings.is24Hour;
 
   const next = alarms
     .filter(a => a.nextTriggerAt > 0 && a.scheduleState !== 'FAILED')

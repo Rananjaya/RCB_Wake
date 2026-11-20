@@ -87,6 +87,11 @@ function SettingsContent({ navigation }: Props) {
         <SectionTitle>{t('timeFormat')}</SectionTitle>
         <View style={styles.wrap}>
           <Chip
+            label={t('formatSystem')}
+            selected={settings.timeFormat === 'system'}
+            onPress={() => set({ timeFormat: 'system' })}
+          />
+          <Chip
             label={t('format12')}
             selected={settings.timeFormat === '12'}
             onPress={() => set({ timeFormat: '12' })}

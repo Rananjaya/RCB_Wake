@@ -74,7 +74,8 @@ moon, rain, snow, storm, fog, showers).
 ## Localisation
 
 All UI strings go through `useT()`; native strings through `res/values*/strings.xml`. City names
-are English. Times are formatted by the app's own 12/24-hour setting.
+are English. Times follow the device's 12/24-hour setting by default (Settings → Time format → Use device
+setting); users can force 12- or 24-hour. The widget's `TextClock` switches live with the device.
 
 ## Accessibility
 

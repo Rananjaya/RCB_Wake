@@ -267,6 +267,7 @@ export const ta: Strings = {
   accentColor: 'முதன்மை நிறம்',
   accentDefault: 'தீம் இயல்புநிலை',
   timeFormat: 'நேர வடிவம்',
+  formatSystem: 'Use device setting',
   format12: '12 மணி நேரம்',
   format24: '24 மணி நேரம்',
   language: 'மொழி',

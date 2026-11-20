@@ -80,6 +80,10 @@ function useEngineBootstrap() {
     });
     const appState = AppState.addEventListener('change', state => {
       if (state === 'active') {
+        useSettingsStore
+          .getState()
+          .load()
+          .catch(() => undefined);
         if (useSettingsStore.getState().settings.weatherUseLocation) {
           engine.updateLocation().catch(() => undefined);
         }

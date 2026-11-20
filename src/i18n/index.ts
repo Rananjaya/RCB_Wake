@@ -58,6 +58,7 @@ export const languageNames: Record<Language, string> = {
  * screen (always English) or by the NFC challenge (on hold).
  */
 export const FALLBACK_KEYS: StringKey[] = [
+  'formatSystem',
   'appIcon',
   'appIconHint',
   'agreementTitle',

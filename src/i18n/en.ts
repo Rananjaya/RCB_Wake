@@ -264,6 +264,7 @@ export const en = {
   accentColor: 'Accent colour',
   accentDefault: 'Theme default',
   timeFormat: 'Time format',
+  formatSystem: 'Use device setting',
   format12: '12-hour',
   format24: '24-hour',
   language: 'Language',

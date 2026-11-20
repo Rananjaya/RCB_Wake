@@ -77,7 +77,7 @@ export function AlarmEditorScreen({ navigation, route }: Props) {
       }
     });
   }, []);
-  const is24 = settings.timeFormat === '24';
+  const is24 = settings.is24Hour;
   const update = (patch: Partial<AlarmConfig>) =>
     setDraft(d => ({ ...d, ...patch }));
   const { time, period } = formatClock(draft.hour, draft.minute, is24);

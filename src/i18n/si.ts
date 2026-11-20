@@ -265,6 +265,7 @@ export const si: Strings = {
   accentColor: 'උච්චාරණ වර්ණය',
   accentDefault: 'තේමාවේ පෙරනිමිය',
   timeFormat: 'වේලා ආකෘතිය',
+  formatSystem: 'Use device setting',
   format12: 'පැය 12',
   format24: 'පැය 24',
   language: 'භාෂාව',

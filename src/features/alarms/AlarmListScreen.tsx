@@ -141,7 +141,7 @@ function AlarmCard({
 }) {
   const theme = useTheme();
   const t = useT();
-  const is24 = useSettingsStore(s => s.settings.timeFormat === '24');
+  const is24 = useSettingsStore(s => s.settings.is24Hour);
   const setEnabled = useAlarmStore(s => s.setEnabled);
   const session = useAlarmStore(s => s.session);
   const { time, period } = formatClock(alarm.hour, alarm.minute, is24);

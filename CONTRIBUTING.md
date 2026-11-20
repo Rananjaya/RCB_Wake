@@ -78,6 +78,15 @@ rules.
 
 ## Translations
 
-Translations live in `src/i18n/<language>.ts` and
-`android/app/src/main/res/values-<language>/strings.xml`. Improvements from native speakers are
-especially welcome.
+Translators are very welcome — no programming experience needed.
+
+- **Improve an existing language:** edit `src/i18n/<code>.ts` (app screens) and
+  `android/app/src/main/res/values-<code>/strings.xml` (notifications, ringing screen, widget).
+  Keep placeholders such as `{duration}` or `%1$s` exactly as they are.
+- **Add a language:** copy `src/i18n/en.ts` to `src/i18n/<code>.ts`, translate the values, add the
+  language to `dictionaries` and `languageNames` in `src/i18n/index.ts` and to `LANGUAGES` in
+  `SettingsStore.kt`, and create `res/values-<code>/strings.xml` from `res/values/strings.xml`.
+  Keys in `FALLBACK_KEYS` (Settings screen and privacy agreement, which are always shown in
+  English) may be left out.
+- Run `yarn test` — the i18n test reports missing keys and mismatched placeholders.
+- Not comfortable with Git? Open an issue titled "Translation: <language>" with your corrections.

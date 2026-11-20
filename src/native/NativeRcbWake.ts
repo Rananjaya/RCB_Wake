@@ -182,8 +182,10 @@ export type Settings = {
   theme: string;
   /** `default` | `purple` | `blue` | `teal` | `green` | `orange` | `rose` */
   accentColor: string;
-  /** `12` | `24` */
+  /** `system` (follow the device) | `12` | `24` */
   timeFormat: string;
+  /** Resolved 24-hour flag (read-only; includes the device setting when timeFormat is `system`). */
+  is24Hour: boolean;
   /** `en` | `si` | `ta` */
   language: string;
   defaultSoundUri: string;

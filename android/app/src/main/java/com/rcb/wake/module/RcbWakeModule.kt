@@ -682,6 +682,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putString("theme", s.theme)
         putString("accentColor", s.accentColor)
         putString("timeFormat", s.timeFormat)
+        putBoolean("is24Hour", s.is24Hour)
         putString("language", s.language)
         putString("defaultSoundUri", s.defaultSoundUri)
         putString("defaultSoundName", s.defaultSoundName)

@@ -11,7 +11,7 @@ yarn test:kotlin    # JVM unit tests (./gradlew :app:testDebugUnitTest)
 yarn typecheck && yarn lint
 ```
 
-### Kotlin (JVM) — 55 tests, all passing
+### Kotlin (JVM) — 64 tests, all passing
 
 | Suite | Covers |
 | --- | --- |
@@ -21,10 +21,12 @@ yarn typecheck && yarn lint
 | `TimerMathTest` | monotonic countdown, overrun, paused/finished, reboot recovery from wall clock, immunity to wall-clock jumps, duration limits |
 | `PomodoroMathTest` | phase sequence and long break after N rounds, phase lengths, monotonic countdown, config validation |
 | `SleepMathTest` | reminder time, past bedtime, no alarm, bedtime |
+| `CalendarEventsTest` | next/ongoing event selection, timed vs all-day, ended events |
+| `NfcChallengeTest` | salted tag hashing, session challenge type, validation (feature on hold) |
 | `WeatherCodesTest` | WMO code mapping incl. showers, °C/°F formatting |
 | `WidgetLayoutTest` | layout selection by widget size |
 
-### Jest — 55 tests, all passing
+### Jest — 76 tests, all passing
 
 | Suite | Covers |
 | --- | --- |
@@ -36,6 +38,9 @@ yarn typecheck && yarn lint
 | `i18n.test.ts` | every language has every key and the same placeholders |
 | `stores.test.ts` | alarm create/edit/toggle/delete through the engine, defaults, multiple timers, settings persistence, Pomodoro cycle |
 | `sleepReminder.test.ts` | reminder timing and goal formatting |
+| `onboarding.test.ts` | privacy agreement → tutorial → app gate, re-consent on new version |
+| `calendar.test.ts` | calendar account labels |
+| `i18n.test.ts` (11 languages) | every non-Settings key translated; placeholders match English |
 
 A real bug found by these tests: hard challenge questions could have negative answers (fixed).
 
@@ -64,6 +69,13 @@ builds. "Killed" means the app process was not running.
 | "Use my location" → coarse position stored rounded to 2 decimals, weather fetched | ✅ Pass |
 | Sleep reminder registered at alarm − goal − lead | ✅ Pass |
 | Pomodoro start / pause / skip / settings UI | ✅ Pass |
+| Accent colours recolour the whole UI | ✅ Pass |
+| App icon switch (teal and back) | ✅ Pass |
+| Widget next calendar event from a local calendar | ✅ Pass |
+| First-launch privacy agreement and tutorial on a fresh install | ✅ Pass |
+| Japanese UI rendering; long tab labels shrink to fit | ✅ Pass |
+| "Use device setting" time format follows device 24 h → 12 h | ✅ Pass |
+| Signed release APK installs and runs without Metro | ✅ Pass |
 | Pomodoro phase change in the background | ⏳ Not completed on device (unit-tested) |
 | Exact-alarm access denied (Android 12) | ⏳ Not tested (no API 31/32 emulator run) |
 | Notifications denied / full-screen intent revoked | ⏳ Not tested |

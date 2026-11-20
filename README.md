@@ -85,6 +85,17 @@ yarn test && yarn test:kotlin
 
 Release builds and signing: [docs/release.md](docs/release.md).
 
+## Help wanted — contributors and translators welcome
+
+RCB Wake is maintained by one developer, and help is very welcome:
+
+- **Translators** — the Sinhala, Tamil, German, Russian, Spanish, French, Portuguese, Hindi,
+  Chinese and Japanese texts were written by the developer and would benefit from native
+  speakers. New languages are welcome too. See *Translations* in [CONTRIBUTING.md](CONTRIBUTING.md).
+- **Testers** — especially on Samsung, Xiaomi, OnePlus and other devices with aggressive battery
+  savers: do alarms ring overnight with the screen locked?
+- **Developers** — bug fixes, accessibility and new ideas. Open an issue first for larger changes.
+
 ## Contributing
 
 Bug reports, translations and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md)

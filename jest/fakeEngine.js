@@ -15,7 +15,8 @@ const state = {
 const defaults = {
   theme: 'midnight',
   accentColor: 'default',
-  timeFormat: '12',
+  timeFormat: 'system',
+  is24Hour: false,
   language: 'en',
   defaultSoundUri: 'builtin:dawn',
   defaultSoundName: 'Dawn',

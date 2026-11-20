@@ -40,7 +40,7 @@ export function WorldClockScreen() {
   const navigation = useNavigation<Nav>();
   const theme = useTheme();
   const t = useT();
-  const is24 = useSettingsStore(s => s.settings.timeFormat === '24');
+  const is24 = useSettingsStore(s => s.settings.is24Hour);
   const { clocks, offsets, load, refreshOffsets } = useWorldClockStore();
   const now = useNow(1000);
 
@@ -147,7 +147,7 @@ type RowProps = {
 function CityRow({ clock, now, localOffset, offset }: RowProps) {
   const theme = useTheme();
   const t = useT();
-  const is24 = useSettingsStore(s => s.settings.timeFormat === '24');
+  const is24 = useSettingsStore(s => s.settings.is24Hour);
   const remove = useWorldClockStore(s => s.remove);
   if (offset === undefined) return null;
   const zt = zoneTime(now, offset, localOffset);

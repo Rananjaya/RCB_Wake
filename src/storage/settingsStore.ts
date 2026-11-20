@@ -4,7 +4,8 @@ import { engine, type Settings } from '../services/engine';
 export const defaultSettings: Settings = {
   theme: 'midnight',
   accentColor: 'default',
-  timeFormat: '12',
+  timeFormat: 'system',
+  is24Hour: false,
   language: 'en',
   defaultSoundUri: 'builtin:dawn',
   defaultSoundName: 'Dawn',
