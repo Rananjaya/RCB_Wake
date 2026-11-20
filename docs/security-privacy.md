@@ -27,6 +27,13 @@ startup. The position is read with the platform `LocationManager` (no Google Pla
 while the app is open, rounded to ~1 km before it is stored, and deleted when the option is turned
 off. RCB Wake does not request background or fine location.
 
+### Optional calendar on the widget
+
+`READ_CALENDAR` is requested only when the user turns on Settings → Widget calendar. RCB Wake
+reads upcoming events from the system calendar provider (which Google Calendar and other calendar
+apps sync into) for the calendars the user selects, and shows the title and time of the next event
+on the widget. Events are read on demand, never stored by RCB Wake and never transmitted.
+
 ## Permissions
 
 | Permission | Why | When granted |
@@ -41,6 +48,7 @@ off. RCB Wake does not request background or fine location.
 | `WAKE_LOCK` | Keep the CPU awake while ringing | Install |
 | `INTERNET` | Opt-in widget weather only | Install; unused while weather is off |
 | `ACCESS_COARSE_LOCATION` | Optional "use my location" for weather | Runtime, only if the user opts in |
+| `READ_CALENDAR` | Optional next-event line on the widget | Runtime, only if the user opts in |
 
 Removed from release builds by `src/release/AndroidManifest.xml`: `ACCESS_NETWORK_STATE`,
 `ACCESS_WIFI_STATE`, and the React Native dev-tooling permissions `SYSTEM_ALERT_WINDOW` and

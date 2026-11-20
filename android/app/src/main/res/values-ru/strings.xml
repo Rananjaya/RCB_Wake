@@ -42,4 +42,7 @@
     <string name="sleep_reminder_body">Будильник в %1$s. Ложитесь скоро, чтобы поспать %2$s.</string>
     <string name="sleep_goal_hours">%1$d ч</string>
     <string name="sleep_goal_hours_minutes">%1$d ч %2$d мин</string>
+    <string name="event_all_day">Весь день</string>
+    <string name="event_now">Сейчас</string>
+    <string name="event_tomorrow">Завтра %1$s</string>
 </resources>

@@ -47,4 +47,7 @@
     <string name="ringing_nfc_off">NFC is off. Turn it on to scan your tag.</string>
     <string name="action_scan_tag">Scan NFC tag</string>
     <string name="action_nfc_settings">Turn on NFC</string>
+    <string name="event_all_day">All day</string>
+    <string name="event_now">Now</string>
+    <string name="event_tomorrow">Tomorrow %1$s</string>
 </resources>

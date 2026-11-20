@@ -255,6 +255,8 @@ const engine = {
       state.pomodoro.remainingMillis = config.focusMinutes * 60_000;
     return engine.getPomodoro();
   },
+  getCalendarSettings: async () => ({ enabled: false, permitted: false, calendars: [] }),
+  saveCalendarSettings: async () => {},
   getNfcStatus: async () => ({ supported: false, enabled: false }),
   getNfcTags: async () => [],
   registerNfcTag: async () => null,

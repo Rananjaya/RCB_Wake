@@ -210,6 +210,12 @@ export const ta: Strings = {
   sleepReminderPreview: 'உங்கள் {alarm} அலாரத்திற்கு அடுத்த நினைவூட்டல் {time}',
   sleepReminderNone: 'நினைவூட்டல் இல்லை: போதுமான நேரம் உள்ள அலாரம் இல்லை',
 
+  widgetCalendar: 'Widget calendar',
+  widgetCalendarToggle: 'Show the next event on the clock widget',
+  widgetCalendarHint:
+    'Reads events from calendars on this device, such as Google Calendar or RCB Calendar. Events never leave your phone.',
+  widgetCalendarNone: 'No calendars found on this device',
+
   appearance: 'தோற்றம்',
   theme: 'தீம்',
   themeMidnight: 'Midnight Purple',

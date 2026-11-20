@@ -42,4 +42,7 @@
     <string name="sleep_reminder_body">Tu alarma es a las %1$s. Acuéstate pronto para dormir %2$s.</string>
     <string name="sleep_goal_hours">%1$d h</string>
     <string name="sleep_goal_hours_minutes">%1$d h %2$d min</string>
+    <string name="event_all_day">Todo el día</string>
+    <string name="event_now">Ahora</string>
+    <string name="event_tomorrow">Mañana %1$s</string>
 </resources>

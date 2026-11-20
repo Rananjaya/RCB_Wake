@@ -55,12 +55,19 @@ class ClockWidgetProvider : AppWidgetProvider() {
      * Layouts and the optional views each one contains. RemoteViews fails to apply if a setter
      * targets a view the layout does not have, so every setter is guarded by these flags.
      */
-    enum class Layout(val resId: Int, val splitClock: Boolean, val date: Boolean, val weather: Boolean, val alarm: Boolean) {
-        SMALL(R.layout.widget_small, splitClock = true, date = true, weather = false, alarm = false),
-        BAR(R.layout.widget_bar, splitClock = false, date = false, weather = true, alarm = false),
-        MEDIUM(R.layout.widget_medium, splitClock = false, date = true, weather = true, alarm = false),
-        WIDE(R.layout.widget_wide, splitClock = false, date = true, weather = true, alarm = true),
-        LARGE(R.layout.widget_large, splitClock = false, date = true, weather = true, alarm = true),
+    enum class Layout(
+        val resId: Int,
+        val splitClock: Boolean,
+        val date: Boolean,
+        val weather: Boolean,
+        val alarm: Boolean,
+        val event: Boolean,
+    ) {
+        SMALL(R.layout.widget_small, splitClock = true, date = true, weather = false, alarm = false, event = false),
+        BAR(R.layout.widget_bar, splitClock = false, date = false, weather = true, alarm = false, event = false),
+        MEDIUM(R.layout.widget_medium, splitClock = false, date = true, weather = true, alarm = false, event = true),
+        WIDE(R.layout.widget_wide, splitClock = false, date = true, weather = true, alarm = true, event = true),
+        LARGE(R.layout.widget_large, splitClock = false, date = true, weather = true, alarm = true, event = true),
     }
 
     companion object {
@@ -81,6 +88,7 @@ class ClockWidgetProvider : AppWidgetProvider() {
 
         private fun render(context: Context, manager: AppWidgetManager, ids: IntArray) {
             val content = WidgetContent.load(context)
+            CalendarEvents.scheduleRefresh(context, content.event)
             for (id in ids) {
                 val views = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     RemoteViews(
@@ -116,6 +124,10 @@ class ClockWidgetProvider : AppWidgetProvider() {
             if (layout.alarm) {
                 views.setViewVisibility(R.id.widget_alarm, if (content.alarmText != null) View.VISIBLE else View.GONE)
                 content.alarmText?.let { views.setTextViewText(R.id.widget_alarm, it) }
+            }
+            if (layout.event) {
+                views.setViewVisibility(R.id.widget_event, if (content.eventText != null) View.VISIBLE else View.GONE)
+                content.eventText?.let { views.setTextViewText(R.id.widget_event, it) }
             }
             if (layout.weather) {
                 val weather = content.weather
@@ -163,6 +175,8 @@ data class WidgetContent(
     val weather: WeatherSnapshot?,
     val temperatureText: String,
     val weatherDescription: String,
+    val event: CalendarEvent?,
+    val eventText: String?,
 ) {
     companion object {
         fun load(context: Context): WidgetContent {
@@ -186,13 +200,34 @@ data class WidgetContent(
                 WeatherCondition.THUNDERSTORM -> R.string.wx_thunder
                 null -> null
             }?.let(c::getString).orEmpty()
+            val event = CalendarEvents.next(context)
+            val eventText = event?.let { formatEvent(c, it, settings.is24Hour) }
             return WidgetContent(
                 is24Hour = settings.is24Hour,
                 alarmText = alarmText,
                 weather = weather,
                 temperatureText = weather?.let { WeatherCodes.formatTemperature(it.temperatureCelsius, settings.temperatureUnit) }.orEmpty(),
                 weatherDescription = description,
+                event = event,
+                eventText = eventText,
             )
+        }
+
+        /** "11:00 AM · Title", "Tomorrow 9:00 AM · Title", "Now · Title" or "All day · Title". */
+        fun formatEvent(c: Context, e: CalendarEvent, is24: Boolean, now: Long = System.currentTimeMillis()): String {
+            val pattern = if (is24) "HH:mm" else "h:mm a"
+            val time = SimpleDateFormat(pattern, Locale.getDefault()).format(Date(e.begin))
+            val zone = java.time.ZoneId.systemDefault()
+            val today = java.time.Instant.ofEpochMilli(now).atZone(zone).toLocalDate()
+            val day = java.time.Instant.ofEpochMilli(e.begin).atZone(zone).toLocalDate()
+            val `when` = when {
+                e.allDay -> c.getString(R.string.event_all_day)
+                e.begin <= now -> c.getString(R.string.event_now)
+                day == today -> time
+                day == today.plusDays(1) -> c.getString(R.string.event_tomorrow, time)
+                else -> SimpleDateFormat("EEE", Locale.getDefault()).format(Date(e.begin)) + " " + time
+            }
+            return "$`when` · ${e.title}"
         }
     }
 }

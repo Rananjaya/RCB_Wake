@@ -46,4 +46,7 @@
     <string name="sleep_reminder_body">आपका अलार्म %1$s पर है। %2$s की नींद के लिए जल्द सो जाएँ।</string>
     <string name="sleep_goal_hours">%1$d घं</string>
     <string name="sleep_goal_hours_minutes">%1$d घं %2$d मि</string>
+    <string name="event_all_day">पूरा दिन</string>
+    <string name="event_now">अभी</string>
+    <string name="event_tomorrow">कल %1$s</string>
 </resources>

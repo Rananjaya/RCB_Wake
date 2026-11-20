@@ -72,6 +72,7 @@ Status legend: ✅ implemented and verified · 🟡 implemented, partially verif
 | Time and date (TextClock), next alarm | ✅ |
 | Opt-in Open-Meteo weather, original 3D-style icons, °C/°F | ✅ |
 | Optional coarse device location | ✅ |
+| Optional next calendar event from chosen calendars (Google, local and other synced calendars) | ✅ verified with a local calendar on the emulator |
 
 ### Settings
 | Requirement | Status |

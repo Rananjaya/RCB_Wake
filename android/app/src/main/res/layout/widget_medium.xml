@@ -49,4 +49,14 @@
             android:textSize="17sp" />
     </LinearLayout>
     </FrameLayout>
+    <TextView
+        android:id="@+id/widget_event"
+        style="@style/WidgetText.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:maxWidth="220dp"
+        android:visibility="gone" />
 </LinearLayout>

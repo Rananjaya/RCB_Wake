@@ -46,4 +46,7 @@
     <string name="ringing_nfc_off">NFC முடக்கப்பட்டுள்ளது. டேக்கை ஸ்கேன் செய்ய இயக்கவும்.</string>
     <string name="action_scan_tag">NFC டேக்கை ஸ்கேன் செய்</string>
     <string name="action_nfc_settings">NFC ஐ இயக்கு</string>
+    <string name="event_all_day">நாள் முழுவதும்</string>
+    <string name="event_now">இப்போது</string>
+    <string name="event_tomorrow">நாளை %1$s</string>
 </resources>

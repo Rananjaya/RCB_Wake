@@ -43,6 +43,7 @@ import com.rcb.wake.timer.WakeTimer
 import com.rcb.wake.weather.DeviceLocation
 import com.rcb.wake.weather.WeatherRepository
 import com.rcb.wake.weather.WeatherSnapshot
+import com.rcb.wake.widget.CalendarEvents
 import com.rcb.wake.widget.ClockWidgetProvider
 import java.time.Instant
 import java.time.ZoneId
@@ -301,6 +302,42 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 activity.setTurnScreenOn(false)
             }
         }
+    }
+
+    // ---- Widget calendar ----
+
+    override fun getCalendarSettings(promise: Promise) = guard(promise) {
+        promise.resolve(
+            Arguments.createMap().apply {
+                putBoolean("enabled", CalendarEvents.isEnabled(context))
+                putBoolean("permitted", CalendarEvents.hasPermission(context))
+                val selected = CalendarEvents.selectedIds(context)
+                putArray(
+                    "calendars",
+                    Arguments.createArray().apply {
+                        CalendarEvents.calendars(context).forEach { cal ->
+                            pushMap(
+                                Arguments.createMap().apply {
+                                    putDouble("id", cal.id.toDouble())
+                                    putString("name", cal.name)
+                                    putString("accountName", cal.accountName)
+                                    putString("accountType", cal.accountType)
+                                    putString("color", String.format("#%06X", 0xFFFFFF and cal.color))
+                                    putBoolean("selected", selected.isEmpty() || cal.id in selected)
+                                },
+                            )
+                        }
+                    },
+                )
+            },
+        )
+    }
+
+    override fun saveCalendarSettings(enabled: Boolean, calendarIds: ReadableArray, promise: Promise) = guard(promise) {
+        val ids = (0 until calendarIds.size()).map { calendarIds.getDouble(it).toLong() }
+        CalendarEvents.save(context, enabled, ids)
+        ClockWidgetProvider.updateAll(context)
+        promise.resolve(null)
     }
 
     // ---- NFC tags ----

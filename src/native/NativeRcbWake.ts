@@ -88,6 +88,23 @@ export type SessionInfo = {
   challengeType: string;
 };
 
+export type DeviceCalendarInfo = {
+  id: number;
+  name: string;
+  /** e.g. the Google account, or a local account name used by apps such as RCB Calendar. */
+  accountName: string;
+  /** e.g. `com.google` for Google Calendar, `LOCAL` for on-device calendars. */
+  accountType: string;
+  color: string;
+  selected: boolean;
+};
+
+export type CalendarSettings = {
+  enabled: boolean;
+  permitted: boolean;
+  calendars: DeviceCalendarInfo[];
+};
+
 export type NfcStatus = {
   supported: boolean;
   enabled: boolean;
@@ -236,6 +253,11 @@ export interface Spec extends TurboModule {
    * solved) or `emergency`. Resolves false if no session is ringing.
    */
   dismissSession(method: string): Promise<boolean>;
+
+  // Widget calendar (optional, READ_CALENDAR)
+  getCalendarSettings(): Promise<CalendarSettings>;
+  /** Empty calendarIds means all visible calendars. */
+  saveCalendarSettings(enabled: boolean, calendarIds: number[]): Promise<void>;
 
   // NFC dismiss challenge
   getNfcStatus(): Promise<NfcStatus>;

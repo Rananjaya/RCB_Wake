@@ -29,7 +29,8 @@ timer, a stopwatch, a world clock and a home-screen clock widget. Offline-first 
 - **Stopwatch.** Laps with fastest and slowest highlighted.
 - **World clock.** About 100 cities, day/night, time difference, daylight-saving aware.
 - **Bedtime reminder.** A nudge to go to bed based on your next alarm and sleep goal.
-- **Home-screen widget.** Frameless, resizable clock with date, next alarm and optional weather.
+- **Home-screen widget.** Frameless, resizable clock with date, next alarm, and optional weather
+  and next calendar event (Google Calendar, RCB Calendar or any calendar on the device).
 - **Themes.** Midnight Purple (default) and Pink Dream, plus accent colours.
 - **Languages.** English, Sinhala, Tamil, German, Russian, Spanish, French, Portuguese, Hindi,
   Chinese (Simplified) and Japanese.
@@ -55,6 +56,7 @@ it on, the coordinates of the city you choose — or your approximate location (
 | Foreground service (media playback), vibrate, wake lock | Keep the alarm sounding |
 | Internet | Optional widget weather only |
 | Approximate location | Optional, only if you choose "Use my location" for weather |
+| Calendar (read) | Optional, only if you show your next event on the widget |
 
 ## Technology
 

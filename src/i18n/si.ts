@@ -208,6 +208,12 @@ export const si: Strings = {
   sleepReminderPreview: '{alarm} එලාම් එක සඳහා ඊළඟ සිහිකැඳවීම {time} ට',
   sleepReminderNone: 'සිහිකැඳවීමක් නැත: ප්‍රමාණවත් කාලයක් ඇති ඉදිරි එලාම් නැත',
 
+  widgetCalendar: 'Widget calendar',
+  widgetCalendarToggle: 'Show the next event on the clock widget',
+  widgetCalendarHint:
+    'Reads events from calendars on this device, such as Google Calendar or RCB Calendar. Events never leave your phone.',
+  widgetCalendarNone: 'No calendars found on this device',
+
   appearance: 'පෙනුම',
   theme: 'තේමාව',
   themeMidnight: 'Midnight Purple',

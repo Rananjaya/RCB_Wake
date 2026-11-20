@@ -46,4 +46,7 @@
     <string name="sleep_reminder_body">你的闹钟在 %1$s。早点睡，才能睡够 %2$s。</string>
     <string name="sleep_goal_hours">%1$d 小时</string>
     <string name="sleep_goal_hours_minutes">%1$d 小时 %2$d 分钟</string>
+    <string name="event_all_day">全天</string>
+    <string name="event_now">现在</string>
+    <string name="event_tomorrow">明天 %1$s</string>
 </resources>

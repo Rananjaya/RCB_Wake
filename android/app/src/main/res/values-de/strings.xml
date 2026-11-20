@@ -42,4 +42,7 @@
     <string name="sleep_reminder_body">Dein Wecker klingelt um %1$s. Geh bald ins Bett, um %2$s Schlaf zu bekommen.</string>
     <string name="sleep_goal_hours">%1$d Std.</string>
     <string name="sleep_goal_hours_minutes">%1$d Std. %2$d Min.</string>
+    <string name="event_all_day">Ganztägig</string>
+    <string name="event_now">Jetzt</string>
+    <string name="event_tomorrow">Morgen %1$s</string>
 </resources>

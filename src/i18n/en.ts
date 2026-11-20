@@ -207,6 +207,12 @@ export const en = {
   sleepReminderPreview: 'Next reminder at {time} for your {alarm} alarm',
   sleepReminderNone: 'No reminder: no upcoming alarm leaves enough time',
 
+  widgetCalendar: 'Widget calendar',
+  widgetCalendarToggle: 'Show the next event on the clock widget',
+  widgetCalendarHint:
+    'Reads events from calendars on this device, such as Google Calendar or RCB Calendar. Events never leave your phone.',
+  widgetCalendarNone: 'No calendars found on this device',
+
   appearance: 'Appearance',
   theme: 'Theme',
   themeMidnight: 'Midnight Purple',

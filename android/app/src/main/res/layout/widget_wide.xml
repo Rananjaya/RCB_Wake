@@ -64,5 +64,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:maxLines="1" />
+        <TextView
+            android:id="@+id/widget_event"
+            style="@style/WidgetText.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:maxWidth="170dp"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>
