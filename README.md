@@ -13,6 +13,7 @@ timer, a stopwatch, a world clock and a home-screen clock widget. Offline-first 
   <img src="docs/screenshots/world-clock.png" width="200" alt="World clock" />
   <img src="docs/screenshots/settings.png" width="200" alt="Settings" />
   <img src="docs/screenshots/widget.png" width="200" alt="Home-screen widget with weather" />
+  <img src="docs/screenshots/tutorial.png" width="200" alt="First-launch tutorial" />
 </p>
 
 ## Features
