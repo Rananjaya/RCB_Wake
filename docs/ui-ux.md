@@ -1,0 +1,72 @@
+# UI and UX specification
+
+## Principles
+
+Minimal, calm and legible at a glance — including half-asleep. Large clock type, rounded cards,
+consistent spacing, no clutter, subtle motion, accessible contrast.
+
+## Themes
+
+Two themes only; the user switches in Settings and the choice persists natively (so the ringing
+screen matches).
+
+| Token | Midnight Purple (default) | Pink Dream |
+| --- | --- | --- |
+| background | `#100D1C` | `#FFF6F1` (warm cream) |
+| surface | `#1D1830` | `#FFFFFF` |
+| elevated | `#28213B` | `#FBE3EA` (pastel pink) |
+| primary | `#A855F7` | `#C2577F` |
+| secondary | `#C4A7FF` | `#9C83D6` (lavender) |
+| text / textSecondary | `#F8F5FF` / `#AAA1BB` | `#3D2B3F` / `#7D6479` |
+| divider | `#393149` | `#F0D9E1` |
+| selected | `#8538E8` | `#E7DAF8` |
+
+Pink Dream adds a small five-petal floral accent (toolbar, empty states, About).
+
+### Accent colours
+
+Settings → Accent colour offers *Theme default* plus purple, blue, teal, green, orange and rose.
+Each accent has a dark-theme and light-theme variant (`src/theme/themes.ts`) with its own
+on-accent text colour for contrast. Yellow and gold are deliberately excluded.
+
+## Spacing and shape
+
+Spacing scale 4 / 8 / 12 / 16 / 24 / 32. Radii 10 / 16 / 24 / pill. Minimum touch target 40–56 dp.
+
+## Navigation
+
+Bottom tabs: **Alarm · Timer · Stopwatch · World Clock**. Settings is the gear in every tab's
+toolbar. Modal screens: alarm editor (modal), city picker, Settings, About, math challenge
+(full-screen, no back gesture).
+
+## Screens
+
+| Screen | Key elements |
+| --- | --- |
+| Alarm list | "Next alarm in …", permission banners, in-app ringing banner (fallback), alarm cards (time, label · repeat, status, switch), floating + |
+| Alarm editor | Big tappable time (native time picker, themed), repeat-day chips, label, sound picker with preview, vibration, gradual volume, snooze chips, math challenge with difficulty and question count, delete |
+| Ringing (native) | Date, large time, label, challenge info, Dismiss/Solve and Snooze buttons; themed and accent-coloured; back button disabled |
+| Challenge | Progress dots, large question, 2×2 answer grid, correct/incorrect feedback with shake, Snooze, hold-to-emergency-dismiss |
+| Timer | Timers / Pomodoro switch. Timers: cards with countdown and progress bar, keypad entry, presets. Pomodoro: progress ring, phase, round dots, Reset/Start/Skip, session lengths |
+| Stopwatch | Large elapsed time with centiseconds, current lap, lap list with fastest/slowest highlighting |
+| World clock | Large local time, city cards with day/night icon, relative day, time difference |
+| Settings | Always English. Theme cards, accent swatches, time format, language, alarm defaults, sleep reminder, widget weather, reliability status, About |
+
+## Home-screen widget
+
+Frameless — text and icons sit directly on the wallpaper with a soft shadow for legibility.
+Layouts by size: **bar** (time + weather), **small** (stacked hour/minute + date), **medium**
+(time, date, weather), **wide** (time + next alarm | weather + date), **large** (time, date +
+weather, next alarm). Weather icons are original 3D-style artwork (gradient sun, translucent cloud,
+moon, rain, snow, storm, fog, showers).
+
+## Localisation
+
+All UI strings go through `useT()`; native strings through `res/values*/strings.xml`. City names
+are English. Times are formatted by the app's own 12/24-hour setting.
+
+## Accessibility
+
+Buttons and switches carry roles, labels and states; live regions announce the next alarm,
+challenge feedback and countdowns; the clock face is announced as text. Day chips use full day
+names as labels.
