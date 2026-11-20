@@ -22,6 +22,8 @@ data class WakeSettings(
     /** Opt-in: when false the app makes no network requests at all. */
     val weatherEnabled: Boolean,
     val weatherCity: String,
+    /** Use the device's coarse location instead of [weatherCity] when permission is granted. */
+    val weatherUseLocation: Boolean,
     val weatherLatitude: Double,
     val weatherLongitude: Double,
     /** `c` or `f` */
@@ -58,6 +60,7 @@ object SettingsStore {
             defaultChallengeQuestionCount = p.getInt("defaultChallengeQuestionCount", 3),
             weatherEnabled = p.getBoolean("weatherEnabled", false),
             weatherCity = p.getString("weatherCity", "")!!,
+            weatherUseLocation = p.getBoolean("weatherUseLocation", false),
             weatherLatitude = p.getFloat("weatherLatitude", 0f).toDouble(),
             weatherLongitude = p.getFloat("weatherLongitude", 0f).toDouble(),
             temperatureUnit = p.getString("temperatureUnit", "c")!!,
@@ -77,7 +80,7 @@ object SettingsStore {
         require(AlarmSounds.isSupportedUri(s.defaultSoundUri)) { "sound" }
         require(s.temperatureUnit == "c" || s.temperatureUnit == "f") { "temperature unit" }
         require(s.weatherLatitude in -90.0..90.0 && s.weatherLongitude in -180.0..180.0) { "coordinates" }
-        require(!s.weatherEnabled || s.weatherCity.isNotBlank()) { "weather city required" }
+        require(!s.weatherEnabled || s.weatherCity.isNotBlank() || s.weatherUseLocation) { "weather city required" }
         require(s.sleepGoalMinutes in 240..720) { "sleep goal 4-12 h" }
         require(s.sleepReminderLeadMinutes in 0..120) { "reminder lead 0-120 min" }
         AppStorage.settings(context).edit()
@@ -94,6 +97,7 @@ object SettingsStore {
             .putInt("defaultChallengeQuestionCount", s.defaultChallengeQuestionCount)
             .putBoolean("weatherEnabled", s.weatherEnabled)
             .putString("weatherCity", s.weatherCity.take(80))
+            .putBoolean("weatherUseLocation", s.weatherUseLocation)
             .putFloat("weatherLatitude", s.weatherLatitude.toFloat())
             .putFloat("weatherLongitude", s.weatherLongitude.toFloat())
             .putString("temperatureUnit", s.temperatureUnit)

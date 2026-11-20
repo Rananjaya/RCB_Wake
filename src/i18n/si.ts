@@ -170,6 +170,11 @@ export const si: Strings = {
     'පෙරනිමියෙන් අක්‍රියයි. සක්‍රිය කළ විට, තෝරාගත් නගරයේ ස්ථානය පමණක් ආසන්න වශයෙන් විනාඩි 30කට වරක් Open-Meteo වෙත යවයි.',
   weatherCity: 'නගරය',
   chooseCity: 'නගරයක් තෝරන්න',
+  weatherUseLocation: 'මගේ ස්ථානය භාවිත කරන්න',
+  weatherUseLocationHint:
+    'ආසන්න ස්ථානය (කි.මී. 1 පමණ), RCB Wake විවෘතව ඇති විට යාවත්කාලීන වේ. නොහැකි නම් පහත නගරය භාවිත වේ.',
+  weatherFallbackCity: 'විකල්ප නගරය',
+  currentLocation: 'ඔබේ ස්ථානය',
   temperatureUnit: 'උෂ්ණත්වය',
   celsius: '°C',
   fahrenheit: '°F',

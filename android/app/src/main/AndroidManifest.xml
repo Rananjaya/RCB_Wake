@@ -21,6 +21,9 @@
     <!-- Used only for the opt-in widget weather (Open-Meteo). Off by default; when weather is
          disabled the app makes no network requests. -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Optional "use my location" for widget weather; coarse only, requested at runtime when the
+         user turns it on. No background location. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".MainApplication"

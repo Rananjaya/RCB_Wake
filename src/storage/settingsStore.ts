@@ -15,6 +15,7 @@ export const defaultSettings: Settings = {
   defaultChallengeQuestionCount: 3,
   weatherEnabled: false,
   weatherCity: '',
+  weatherUseLocation: false,
   weatherLatitude: 0,
   weatherLongitude: 0,
   temperatureUnit: 'c',

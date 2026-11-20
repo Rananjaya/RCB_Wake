@@ -162,6 +162,8 @@ export type Settings = {
   /** Opt-in widget weather. When false the app makes no network requests. */
   weatherEnabled: boolean;
   weatherCity: string;
+  /** Use coarse device location (refreshed while the app is open) instead of weatherCity. */
+  weatherUseLocation: boolean;
   weatherLatitude: number;
   weatherLongitude: number;
   /** `c` | `f` */
@@ -175,6 +177,7 @@ export type Settings = {
 };
 
 export type WeatherInfo = {
+  /** Empty when the reading is for the device location. */
   city: string;
   temperatureCelsius: number;
   /** `CLEAR` | `PARTLY_CLOUDY` | `CLOUDY` | `FOG` | `DRIZZLE` | `RAIN` | `SHOWERS` | `SNOW` | `SNOW_SHOWERS` | `THUNDERSTORM` */
@@ -266,6 +269,8 @@ export interface Spec extends TurboModule {
 
   // Opt-in weather (Open-Meteo), shown on the home-screen widget
   getWeather(): Promise<WeatherInfo | null>;
+  /** Refreshes the coarse location when "use my location" is on; resolves whether a position is known. */
+  updateLocation(): Promise<boolean>;
   /** Fetches now. Resolves null when weather is disabled or the request fails. */
   refreshWeather(): Promise<WeatherInfo | null>;
   setValue(key: string, value: string): Promise<void>;

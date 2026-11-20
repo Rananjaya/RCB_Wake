@@ -171,6 +171,11 @@ export const ta: Strings = {
     'இயல்பாக முடக்கப்பட்டுள்ளது. இயக்கினால், தேர்ந்தெடுத்த நகரத்தின் இருப்பிடம் மட்டும் சுமார் 30 நிமிடங்களுக்கு ஒருமுறை Open-Meteo க்கு அனுப்பப்படும்.',
   weatherCity: 'நகரம்',
   chooseCity: 'நகரத்தைத் தேர்ந்தெடு',
+  weatherUseLocation: 'என் இருப்பிடத்தைப் பயன்படுத்து',
+  weatherUseLocationHint:
+    'தோராயமான இருப்பிடம் (சுமார் 1 கி.மீ), RCB Wake திறந்திருக்கும்போது புதுப்பிக்கப்படும். இல்லையெனில் கீழே உள்ள நகரம் பயன்படும்.',
+  weatherFallbackCity: 'மாற்று நகரம்',
+  currentLocation: 'உங்கள் இருப்பிடம்',
   temperatureUnit: 'வெப்பநிலை',
   celsius: '°C',
   fahrenheit: '°F',

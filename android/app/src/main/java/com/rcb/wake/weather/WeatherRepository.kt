@@ -26,6 +26,8 @@ object WeatherRepository {
     private const val TAG = "RcbWakeWeather"
     private const val KEY = "weather_snapshot"
     const val MAX_AGE_MILLIS = 30 * 60_000L
+    /** Snapshot key used when weather comes from the device location. */
+    const val LOCATION_KEY = "@location"
 
     fun cached(context: Context): WeatherSnapshot? {
         val settings = SettingsStore.load(context)
@@ -40,7 +42,7 @@ object WeatherRepository {
                 fetchedAt = o.getLong("at"),
                 city = o.getString("city"),
             )
-        }.getOrNull()?.takeIf { it.city == settings.weatherCity }
+        }.getOrNull()?.takeIf { it.city == sourceKey(context) }
     }
 
     fun isStale(context: Context): Boolean {
@@ -50,16 +52,29 @@ object WeatherRepository {
 
     fun clear(context: Context) = AppStorage.state(context).edit().remove(KEY).apply()
 
+    /** Where weather is read for: the device location when enabled and known, else the chosen city. */
+    private fun source(context: Context): Pair<String, Coordinates>? {
+        val settings = SettingsStore.load(context)
+        if (settings.weatherUseLocation && DeviceLocation.hasPermission(context)) {
+            DeviceLocation.stored(context)?.let { return LOCATION_KEY to it }
+        }
+        if (settings.weatherCity.isBlank()) return null
+        return settings.weatherCity to Coordinates(settings.weatherLatitude, settings.weatherLongitude)
+    }
+
+    private fun sourceKey(context: Context) = source(context)?.first
+
     /** Blocking network call; never call on the main thread. Returns null when disabled or on failure. */
     fun refresh(context: Context): WeatherSnapshot? {
         val settings = SettingsStore.load(context)
-        if (!settings.weatherEnabled || settings.weatherCity.isBlank()) return null
+        if (!settings.weatherEnabled) return null
+        val (key, coordinates) = source(context) ?: return null
         val url = URL(
             String.format(
                 Locale.ROOT,
                 "https://api.open-meteo.com/v1/forecast?latitude=%.2f&longitude=%.2f&current=temperature_2m,weather_code,is_day",
-                settings.weatherLatitude,
-                settings.weatherLongitude,
+                coordinates.latitude,
+                coordinates.longitude,
             ),
         )
         return try {
@@ -77,7 +92,7 @@ object WeatherRepository {
                     condition = WeatherCodes.condition(current.getInt("weather_code")),
                     isDay = current.optInt("is_day", 1) == 1,
                     fetchedAt = System.currentTimeMillis(),
-                    city = settings.weatherCity,
+                    city = key,
                 )
                 save(context, snapshot)
                 snapshot

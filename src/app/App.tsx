@@ -74,6 +74,9 @@ function useEngineBootstrap() {
     });
     const appState = AppState.addEventListener('change', state => {
       if (state === 'active') {
+        if (useSettingsStore.getState().settings.weatherUseLocation) {
+          engine.updateLocation().catch(() => undefined);
+        }
         useAlarmStore.getState().refreshStatus();
         useAlarmStore.getState().refreshSession();
         useTimerStore.getState().load();

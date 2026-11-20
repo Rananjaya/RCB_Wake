@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { PermissionsAndroid, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
@@ -41,10 +41,29 @@ export function WeatherSettings() {
     // Pick up the background fetch that starts when weather is first enabled.
     const id = setTimeout(() => engine.getWeather().then(setWeather), 4000);
     return () => clearTimeout(id);
-  }, [settings.weatherEnabled, settings.weatherCity]);
+  }, [
+    settings.weatherEnabled,
+    settings.weatherCity,
+    settings.weatherUseLocation,
+  ]);
+
+  /** Coarse location only; asked at the moment the user opts in, never in the background. */
+  const toggleLocation = async (on: boolean) => {
+    if (!on) {
+      update({ weatherUseLocation: false }).catch(() => undefined);
+      return;
+    }
+    const result = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+    );
+    if (result !== PermissionsAndroid.RESULTS.GRANTED) return;
+    await update({ weatherUseLocation: true }).catch(() => undefined);
+    await engine.updateLocation();
+    setWeather(await engine.getWeather());
+  };
 
   const toggle = (on: boolean) => {
-    if (on && !settings.weatherCity) {
+    if (on && !settings.weatherCity && !settings.weatherUseLocation) {
       navigation.navigate('CityPicker', { mode: 'weather' });
       return;
     }
@@ -64,8 +83,19 @@ export function WeatherSettings() {
         {settings.weatherEnabled && (
           <>
             <Divider />
+            <ToggleRow
+              label={t('weatherUseLocation')}
+              hint={t('weatherUseLocationHint')}
+              value={settings.weatherUseLocation}
+              onValueChange={toggleLocation}
+            />
+            <Divider />
             <NavRow
-              label={t('weatherCity')}
+              label={
+                settings.weatherUseLocation
+                  ? t('weatherFallbackCity')
+                  : t('weatherCity')
+              }
               value={settings.weatherCity || t('chooseCity')}
               onPress={() =>
                 navigation.navigate('CityPicker', { mode: 'weather' })
@@ -96,7 +126,7 @@ export function WeatherSettings() {
                       weather.temperatureCelsius,
                       settings.temperatureUnit,
                     ),
-                    city: weather.city,
+                    city: weather.city || t('currentLocation'),
                   })
                 : t('weatherNotYet')}
             </Text>

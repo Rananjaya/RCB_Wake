@@ -26,6 +26,7 @@ const defaults = {
   defaultChallengeQuestionCount: 3,
   weatherEnabled: false,
   weatherCity: '',
+  weatherUseLocation: false,
   weatherLatitude: 0,
   weatherLongitude: 0,
   temperatureUnit: 'c',
@@ -254,6 +255,7 @@ const engine = {
     return engine.getPomodoro();
   },
   getWeather: async () => null,
+  updateLocation: async () => false,
   refreshWeather: async () => null,
 };
 

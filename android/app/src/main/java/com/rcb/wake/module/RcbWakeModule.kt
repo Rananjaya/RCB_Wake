@@ -39,6 +39,7 @@ import com.rcb.wake.timer.PomodoroController
 import com.rcb.wake.timer.PomodoroState
 import com.rcb.wake.timer.TimerController
 import com.rcb.wake.timer.WakeTimer
+import com.rcb.wake.weather.DeviceLocation
 import com.rcb.wake.weather.WeatherRepository
 import com.rcb.wake.weather.WeatherSnapshot
 import com.rcb.wake.widget.ClockWidgetProvider
@@ -535,6 +536,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 defaultChallengeQuestionCount = settings.getDouble("defaultChallengeQuestionCount").toInt(),
                 weatherEnabled = settings.getBoolean("weatherEnabled"),
                 weatherCity = settings.getString("weatherCity").orEmpty(),
+                weatherUseLocation = settings.getBoolean("weatherUseLocation"),
                 weatherLatitude = settings.getDouble("weatherLatitude"),
                 weatherLongitude = settings.getDouble("weatherLongitude"),
                 temperatureUnit = settings.getString("temperatureUnit").orEmpty(),
@@ -564,6 +566,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putInt("defaultChallengeQuestionCount", s.defaultChallengeQuestionCount)
         putBoolean("weatherEnabled", s.weatherEnabled)
         putString("weatherCity", s.weatherCity)
+        putBoolean("weatherUseLocation", s.weatherUseLocation)
         putDouble("weatherLatitude", s.weatherLatitude)
         putDouble("weatherLongitude", s.weatherLongitude)
         putString("temperatureUnit", s.temperatureUnit)
@@ -576,6 +579,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
 
     /** Disabling weather deletes the cached reading; enabling or changing city fetches in the background. */
     private fun onWeatherSettingsSaved(s: WakeSettings) {
+        if (!s.weatherUseLocation) DeviceLocation.clear(context)
         if (!s.weatherEnabled) {
             WeatherRepository.clear(context)
             ClockWidgetProvider.updateAll(context)
@@ -585,6 +589,24 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 ClockWidgetProvider.updateAll(context)
             }.start()
         }
+    }
+
+    /** Refreshes the coarse device location (when enabled and permitted), then the weather if it moved. */
+    override fun updateLocation(promise: Promise) {
+        Thread {
+            val settings = SettingsStore.load(context)
+            if (!settings.weatherEnabled || !settings.weatherUseLocation) {
+                promise.resolve(false)
+                return@Thread
+            }
+            val before = DeviceLocation.stored(context)
+            val ok = DeviceLocation.update(context)
+            if (ok && (before != DeviceLocation.stored(context) || WeatherRepository.isStale(context))) {
+                WeatherRepository.refresh(context)
+                ClockWidgetProvider.updateAll(context)
+            }
+            promise.resolve(ok)
+        }.start()
     }
 
     override fun getWeather(promise: Promise) = guard(promise) {
@@ -600,7 +622,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
     }
 
     private fun weatherMap(w: WeatherSnapshot) = Arguments.createMap().apply {
-        putString("city", w.city)
+        putString("city", if (w.city == WeatherRepository.LOCATION_KEY) "" else w.city)
         putDouble("temperatureCelsius", w.temperatureCelsius)
         putString("condition", w.condition.name)
         putBoolean("isDay", w.isDay)
