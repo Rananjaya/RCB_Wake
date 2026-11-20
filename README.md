@@ -88,14 +88,18 @@ and the [Code of Conduct](CODE_OF_CONDUCT.md). Security issues: [SECURITY.md](SE
 
 ## License
 
-Copyright 2026 Rananjaya.
+RCB Wake is **dual-licensed**.
 
-RCB Wake is **source-available** under the
-[PolyForm Noncommercial License 1.0.0](LICENSE). It is free for personal use, study, research,
-education, charities and other non-commercial purposes.
+**Free for noncommercial use** under the [PolyForm Noncommercial License 1.0.0](LICENSE): personal
+use, study, research, hobby projects, and use by educational institutions, charities, public
+research and government organisations.
 
-**Commercial use requires permission.** Businesses and startups that want to use, modify, rebrand,
-sell or bundle RCB Wake need a separate commercial licence — see [COMMERCIAL.md](COMMERCIAL.md).
+**A paid commercial license is required for any commercial use**, including internal company
+tools, SaaS or hosted services, client work, and paid or monetised products. See
+[COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md) to request a commercial license or to ask about
+acquiring the project.
 
-Third-party components remain under their own licences: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Copyright 2026 Rananjaya. See [NOTICE](NOTICE).
+
+Third-party components remain under their own licenses: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 Weather data by [Open-Meteo.com](https://open-meteo.com) (CC BY 4.0).

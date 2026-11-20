@@ -7,7 +7,8 @@ requests are all welcome.
 
 - RCB Wake is **source-available** under the PolyForm Noncommercial License 1.0.0. By submitting
   a contribution you agree that it is provided under the same licence, and that the maintainer may
-  also distribute it as part of RCB Wake under separate commercial terms.
+  also distribute it as part of RCB Wake under separate commercial terms (see
+  [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md)).
 - Please read and follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 - For anything larger than a small fix, open an issue first so we can agree on the approach.
 - Report security issues privately — see [SECURITY.md](SECURITY.md).
