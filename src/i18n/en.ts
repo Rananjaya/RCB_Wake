@@ -193,6 +193,8 @@ export const en = {
   theme: 'Theme',
   themeMidnight: 'Midnight Purple',
   themePink: 'Pink Dream',
+  accentColor: 'Accent colour',
+  accentDefault: 'Theme default',
   timeFormat: 'Time format',
   format12: '12-hour',
   format24: '24-hour',
@@ -210,14 +212,14 @@ export const en = {
   privacy: 'Privacy',
   version: 'Version {v}',
   aboutBody:
-    'RCB Wake is a free, open-source alarm clock, timer, stopwatch and world clock for Android. Alarms are scheduled by Android itself, so they ring even when the app is closed.',
+    'RCB Wake is a free alarm clock, timer, stopwatch and world clock for Android. Alarms are scheduled by Android itself, so they ring even when the app is closed.',
   privacyBody:
     'RCB Wake works offline. It has no accounts, no analytics, no ads and no tracking. Your alarms, timers, cities and settings stay on this device and are excluded from cloud backup. Custom alarm sounds are read from your device with your permission and are never copied or uploaded. The only network use is the optional widget weather: if you turn it on, the chosen city’s coordinates, or your approximate location (rounded to about 1 km) if you allow it, are sent to Open-Meteo (open-meteo.com) about every 30 minutes. Location is only read while the app is open. Nothing else ever leaves your device.',
   reliabilityNote:
     'If you force-stop RCB Wake from system settings, Android cancels its alarms until you open the app again.',
   license: 'License',
   licenseBody:
-    'Licensed under the Apache License 2.0. Built with React Native and other open-source libraries; see THIRD_PARTY_NOTICES in the source repository.',
+    'RCB Wake is source-available under the PolyForm Noncommercial License 1.0.0: you may use, study and change it for non-commercial purposes. Commercial use requires the author’s written permission. Third-party libraries keep their own licences; see THIRD_PARTY_NOTICES in the source repository.',
 };
 
 export type Strings = typeof en;

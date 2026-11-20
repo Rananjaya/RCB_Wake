@@ -1,7 +1,12 @@
+import { useMemo } from 'react';
 import { useSettingsStore } from '../storage/settingsStore';
-import { themes, type Theme, type ThemeName } from './themes';
+import { themes, withAccent, type Theme, type ThemeName } from './themes';
 
 export function useTheme(): Theme {
   const name = useSettingsStore(s => s.settings.theme) as ThemeName;
-  return themes[name] ?? themes.midnight;
+  const accent = useSettingsStore(s => s.settings.accentColor);
+  return useMemo(
+    () => withAccent(themes[name] ?? themes.midnight, accent),
+    [name, accent],
+  );
 }

@@ -147,6 +147,8 @@ export type ZoneOffset = {
 export type Settings = {
   /** `midnight` | `pink` */
   theme: string;
+  /** `default` | `purple` | `blue` | `teal` | `green` | `orange` | `rose` */
+  accentColor: string;
   /** `12` | `24` */
   timeFormat: string;
   /** `en` | `si` | `ta` */

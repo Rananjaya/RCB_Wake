@@ -9,6 +9,8 @@ import java.util.Locale
 
 data class WakeSettings(
     val theme: String,
+    /** `default` (theme's own) or one of [SettingsStore.ACCENTS]. */
+    val accentColor: String,
     val timeFormat: String,
     val language: String,
     val defaultSoundUri: String,
@@ -42,12 +44,23 @@ object SettingsStore {
     val THEMES = setOf(THEME_MIDNIGHT, THEME_PINK)
     val LANGUAGES = setOf("en", "si", "ta")
 
+    /** Accent primaries for the ringing screen: dark-theme and light-theme variants. Mirrors src/theme/themes.ts. */
+    val ACCENTS = mapOf(
+        "purple" to ("#A855F7" to "#8E44D6"),
+        "blue" to ("#60A5FA" to "#2F6FD6"),
+        "teal" to ("#2DD4BF" to "#0F8F80"),
+        "green" to ("#4ADE80" to "#2E8A4E"),
+        "orange" to ("#FB923C" to "#C9601F"),
+        "rose" to ("#FB7185" to "#C2577F"),
+    )
+
     fun load(context: Context): WakeSettings {
         val p = AppStorage.settings(context)
         val systemLanguage = Locale.getDefault().language.takeIf { it in LANGUAGES } ?: "en"
         val systemFormat = if (DateFormat.is24HourFormat(context)) "24" else "12"
         return WakeSettings(
             theme = p.getString("theme", THEME_MIDNIGHT)!!,
+            accentColor = p.getString("accentColor", "default")!!,
             timeFormat = p.getString("timeFormat", systemFormat)!!,
             language = p.getString("language", systemLanguage)!!,
             defaultSoundUri = p.getString("defaultSoundUri", AlarmSounds.DEFAULT_URI)!!,
@@ -72,6 +85,7 @@ object SettingsStore {
 
     fun save(context: Context, s: WakeSettings): WakeSettings {
         require(s.theme in THEMES) { "unknown theme" }
+        require(s.accentColor == "default" || s.accentColor in ACCENTS) { "unknown accent" }
         require(s.timeFormat == "12" || s.timeFormat == "24") { "unknown time format" }
         require(s.language in LANGUAGES) { "unknown language" }
         require(s.defaultSnoozeMinutes in AlarmLimits.MIN_SNOOZE_MINUTES..AlarmLimits.MAX_SNOOZE_MINUTES) { "snooze" }
@@ -85,6 +99,7 @@ object SettingsStore {
         require(s.sleepReminderLeadMinutes in 0..120) { "reminder lead 0-120 min" }
         AppStorage.settings(context).edit()
             .putString("theme", s.theme)
+            .putString("accentColor", s.accentColor)
             .putString("timeFormat", s.timeFormat)
             .putString("language", s.language)
             .putString("defaultSoundUri", s.defaultSoundUri)

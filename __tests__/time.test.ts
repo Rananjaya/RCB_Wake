@@ -61,3 +61,26 @@ describe('durations', () => {
     expect(formatStopwatch(3_723_450)).toBe('1:02:03.45');
   });
 });
+
+describe('accent colours', () => {
+  const {
+    accents,
+    midnightPurple,
+    pinkDream,
+    withAccent,
+  } = require('../src/theme/themes');
+  it('keep the theme when set to default', () => {
+    expect(withAccent(midnightPurple, 'default')).toBe(midnightPurple);
+  });
+  it('apply the dark or light variant to the matching theme', () => {
+    expect(withAccent(midnightPurple, 'teal').colors.primary).toBe(
+      accents.teal.dark.primary,
+    );
+    expect(withAccent(pinkDream, 'teal').colors.primary).toBe(
+      accents.teal.light.primary,
+    );
+    expect(withAccent(pinkDream, 'teal').colors.background).toBe(
+      pinkDream.colors.background,
+    );
+  });
+});

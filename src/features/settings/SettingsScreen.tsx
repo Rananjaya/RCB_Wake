@@ -29,6 +29,7 @@ import { DIFFICULTIES, QuestionStepper } from '../alarms/AlarmEditorScreen';
 import { clampQuestions, SNOOZE_OPTIONS } from '../alarms/alarmDraft';
 import { SoundPicker } from '../alarms/SoundPicker';
 import { soundDisplayName } from '../alarms/soundNames';
+import { AccentPicker } from './AccentPicker';
 import { SleepReminderSettings } from './SleepReminderSettings';
 import { WeatherSettings } from './WeatherSettings';
 
@@ -75,6 +76,8 @@ function SettingsContent({ navigation }: Props) {
             />
           ))}
         </View>
+
+        <AccentPicker />
 
         <SectionTitle>{t('timeFormat')}</SectionTitle>
         <View style={styles.wrap}>

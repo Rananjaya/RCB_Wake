@@ -524,6 +524,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
             context,
             WakeSettings(
                 theme = settings.getString("theme").orEmpty(),
+                accentColor = settings.getString("accentColor") ?: "default",
                 timeFormat = settings.getString("timeFormat").orEmpty(),
                 language = settings.getString("language").orEmpty(),
                 defaultSoundUri = settings.getString("defaultSoundUri").orEmpty(),
@@ -554,6 +555,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
 
     private fun settingsMap(s: WakeSettings) = Arguments.createMap().apply {
         putString("theme", s.theme)
+        putString("accentColor", s.accentColor)
         putString("timeFormat", s.timeFormat)
         putString("language", s.language)
         putString("defaultSoundUri", s.defaultSoundUri)
