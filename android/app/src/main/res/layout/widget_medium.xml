@@ -14,6 +14,7 @@
         style="@style/WidgetText.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="-6dp"
         android:textSize="40sp" />
     <TextClock
         android:id="@+id/widget_date"
@@ -22,7 +23,7 @@
         style="@style/WidgetText.Detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="0dp"
         android:maxLines="1" />
     <FrameLayout
         android:layout_width="wrap_content"

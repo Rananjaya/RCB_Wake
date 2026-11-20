@@ -20,13 +20,14 @@
             style="@style/WidgetText.Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="-6dp"
             android:textSize="52sp" />
         <TextView
             android:id="@+id/widget_alarm"
             style="@style/WidgetText.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="2dp"
             android:maxLines="1"
             android:visibility="gone" />
     </LinearLayout>
