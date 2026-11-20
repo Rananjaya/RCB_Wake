@@ -48,7 +48,7 @@
     "node": ">= 22.11.0"
   },
   "description": "RCB Wake — an offline-first Android alarm clock, timer, stopwatch and world clock.",
-  "license": "Apache-2.0",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "codegenConfig": {
     "name": "RcbWakeSpec",
     "type": "modules",
