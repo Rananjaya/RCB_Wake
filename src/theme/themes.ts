@@ -84,40 +84,46 @@ export type AccentName =
   | 'orange'
   | 'rose';
 
-type AccentColors = Pick<
-  Theme['colors'],
-  'primary' | 'secondary' | 'selected' | 'onPrimary' | 'onSelected'
->;
+type Palette = Theme['colors'];
+type AccentPalettes = {
+  swatch: string;
+  dark: Partial<Palette>;
+  light: Partial<Palette>;
+};
 
 /**
- * Built-in accent colours. Each has a variant tuned for the dark (Midnight Purple) and light
- * (Pink Dream) themes so text on accent surfaces stays readable. Yellow and gold are excluded
- * by the design rules.
+ * Built-in colour themes. Each accent recolours the whole app — background, surfaces, dividers,
+ * text tints and controls — with a variant for dark (Midnight) and light (Pink Dream) modes.
+ * Contrast of text on surfaces and on the accent is kept at WCAG AA or better. Yellow and gold are
+ * excluded by the design rules.
  */
-export const accents: Record<
-  Exclude<AccentName, 'default'>,
-  { swatch: string; dark: AccentColors; light: AccentColors }
-> = {
+export const accents: Record<Exclude<AccentName, 'default'>, AccentPalettes> = {
   purple: {
     swatch: '#A855F7',
-    dark: {
-      primary: '#A855F7',
-      secondary: '#C4A7FF',
-      selected: '#8538E8',
-      onPrimary: '#FFFFFF',
-      onSelected: '#FFFFFF',
-    },
+    dark: { ...midnightPurple.colors },
     light: {
+      background: '#F8F3FF',
+      surface: '#FFFFFF',
+      elevated: '#EBDDF9',
+      divider: '#DCCDEE',
+      text: '#2F2240',
+      textSecondary: '#6E5E86',
       primary: '#8E44D6',
       secondary: '#9C83D6',
       selected: '#EBDDF9',
       onPrimary: '#FFFFFF',
-      onSelected: '#3D2B3F',
+      onSelected: '#2F2240',
     },
   },
   blue: {
     swatch: '#3B82F6',
     dark: {
+      background: '#0B1220',
+      surface: '#131D33',
+      elevated: '#1C2945',
+      divider: '#2A3A5C',
+      text: '#F2F6FF',
+      textSecondary: '#9FB0CC',
       primary: '#60A5FA',
       secondary: '#BFDBFE',
       selected: '#2563EB',
@@ -125,6 +131,12 @@ export const accents: Record<
       onSelected: '#FFFFFF',
     },
     light: {
+      background: '#F3F7FF',
+      surface: '#FFFFFF',
+      elevated: '#E2EBFB',
+      divider: '#D3DEF2',
+      text: '#1E2A44',
+      textSecondary: '#5E6F8E',
       primary: '#2F6FD6',
       secondary: '#6E9BE0',
       selected: '#DCE8FB',
@@ -135,6 +147,12 @@ export const accents: Record<
   teal: {
     swatch: '#14B8A6',
     dark: {
+      background: '#081614',
+      surface: '#102421',
+      elevated: '#18332F',
+      divider: '#234541',
+      text: '#F0FBF9',
+      textSecondary: '#9CBDB8',
       primary: '#2DD4BF',
       secondary: '#99F6E4',
       selected: '#0F9F8F',
@@ -142,6 +160,12 @@ export const accents: Record<
       onSelected: '#FFFFFF',
     },
     light: {
+      background: '#F1FAF8',
+      surface: '#FFFFFF',
+      elevated: '#D9F0EC',
+      divider: '#C9E4DF',
+      text: '#163A36',
+      textSecondary: '#557A75',
       primary: '#0F8F80',
       secondary: '#4DB6A9',
       selected: '#D2F2EE',
@@ -152,6 +176,12 @@ export const accents: Record<
   green: {
     swatch: '#22C55E',
     dark: {
+      background: '#0A150E',
+      surface: '#122219',
+      elevated: '#1A3023',
+      divider: '#264331',
+      text: '#F2FBF4',
+      textSecondary: '#A0BEA9',
       primary: '#4ADE80',
       secondary: '#BBF7D0',
       selected: '#16A34A',
@@ -159,6 +189,12 @@ export const accents: Record<
       onSelected: '#FFFFFF',
     },
     light: {
+      background: '#F3FAF4',
+      surface: '#FFFFFF',
+      elevated: '#DDF0E1',
+      divider: '#CDE5D3',
+      text: '#183A24',
+      textSecondary: '#5A7A63',
       primary: '#2E8A4E',
       secondary: '#5FB07A',
       selected: '#DAF1E1',
@@ -169,6 +205,12 @@ export const accents: Record<
   orange: {
     swatch: '#F97316',
     dark: {
+      background: '#170F0A',
+      surface: '#241912',
+      elevated: '#33241A',
+      divider: '#463325',
+      text: '#FFF6F0',
+      textSecondary: '#C2AC9C',
       primary: '#FB923C',
       secondary: '#FED7AA',
       selected: '#EA580C',
@@ -176,6 +218,12 @@ export const accents: Record<
       onSelected: '#FFFFFF',
     },
     light: {
+      background: '#FFF6EF',
+      surface: '#FFFFFF',
+      elevated: '#FBE4D3',
+      divider: '#F0D3BE',
+      text: '#41240F',
+      textSecondary: '#86634B',
       primary: '#C9601F',
       secondary: '#E08B57',
       selected: '#FBE3D3',
@@ -186,19 +234,19 @@ export const accents: Record<
   rose: {
     swatch: '#F43F5E',
     dark: {
+      background: '#170A10',
+      surface: '#25121B',
+      elevated: '#351A26',
+      divider: '#4A2535',
+      text: '#FFF2F6',
+      textSecondary: '#C4A0AF',
       primary: '#FB7185',
       secondary: '#FECDD3',
       selected: '#E11D48',
       onPrimary: '#2A0710',
       onSelected: '#FFFFFF',
     },
-    light: {
-      primary: '#C2577F',
-      secondary: '#D98AA8',
-      selected: '#F7DCE5',
-      onPrimary: '#FFFFFF',
-      onSelected: '#3D2B3F',
-    },
+    light: { ...pinkDream.colors },
   },
 };
 

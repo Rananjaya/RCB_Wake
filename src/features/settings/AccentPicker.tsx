@@ -27,7 +27,9 @@ export function AccentPicker() {
     ...accentNames
       .map(id => ({
         id,
-        color: base.dark ? accents[id].dark.primary : accents[id].light.primary,
+        color:
+          (base.dark ? accents[id].dark.primary : accents[id].light.primary) ??
+          accents[id].swatch,
         label: id,
       }))
       // Hide the accent that is identical to the theme's own colour.

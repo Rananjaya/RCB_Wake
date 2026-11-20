@@ -147,11 +147,11 @@ class RingingActivity : Activity() {
         val settings = SettingsStore.load(this)
         val pink = settings.theme == SettingsStore.THEME_PINK
         val accent = SettingsStore.ACCENTS[settings.accentColor]
-        val bg = Color.parseColor(if (pink) "#FFF4F2" else "#100D1C")
+        val bg = Color.parseColor(accent?.let { if (pink) it.lightBg else it.darkBg } ?: if (pink) "#FFF4F2" else "#100D1C")
         val text = Color.parseColor(if (pink) "#3D2B3F" else "#F8F5FF")
         val muted = Color.parseColor(if (pink) "#8A6F86" else "#AAA1BB")
-        val primary = Color.parseColor(accent?.let { if (pink) it.second else it.first } ?: if (pink) "#C2577F" else "#A855F7")
-        val surface = Color.parseColor(if (pink) "#FBE3EA" else "#28213B")
+        val primary = Color.parseColor(accent?.let { if (pink) it.lightPrimary else it.darkPrimary } ?: if (pink) "#C2577F" else "#A855F7")
+        val surface = Color.parseColor(accent?.let { if (pink) it.lightSurface else it.darkSurface } ?: if (pink) "#FBE3EA" else "#28213B")
         findViewById<View>(R.id.root).setBackgroundColor(bg)
         window.statusBarColor = bg
         window.navigationBarColor = bg

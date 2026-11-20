@@ -44,16 +44,17 @@ object SettingsStore {
     val THEMES = setOf(THEME_MIDNIGHT, THEME_PINK)
     val LANGUAGES = setOf("en", "si", "ta")
 
-    /** Accent primaries for the ringing screen: dark-theme and light-theme variants. Mirrors src/theme/themes.ts. */
-    val ACCENTS = mapOf(
-        "purple" to ("#A855F7" to "#8E44D6"),
-        "blue" to ("#60A5FA" to "#2F6FD6"),
-        "teal" to ("#2DD4BF" to "#0F8F80"),
-        "green" to ("#4ADE80" to "#2E8A4E"),
-        "orange" to ("#FB923C" to "#C9601F"),
-        "rose" to ("#FB7185" to "#C2577F"),
-    )
+    /** Ringing-screen colours per accent: background, primary, surface for dark and light. Mirrors src/theme/themes.ts. */
+    data class AccentColors(val darkBg: String, val darkPrimary: String, val darkSurface: String, val lightBg: String, val lightPrimary: String, val lightSurface: String)
 
+    val ACCENTS = mapOf(
+        "purple" to AccentColors("#100D1C", "#A855F7", "#28213B", "#F8F3FF", "#8E44D6", "#EBDDF9"),
+        "blue" to AccentColors("#0B1220", "#60A5FA", "#1C2945", "#F3F7FF", "#2F6FD6", "#E2EBFB"),
+        "teal" to AccentColors("#081614", "#2DD4BF", "#18332F", "#F1FAF8", "#0F8F80", "#D9F0EC"),
+        "green" to AccentColors("#0A150E", "#4ADE80", "#1A3023", "#F3FAF4", "#2E8A4E", "#DDF0E1"),
+        "orange" to AccentColors("#170F0A", "#FB923C", "#33241A", "#FFF6EF", "#C9601F", "#FBE4D3"),
+        "rose" to AccentColors("#170A10", "#FB7185", "#351A26", "#FFF4F2", "#C2577F", "#FBE3EA"),
+    )
     fun load(context: Context): WakeSettings {
         val p = AppStorage.settings(context)
         val systemLanguage = Locale.getDefault().language.takeIf { it in LANGUAGES } ?: "en"

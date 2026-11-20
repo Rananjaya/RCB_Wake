@@ -79,8 +79,12 @@ describe('accent colours', () => {
     expect(withAccent(pinkDream, 'teal').colors.primary).toBe(
       accents.teal.light.primary,
     );
+    // Accents recolour the whole theme, including backgrounds.
     expect(withAccent(pinkDream, 'teal').colors.background).toBe(
-      pinkDream.colors.background,
+      accents.teal.light.background,
+    );
+    expect(withAccent(midnightPurple, 'teal').colors.background).toBe(
+      accents.teal.dark.background,
     );
   });
 });
