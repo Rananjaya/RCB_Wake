@@ -10,6 +10,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
+import com.rcb.wake.activity.RingingActivity
 import com.rcb.wake.alarm.Alarm
 import com.rcb.wake.alarm.AlarmController
 import com.rcb.wake.alarm.AlarmSession
@@ -86,7 +87,10 @@ class RingingService : Service() {
         session = next
         AlarmSessionStore.save(this, next)
         startForegroundCompat(WakeNotifications.buildRinging(this, next, alarmsOf(next)))
-        if (isNewSession) startOutput(alarm)
+        if (isNewSession) {
+            startOutput(alarm)
+            showRingingScreen()
+        }
         EngineEvents.emit(EngineEvents.SESSION_STARTED)
     }
 
@@ -103,6 +107,20 @@ class RingingService : Service() {
         session = saved
         startForegroundCompat(WakeNotifications.buildRinging(this, saved, alarmsOf(saved)))
         startOutput(first)
+    }
+
+    /**
+     * The full-screen intent only launches the ringing screen when the device is locked or idle.
+     * While the user is in the app, Android shows a heads-up instead, so start it directly.
+     * Android blocks this from the background, in which case the notification remains.
+     */
+    private fun showRingingScreen() {
+        runCatching {
+            startActivity(
+                Intent(this, RingingActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_USER_ACTION),
+            )
+        }
     }
 
     private fun startOutput(alarm: Alarm) {
