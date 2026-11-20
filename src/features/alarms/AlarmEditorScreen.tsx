@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { FEATURES } from '../../app/features';
 import { Icon } from '../../components/Icon';
 import {
   Button,
@@ -71,7 +72,9 @@ export function AlarmEditorScreen({ navigation, route }: Props) {
   const [nfcTagCount, setNfcTagCount] = useState<number | null>(null);
   useEffect(() => {
     engine.getNfcStatus().then(async status => {
-      if (status.supported) setNfcTagCount((await engine.getNfcTags()).length);
+      if (FEATURES.nfcChallenge && status.supported) {
+        setNfcTagCount((await engine.getNfcTags()).length);
+      }
     });
   }, []);
   const is24 = settings.timeFormat === '24';
@@ -255,36 +258,43 @@ export function AlarmEditorScreen({ navigation, route }: Props) {
           />
           {draft.challengeEnabled && (
             <>
-              <Text
-                style={[styles.subLabel, { color: theme.colors.textSecondary }]}
-              >
-                {t('challengeType')}
-              </Text>
-              <View style={styles.wrap}>
-                <Chip
-                  label={t('challengeMath')}
-                  selected={draft.challengeType !== 'nfc'}
-                  onPress={() => update({ challengeType: 'math' })}
-                />
-                {nfcTagCount !== null && (
-                  <Chip
-                    label={t('challengeNfc')}
-                    selected={draft.challengeType === 'nfc'}
-                    onPress={() =>
-                      nfcTagCount > 0 && update({ challengeType: 'nfc' })
-                    }
-                  />
-                )}
-              </View>
-              {nfcTagCount === 0 && (
-                <Text
-                  style={[
-                    styles.subLabel,
-                    { color: theme.colors.textSecondary },
-                  ]}
-                >
-                  {t('challengeNfcNeedsTag')}
-                </Text>
+              {nfcTagCount !== null && (
+                <>
+                  <Text
+                    style={[
+                      styles.subLabel,
+                      { color: theme.colors.textSecondary },
+                    ]}
+                  >
+                    {t('challengeType')}
+                  </Text>
+                  <View style={styles.wrap}>
+                    <Chip
+                      label={t('challengeMath')}
+                      selected={draft.challengeType !== 'nfc'}
+                      onPress={() => update({ challengeType: 'math' })}
+                    />
+                    {nfcTagCount !== null && (
+                      <Chip
+                        label={t('challengeNfc')}
+                        selected={draft.challengeType === 'nfc'}
+                        onPress={() =>
+                          nfcTagCount > 0 && update({ challengeType: 'nfc' })
+                        }
+                      />
+                    )}
+                  </View>
+                  {nfcTagCount === 0 && (
+                    <Text
+                      style={[
+                        styles.subLabel,
+                        { color: theme.colors.textSecondary },
+                      ]}
+                    >
+                      {t('challengeNfcNeedsTag')}
+                    </Text>
+                  )}
+                </>
               )}
               <Text
                 style={[styles.subLabel, { color: theme.colors.textSecondary }]}

@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { FEATURES } from '../../app/features';
 import { Icon } from '../../components/Icon';
 import { Button, Card, Divider, SectionTitle } from '../../components/ui';
 import { useT } from '../../i18n';
@@ -31,7 +32,7 @@ export function NfcTagSettings() {
     reload();
   }, [reload]);
 
-  if (!status?.supported) return null;
+  if (!FEATURES.nfcChallenge || !status?.supported) return null;
 
   const scan = async () => {
     setMessage(null);

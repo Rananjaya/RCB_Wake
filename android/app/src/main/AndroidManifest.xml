@@ -18,9 +18,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Optional NFC dismiss challenge; the app works on devices without NFC. -->
-    <uses-permission android:name="android.permission.NFC" />
-    <uses-feature android:name="android.hardware.nfc" android:required="false" />
+    <!-- The NFC dismiss challenge is on hold (src/app/features.ts). To enable it, declare:
+         <uses-permission android:name="android.permission.NFC" />
+         <uses-feature android:name="android.hardware.nfc" android:required="false" /> -->
     <!-- Used only for the opt-in widget weather (Open-Meteo). Off by default; when weather is
          disabled the app makes no network requests. -->
     <uses-permission android:name="android.permission.INTERNET" />
