@@ -166,6 +166,12 @@ export type Settings = {
   weatherLongitude: number;
   /** `c` | `f` */
   temperatureUnit: string;
+  /** Bedtime reminder before the next alarm. */
+  sleepReminderEnabled: boolean;
+  /** 240-720 */
+  sleepGoalMinutes: number;
+  /** 0-120 */
+  sleepReminderLeadMinutes: number;
 };
 
 export type WeatherInfo = {

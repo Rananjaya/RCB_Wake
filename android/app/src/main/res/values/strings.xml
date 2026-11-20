@@ -38,4 +38,9 @@
     <string name="pomodoro_round">Round %1$d of %2$d</string>
     <string name="pomodoro_phase_done">%1$s finished</string>
     <string name="pomodoro_next">Next: %1$s</string>
+    <string name="channel_sleep">Bedtime reminders</string>
+    <string name="sleep_reminder_title">Time to wind down</string>
+    <string name="sleep_reminder_body">Your alarm is at %1$s. Head to bed soon to get %2$s of sleep.</string>
+    <string name="sleep_goal_hours">%1$d h</string>
+    <string name="sleep_goal_hours_minutes">%1$d h %2$d min</string>
 </resources>

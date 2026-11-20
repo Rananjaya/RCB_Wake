@@ -178,6 +178,15 @@ export const ta: Strings = {
   weatherNotYet: 'முதல் புதுப்பிப்புக்காகக் காத்திருக்கிறது…',
   weatherAttribution: 'வானிலைத் தரவு Open-Meteo.com (CC BY 4.0)',
 
+  sleepReminder: 'உறக்க நினைவூட்டல்',
+  sleepReminderToggle: 'படுக்கைக்குச் செல்ல நினைவூட்டு',
+  sleepReminderHint: 'உங்கள் அடுத்த அலாரம் மற்றும் உறக்க இலக்கின் அடிப்படையில்',
+  sleepGoal: 'உறக்க இலக்கு',
+  sleepReminderLead: 'நினைவூட்டு',
+  atBedtime: 'படுக்கை நேரத்தில்',
+  sleepReminderPreview: 'உங்கள் {alarm} அலாரத்திற்கு அடுத்த நினைவூட்டல் {time}',
+  sleepReminderNone: 'நினைவூட்டல் இல்லை: போதுமான நேரம் உள்ள அலாரம் இல்லை',
+
   appearance: 'தோற்றம்',
   theme: 'தீம்',
   themeMidnight: 'Midnight Purple',

@@ -175,6 +175,15 @@ export const en = {
   weatherNotYet: 'Waiting for the first update…',
   weatherAttribution: 'Weather data by Open-Meteo.com (CC BY 4.0)',
 
+  sleepReminder: 'Sleep reminder',
+  sleepReminderToggle: 'Remind me to go to bed',
+  sleepReminderHint: 'Based on your next alarm and your sleep goal',
+  sleepGoal: 'Sleep goal',
+  sleepReminderLead: 'Remind me',
+  atBedtime: 'At bedtime',
+  sleepReminderPreview: 'Next reminder at {time} for your {alarm} alarm',
+  sleepReminderNone: 'No reminder: no upcoming alarm leaves enough time',
+
   appearance: 'Appearance',
   theme: 'Theme',
   themeMidnight: 'Midnight Purple',

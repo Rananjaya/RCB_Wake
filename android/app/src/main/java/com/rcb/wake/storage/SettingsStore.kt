@@ -26,6 +26,9 @@ data class WakeSettings(
     val weatherLongitude: Double,
     /** `c` or `f` */
     val temperatureUnit: String,
+    val sleepReminderEnabled: Boolean,
+    val sleepGoalMinutes: Int,
+    val sleepReminderLeadMinutes: Int,
 ) {
     val is24Hour get() = timeFormat == "24"
 }
@@ -58,6 +61,9 @@ object SettingsStore {
             weatherLatitude = p.getFloat("weatherLatitude", 0f).toDouble(),
             weatherLongitude = p.getFloat("weatherLongitude", 0f).toDouble(),
             temperatureUnit = p.getString("temperatureUnit", "c")!!,
+            sleepReminderEnabled = p.getBoolean("sleepReminderEnabled", false),
+            sleepGoalMinutes = p.getInt("sleepGoalMinutes", 8 * 60),
+            sleepReminderLeadMinutes = p.getInt("sleepReminderLeadMinutes", 30),
         )
     }
 
@@ -72,6 +78,8 @@ object SettingsStore {
         require(s.temperatureUnit == "c" || s.temperatureUnit == "f") { "temperature unit" }
         require(s.weatherLatitude in -90.0..90.0 && s.weatherLongitude in -180.0..180.0) { "coordinates" }
         require(!s.weatherEnabled || s.weatherCity.isNotBlank()) { "weather city required" }
+        require(s.sleepGoalMinutes in 240..720) { "sleep goal 4-12 h" }
+        require(s.sleepReminderLeadMinutes in 0..120) { "reminder lead 0-120 min" }
         AppStorage.settings(context).edit()
             .putString("theme", s.theme)
             .putString("timeFormat", s.timeFormat)
@@ -89,6 +97,9 @@ object SettingsStore {
             .putFloat("weatherLatitude", s.weatherLatitude.toFloat())
             .putFloat("weatherLongitude", s.weatherLongitude.toFloat())
             .putString("temperatureUnit", s.temperatureUnit)
+            .putBoolean("sleepReminderEnabled", s.sleepReminderEnabled)
+            .putInt("sleepGoalMinutes", s.sleepGoalMinutes)
+            .putInt("sleepReminderLeadMinutes", s.sleepReminderLeadMinutes)
             .commit()
         return load(context)
     }

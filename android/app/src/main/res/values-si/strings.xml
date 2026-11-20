@@ -37,4 +37,9 @@
     <string name="pomodoro_round">වටය %1$d / %2$d</string>
     <string name="pomodoro_phase_done">%1$s අවසන්</string>
     <string name="pomodoro_next">ඊළඟට: %1$s</string>
+    <string name="channel_sleep">නින්ද සිහිකැඳවීම්</string>
+    <string name="sleep_reminder_title">විවේක ගැනීමට කාලයයි</string>
+    <string name="sleep_reminder_body">ඔබේ එලාම් එක %1$s ට. %2$s ක නින්දක් ලබා ගැනීමට ඉක්මනින් නින්දට යන්න.</string>
+    <string name="sleep_goal_hours">පැය %1$d</string>
+    <string name="sleep_goal_hours_minutes">පැය %1$d විනාඩි %2$d</string>
 </resources>

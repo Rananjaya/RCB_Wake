@@ -29,6 +29,9 @@ const defaults = {
   weatherLatitude: 0,
   weatherLongitude: 0,
   temperatureUnit: 'c',
+  sleepReminderEnabled: false,
+  sleepGoalMinutes: 480,
+  sleepReminderLeadMinutes: 30,
 };
 
 const defaultPomodoroConfig = {

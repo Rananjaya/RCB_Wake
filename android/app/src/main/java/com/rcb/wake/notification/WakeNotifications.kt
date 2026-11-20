@@ -29,6 +29,7 @@ object WakeNotifications {
     const val CHANNEL_TIMER_RUNNING = "timer_running"
     const val CHANNEL_TIMER_DONE = "timer_done"
     const val CHANNEL_POMODORO = "pomodoro"
+    const val CHANNEL_SLEEP = "sleep_reminder"
 
     const val RINGING_NOTIFICATION_ID = 1
     private const val TAG_SNOOZE = "snooze"
@@ -75,6 +76,9 @@ object WakeNotifications {
                 enableVibration(true)
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             },
+        )
+        nm.createNotificationChannel(
+            NotificationChannel(CHANNEL_SLEEP, c.getString(R.string.channel_sleep), NotificationManager.IMPORTANCE_DEFAULT),
         )
         // A single gentle chime at each phase change; not insistent like finished timers.
         nm.createNotificationChannel(
@@ -255,6 +259,23 @@ object WakeNotifications {
             .setContentIntent(openAppIntent(context, 800, tab = "timer"))
             .build()
         manager(context).notify(TAG_POMODORO, 0, n)
+    }
+
+    fun showSleepReminder(context: Context, alarmAt: Long, sleepGoalMinutes: Int) {
+        val c = Localized.context(context)
+        val hours = sleepGoalMinutes / 60
+        val minutes = sleepGoalMinutes % 60
+        val goal = if (minutes == 0) c.getString(R.string.sleep_goal_hours, hours) else c.getString(R.string.sleep_goal_hours_minutes, hours, minutes)
+        val n = Notification.Builder(context, CHANNEL_SLEEP)
+            .setSmallIcon(R.drawable.ic_stat_alarm)
+            .setContentTitle(c.getString(R.string.sleep_reminder_title))
+            .setContentText(c.getString(R.string.sleep_reminder_body, formatTime(context, alarmAt), goal))
+            .setStyle(Notification.BigTextStyle().bigText(c.getString(R.string.sleep_reminder_body, formatTime(context, alarmAt), goal)))
+            .setAutoCancel(true)
+            .setTimeoutAfter(2 * 60 * 60_000L)
+            .setContentIntent(openAppIntent(context, 900))
+            .build()
+        manager(context).notify("sleep", 0, n)
     }
 
     fun cancelPomodoro(context: Context) = manager(context).cancel(TAG_POMODORO, 0)

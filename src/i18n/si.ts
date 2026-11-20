@@ -177,6 +177,15 @@ export const si: Strings = {
   weatherNotYet: 'පළමු යාවත්කාලීනය බලාපොරොත්තුවෙන්…',
   weatherAttribution: 'කාලගුණ දත්ත Open-Meteo.com (CC BY 4.0) මගින්',
 
+  sleepReminder: 'නින්ද සිහිකැඳවීම',
+  sleepReminderToggle: 'නින්දට යාමට මතක් කරන්න',
+  sleepReminderHint: 'ඔබේ ඊළඟ එලාම් එක සහ නින්දේ ඉලක්කය මත',
+  sleepGoal: 'නින්දේ ඉලක්කය',
+  sleepReminderLead: 'මතක් කරන්න',
+  atBedtime: 'නින්දට යන වේලාවට',
+  sleepReminderPreview: '{alarm} එලාම් එක සඳහා ඊළඟ සිහිකැඳවීම {time} ට',
+  sleepReminderNone: 'සිහිකැඳවීමක් නැත: ප්‍රමාණවත් කාලයක් ඇති ඉදිරි එලාම් නැත',
+
   appearance: 'පෙනුම',
   theme: 'තේමාව',
   themeMidnight: 'Midnight Purple',

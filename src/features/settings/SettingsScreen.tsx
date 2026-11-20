@@ -29,6 +29,7 @@ import { DIFFICULTIES, QuestionStepper } from '../alarms/AlarmEditorScreen';
 import { clampQuestions, SNOOZE_OPTIONS } from '../alarms/alarmDraft';
 import { SoundPicker } from '../alarms/SoundPicker';
 import { soundDisplayName } from '../alarms/soundNames';
+import { SleepReminderSettings } from './SleepReminderSettings';
 import { WeatherSettings } from './WeatherSettings';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Settings'>;
@@ -170,6 +171,8 @@ function SettingsContent({ navigation }: Props) {
             </>
           )}
         </Card>
+
+        <SleepReminderSettings />
 
         <WeatherSettings />
 

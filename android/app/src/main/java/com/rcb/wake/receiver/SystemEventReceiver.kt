@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import com.rcb.wake.alarm.AlarmController
 import com.rcb.wake.timer.PomodoroController
+import com.rcb.wake.sleep.SleepReminder
 import com.rcb.wake.timer.TimerController
 import com.rcb.wake.widget.ClockWidgetProvider
 
@@ -27,6 +28,7 @@ class SystemEventReceiver : BroadcastReceiver() {
                 // Resource ids change between app versions; re-render so the launcher drops
                 // RemoteViews that reference stale drawables.
                 ClockWidgetProvider.updateAll(context)
+                SleepReminder.reschedule(context)
             } finally {
                 pending.finish()
             }

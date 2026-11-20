@@ -538,6 +538,9 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 weatherLatitude = settings.getDouble("weatherLatitude"),
                 weatherLongitude = settings.getDouble("weatherLongitude"),
                 temperatureUnit = settings.getString("temperatureUnit").orEmpty(),
+                sleepReminderEnabled = settings.getBoolean("sleepReminderEnabled"),
+                sleepGoalMinutes = settings.getDouble("sleepGoalMinutes").toInt(),
+                sleepReminderLeadMinutes = settings.getDouble("sleepReminderLeadMinutes").toInt(),
             ),
         )
         onWeatherSettingsSaved(saved)
@@ -564,6 +567,9 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putDouble("weatherLatitude", s.weatherLatitude)
         putDouble("weatherLongitude", s.weatherLongitude)
         putString("temperatureUnit", s.temperatureUnit)
+        putBoolean("sleepReminderEnabled", s.sleepReminderEnabled)
+        putInt("sleepGoalMinutes", s.sleepGoalMinutes)
+        putInt("sleepReminderLeadMinutes", s.sleepReminderLeadMinutes)
     }
 
     // ---- Weather (opt-in) ----

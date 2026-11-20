@@ -92,6 +92,11 @@
                 android:resource="@xml/clock_widget_info" />
         </receiver>
 
+        <receiver
+            android:name=".sleep.SleepReminderReceiver"
+            android:directBootAware="true"
+            android:exported="false" />
+
         <!-- Exported only so the system can deliver these protected broadcasts. -->
         <receiver
             android:name=".receiver.SystemEventReceiver"
