@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Frameless widget: no panel or border, the clock sits directly on the wallpaper.
+     Readability comes from the text shadow in widget_styles.xml. A transparent shape (rather
+     than no background) keeps the whole widget area tappable. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@android:color/transparent" />
+</shape>

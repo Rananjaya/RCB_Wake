@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Material Symbols "cloud" (rounded, filled) by Google, Apache License 2.0. See THIRD_PARTY_NOTICES.md. -->
+<!-- RCB Wake weather icon composed from Material Symbols (cloud) by Google,
+     Apache License 2.0. Colours and composition are RCB Wake's own. See THIRD_PARTY_NOTICES.md. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
     android:viewportWidth="960"
     android:viewportHeight="960">
-    <group android:translateY="960">
-        <path android:fillColor="#FFFFFF" android:pathData="M251-160q-88 0-149.5-61.5T40-371q0-78 50-137t127-71q20-97 94-158.5T482-799q112 0 189 81.5T748-522v24q72-2 122 46.5T920-329q0 69-50 119t-119 50H251Z" />
+    <group android:scaleX="0.62" android:scaleY="0.62" android:translateX="330" android:translateY="90">
+        <group android:translateY="960">
+            <path android:fillColor="#B9C4D0" android:pathData="M251-160q-88 0-149.5-61.5T40-371q0-78 50-137t127-71q20-97 94-158.5T482-799q112 0 189 81.5T748-522v24q72-2 122 46.5T920-329q0 69-50 119t-119 50H251Z" />
+        </group>
+    </group>
+    <group android:scaleX="0.85" android:scaleY="0.85" android:translateX="70" android:translateY="230">
+        <group android:translateY="960">
+            <path android:fillColor="#F5F7FA" android:pathData="M251-160q-88 0-149.5-61.5T40-371q0-78 50-137t127-71q20-97 94-158.5T482-799q112 0 189 81.5T748-522v24q72-2 122 46.5T920-329q0 69-50 119t-119 50H251Z" />
+        </group>
     </group>
 </vector>
