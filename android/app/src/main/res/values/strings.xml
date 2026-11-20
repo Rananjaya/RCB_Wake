@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">RCBWake</string>
+    <string name="app_name" translatable="false">RCB Wake</string>
+    <string name="channel_ringing">Ringing alarms</string>
+    <string name="channel_status">Snoozed and missed alarms</string>
+    <string name="channel_timer_running">Running timers</string>
+    <string name="channel_timer_done">Finished timers</string>
+    <string name="alarm_default_label">Alarm</string>
+    <string name="timer_default_label">Timer</string>
+    <string name="ringing_challenge_hint">Solve the math challenge to dismiss</string>
+    <string name="ringing_challenge_info">Solve %1$d %2$s questions to dismiss</string>
+    <string name="action_snooze">Snooze</string>
+    <string name="action_dismiss">Dismiss</string>
+    <string name="action_solve">Solve to dismiss</string>
+    <string name="action_cancel_snooze">Dismiss now</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_add_minute">+1 min</string>
+    <string name="snoozed_until">Snoozed until %1$s</string>
+    <string name="missed_alarm">Missed alarm</string>
+    <string name="timer_done">Time\'s up</string>
+    <string name="difficulty_easy">easy</string>
+    <string name="difficulty_medium">medium</string>
+    <string name="difficulty_hard">hard</string>
 </resources>

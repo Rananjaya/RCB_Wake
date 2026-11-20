@@ -1,0 +1,22 @@
+<resources>
+    <string name="channel_ringing">ஒலிக்கும் அலாரங்கள்</string>
+    <string name="channel_status">உறக்கநிலை மற்றும் தவறிய அலாரங்கள்</string>
+    <string name="channel_timer_running">இயங்கும் டைமர்கள்</string>
+    <string name="channel_timer_done">முடிந்த டைமர்கள்</string>
+    <string name="alarm_default_label">அலாரம்</string>
+    <string name="timer_default_label">டைமர்</string>
+    <string name="ringing_challenge_hint">நிறுத்த கணிதச் சவாலைத் தீர்க்கவும்</string>
+    <string name="ringing_challenge_info">நிறுத்த %2$s கேள்விகள் %1$d தீர்க்கவும்</string>
+    <string name="action_snooze">உறக்கநிலை</string>
+    <string name="action_dismiss">நிறுத்து</string>
+    <string name="action_solve">தீர்த்து நிறுத்து</string>
+    <string name="action_cancel_snooze">இப்போது நிறுத்து</string>
+    <string name="action_stop">நிறுத்து</string>
+    <string name="action_add_minute">+1 நிமிடம்</string>
+    <string name="snoozed_until">%1$s வரை உறக்கநிலை</string>
+    <string name="missed_alarm">தவறிய அலாரம்</string>
+    <string name="timer_done">நேரம் முடிந்தது</string>
+    <string name="difficulty_easy">எளிய</string>
+    <string name="difficulty_medium">நடுத்தர</string>
+    <string name="difficulty_hard">கடினமான</string>
+</resources>

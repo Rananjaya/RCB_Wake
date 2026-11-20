@@ -6,7 +6,9 @@
     "android": "react-native run-android",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "test:kotlin": "cd android && ./gradlew :app:testDebugUnitTest"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^7.22.0",
@@ -46,5 +48,13 @@
     "node": ">= 22.11.0"
   },
   "description": "RCB Wake — an offline-first Android alarm clock, timer, stopwatch and world clock.",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "codegenConfig": {
+    "name": "RcbWakeSpec",
+    "type": "modules",
+    "jsSrcsDir": "src/native",
+    "android": {
+      "javaPackageName": "com.rcb.wake.module.specs"
+    }
+  }
 }

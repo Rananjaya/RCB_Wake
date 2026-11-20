@@ -1,0 +1,209 @@
+/**
+ * TurboModule contract between React Native and the Kotlin alarm engine.
+ * See docs/native-contract.md for the full request/response/event documentation.
+ *
+ * Kotlin owns all persistence (SQLite + preferences). This module is the only way JavaScript
+ * reads or writes alarms, timers, world clocks and settings.
+ */
+import type {CodegenTypes, TurboModule} from 'react-native';
+import {TurboModuleRegistry} from 'react-native';
+
+export type AlarmConfig = {
+  /** 0 creates a new alarm; a positive id updates an existing one. */
+  id: number;
+  hour: number;
+  minute: number;
+  enabled: boolean;
+  /** Bitmask, bit 0 = Monday … bit 6 = Sunday. 0 = one-time alarm. */
+  repeatDays: number;
+  label: string;
+  /** `builtin:<name>`, `system:default` or a `content://` URI from the Storage Access Framework. */
+  soundUri: string;
+  soundName: string;
+  vibrationEnabled: boolean;
+  gradualVolumeEnabled: boolean;
+  snoozeMinutes: number;
+  challengeEnabled: boolean;
+  /** `easy` | `medium` | `hard` */
+  challengeDifficulty: string;
+  challengeQuestionCount: number;
+};
+
+export type AlarmRecord = {
+  id: number;
+  hour: number;
+  minute: number;
+  enabled: boolean;
+  repeatDays: number;
+  label: string;
+  soundUri: string;
+  soundName: string;
+  vibrationEnabled: boolean;
+  gradualVolumeEnabled: boolean;
+  snoozeMinutes: number;
+  challengeEnabled: boolean;
+  challengeDifficulty: string;
+  challengeQuestionCount: number;
+  createdAt: number;
+  updatedAt: number;
+  /** 0 when not snoozed. */
+  snoozedUntil: number;
+  /** Epoch millis the OS will fire this alarm; 0 when not scheduled. */
+  nextTriggerAt: number;
+  /** `NONE` | `EXACT` | `INEXACT` | `FAILED` | `RINGING` */
+  scheduleState: string;
+};
+
+export type ScheduledAlarm = {
+  alarmId: number;
+  triggerAt: number;
+  scheduleState: string;
+  /** Whether a PendingIntent is actually registered with AlarmManager. */
+  registered: boolean;
+};
+
+export type EngineStatus = {
+  exactAlarmPermitted: boolean;
+  notificationsPermitted: boolean;
+  fullScreenIntentPermitted: boolean;
+  sdkInt: number;
+  versionName: string;
+  versionCode: number;
+  scheduledCount: number;
+  failedCount: number;
+};
+
+export type SessionInfo = {
+  alarmIds: number[];
+  labels: string[];
+  startedAt: number;
+  challengeRequired: boolean;
+  challengeDifficulty: string;
+  challengeQuestionCount: number;
+};
+
+export type Sound = {
+  uri: string;
+  name: string;
+};
+
+export type PickedTime = {
+  hour: number;
+  minute: number;
+  cancelled: boolean;
+};
+
+export type TimerRecord = {
+  id: number;
+  label: string;
+  durationMillis: number;
+  /** Remaining time when paused or idle. */
+  remainingMillis: number;
+  /** SystemClock.elapsedRealtime() at which a running timer completes; 0 otherwise. */
+  endElapsedMillis: number;
+  /** `IDLE` | `RUNNING` | `PAUSED` | `FINISHED` */
+  status: string;
+  createdAt: number;
+};
+
+export type WorldClockRecord = {
+  id: number;
+  cityName: string;
+  zoneId: string;
+  displayOrder: number;
+};
+
+export type ZoneOffset = {
+  zoneId: string;
+  /** Offset from UTC in milliseconds at the requested instant (DST-aware). */
+  offsetMillis: number;
+  /** Next DST/offset transition after the instant, epoch millis; 0 if none. */
+  nextTransitionAt: number;
+};
+
+export type Settings = {
+  /** `midnight` | `pink` */
+  theme: string;
+  /** `12` | `24` */
+  timeFormat: string;
+  /** `en` | `si` | `ta` */
+  language: string;
+  defaultSoundUri: string;
+  defaultSoundName: string;
+  defaultSnoozeMinutes: number;
+  defaultVibration: boolean;
+  defaultGradualVolume: boolean;
+  defaultChallengeEnabled: boolean;
+  defaultChallengeDifficulty: string;
+  defaultChallengeQuestionCount: number;
+};
+
+export type EngineEvent = {
+  /** `alarmsChanged` | `timersChanged` | `sessionStarted` | `sessionEnded` | `settingsChanged` */
+  type: string;
+};
+
+export interface Spec extends TurboModule {
+  readonly onEngineEvent: CodegenTypes.EventEmitter<EngineEvent>;
+
+  // Engine lifecycle and status
+  initializeEngine(): Promise<EngineStatus>;
+  getAlarmEngineStatus(): Promise<EngineStatus>;
+  requestExactAlarmPermission(): void;
+  requestFullScreenIntentPermission(): void;
+  openNotificationSettings(): void;
+
+  // Alarms
+  getAlarms(): Promise<AlarmRecord[]>;
+  saveAlarm(config: AlarmConfig): Promise<AlarmRecord>;
+  setAlarmEnabled(alarmId: number, enabled: boolean): Promise<AlarmRecord>;
+  deleteAlarm(alarmId: number): Promise<void>;
+  cancelAllAlarms(): Promise<void>;
+  getScheduledAlarms(): Promise<ScheduledAlarm[]>;
+  getNextAlarm(): Promise<AlarmRecord | null>;
+
+  // Ringing session
+  getActiveSession(): Promise<SessionInfo | null>;
+  snoozeSession(): Promise<number>;
+  /**
+   * method: `normal` (refused natively while a challenge is required), `challenge` (all questions
+   * solved) or `emergency`. Resolves false if no session is ringing.
+   */
+  dismissSession(method: string): Promise<boolean>;
+
+  // Sounds and pickers
+  getBuiltInSounds(): Promise<Sound[]>;
+  pickCustomSound(): Promise<Sound | null>;
+  previewSound(uri: string): void;
+  stopPreview(): void;
+  showTimePicker(hour: number, minute: number, is24Hour: boolean): Promise<PickedTime>;
+
+  // Timers
+  getTimers(): Promise<TimerRecord[]>;
+  createTimer(label: string, durationMillis: number, start: boolean): Promise<TimerRecord>;
+  startTimer(timerId: number): Promise<TimerRecord>;
+  pauseTimer(timerId: number): Promise<TimerRecord>;
+  resetTimer(timerId: number): Promise<TimerRecord>;
+  addTimerTime(timerId: number, millis: number): Promise<TimerRecord>;
+  deleteTimer(timerId: number): Promise<void>;
+
+  // Clocks (synchronous, monotonic)
+  elapsedRealtime(): number;
+  getBootCount(): number;
+
+  // World clock
+  getWorldClocks(): Promise<WorldClockRecord[]>;
+  addWorldClock(cityName: string, zoneId: string): Promise<WorldClockRecord>;
+  removeWorldClock(clockId: number): Promise<void>;
+  /** Pass `local` for the device's current zone. */
+  getZoneOffsets(zoneIds: string[], atMillis: number): Promise<ZoneOffset[]>;
+
+  // Settings and small state
+  getSettings(): Promise<Settings>;
+  saveSettings(settings: Settings): Promise<Settings>;
+  getValue(key: string): Promise<string | null>;
+  setValue(key: string, value: string): Promise<void>;
+  removeValue(key: string): Promise<void>;
+}
+
+export default TurboModuleRegistry.getEnforcing<Spec>('RcbWake');

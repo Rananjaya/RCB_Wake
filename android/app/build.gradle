@@ -72,7 +72,22 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
+/**
+ * Release signing is read from a properties file kept outside version control. The path comes from
+ * the RCB_WAKE_SIGNING_PROPERTIES environment variable or the rcbWakeSigningProperties Gradle
+ * property. Expected keys: storeFile, storePassword, keyAlias, keyPassword.
+ */
+def releaseSigning = null
+def signingPath = System.getenv("RCB_WAKE_SIGNING_PROPERTIES") ?: project.findProperty("rcbWakeSigningProperties")
+if (signingPath != null && file(signingPath).exists()) {
+    releaseSigning = new Properties()
+    file(signingPath).withInputStream { releaseSigning.load(it) }
+}
+
 android {
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
@@ -82,8 +97,9 @@ android {
         applicationId "com.rcb.wake"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode 100
+        versionName "1.0.0"
     }
     signingConfigs {
         debug {
@@ -91,6 +107,14 @@ android {
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
+        }
+        if (releaseSigning != null) {
+            release {
+                storeFile file(releaseSigning['storeFile'])
+                storePassword releaseSigning['storePassword']
+                keyAlias releaseSigning['keyAlias']
+                keyPassword releaseSigning['keyPassword']
+            }
         }
     }
     buildTypes {

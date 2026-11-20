@@ -1,0 +1,22 @@
+<resources>
+    <string name="channel_ringing">නාද වන එලාම්</string>
+    <string name="channel_status">නිදි කළ සහ මඟ හැරුණු එලාම්</string>
+    <string name="channel_timer_running">ක්‍රියාත්මක ටයිමර්</string>
+    <string name="channel_timer_done">අවසන් වූ ටයිමර්</string>
+    <string name="alarm_default_label">එලාම්</string>
+    <string name="timer_default_label">ටයිමරය</string>
+    <string name="ringing_challenge_hint">නැවැත්වීමට ගණිත අභියෝගය විසඳන්න</string>
+    <string name="ringing_challenge_info">නැවැත්වීමට %2$s ප්‍රශ්න %1$d ක් විසඳන්න</string>
+    <string name="action_snooze">නිදි කරන්න</string>
+    <string name="action_dismiss">නවත්වන්න</string>
+    <string name="action_solve">විසඳා නවත්වන්න</string>
+    <string name="action_cancel_snooze">දැන් නවත්වන්න</string>
+    <string name="action_stop">නවත්වන්න</string>
+    <string name="action_add_minute">+විනාඩි 1</string>
+    <string name="snoozed_until">%1$s දක්වා නිදි කර ඇත</string>
+    <string name="missed_alarm">මඟ හැරුණු එලාම්</string>
+    <string name="timer_done">කාලය අවසන්</string>
+    <string name="difficulty_easy">පහසු</string>
+    <string name="difficulty_medium">මධ්‍යම</string>
+    <string name="difficulty_hard">අපහසු</string>
+</resources>
