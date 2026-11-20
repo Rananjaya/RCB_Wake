@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 
 /** Wall-clock "now" for display only, refreshed at [intervalMillis]. Never used for alarm timing. */
 export function useNow(intervalMillis = 1000): number {

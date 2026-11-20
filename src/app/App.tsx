@@ -1,24 +1,30 @@
-import React, {useEffect, useRef} from 'react';
-import {AppState, PermissionsAndroid, Platform, StatusBar} from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import {
+  AppState,
+  PermissionsAndroid,
+  Platform,
+  StatusBar,
+  StyleSheet,
+} from 'react-native';
 import {
   createNavigationContainerRef,
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
 } from '@react-navigation/native';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import type {RootStackParamList, TabParamList} from '../navigation/types';
-import {RootNavigator} from '../navigation/RootNavigator';
-import {engine, subscribeEngine} from '../services/engine';
-import {useAlarmStore} from '../storage/alarmStore';
-import {useSettingsStore} from '../storage/settingsStore';
-import {useTimerStore} from '../storage/timerStore';
-import {useTheme} from '../theme/useTheme';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import type { RootStackParamList, TabParamList } from '../navigation/types';
+import { RootNavigator } from '../navigation/RootNavigator';
+import { engine, subscribeEngine } from '../services/engine';
+import { useAlarmStore } from '../storage/alarmStore';
+import { useSettingsStore } from '../storage/settingsStore';
+import { useTimerStore } from '../storage/timerStore';
+import { useTheme } from '../theme/useTheme';
 
 const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
-const TAB_BY_LAUNCH: Record<string, keyof TabParamList> = {timer: 'Timers'};
+const TAB_BY_LAUNCH: Record<string, keyof TabParamList> = { timer: 'Timers' };
 
 async function requestNotificationPermission() {
   if (Platform.OS !== 'android' || Platform.Version < 33) return;
@@ -35,8 +41,12 @@ function useEngineBootstrap() {
     (async () => {
       await useSettingsStore.getState().load();
       const status = await engine.initializeEngine();
-      useAlarmStore.setState({status});
-      await Promise.all([alarms.load(), timers.load(), alarms.refreshSession()]);
+      useAlarmStore.setState({ status });
+      await Promise.all([
+        alarms.load(),
+        timers.load(),
+        alarms.refreshSession(),
+      ]);
       await requestNotificationPermission();
       await alarms.refreshStatus();
     })().catch(() => {
@@ -89,7 +99,7 @@ function useChallengeRouting() {
   }, [session]);
 }
 
-export default function App({initialTab}: {initialTab?: string}) {
+export default function App({ initialTab }: { initialTab?: string }) {
   const theme = useTheme();
   useEngineBootstrap();
   useChallengeRouting();
@@ -108,16 +118,23 @@ export default function App({initialTab}: {initialTab?: string}) {
   };
 
   return (
-    <GestureHandlerRootView style={{flex: 1, backgroundColor: theme.colors.background}}>
+    <GestureHandlerRootView
+      style={[styles.root, { backgroundColor: theme.colors.background }]}
+    >
       <SafeAreaProvider>
         <StatusBar barStyle={theme.dark ? 'light-content' : 'dark-content'} />
         <NavigationContainer
           ref={navigationRef}
           theme={navTheme}
-          onReady={() => useAlarmStore.getState().refreshSession()}>
-          <RootNavigator initialTab={initialTab ? TAB_BY_LAUNCH[initialTab] : undefined} />
+          onReady={() => useAlarmStore.getState().refreshSession()}
+        >
+          <RootNavigator
+            initialTab={initialTab ? TAB_BY_LAUNCH[initialTab] : undefined}
+          />
         </NavigationContainer>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({ root: { flex: 1 } });

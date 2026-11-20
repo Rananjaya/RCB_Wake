@@ -1,8 +1,8 @@
 import React from 'react';
-import {Banner} from '../../components/ui';
-import {useT} from '../../i18n';
-import {engine} from '../../services/engine';
-import {useAlarmStore} from '../../storage/alarmStore';
+import { Banner } from '../../components/ui';
+import { useT } from '../../i18n';
+import { engine } from '../../services/engine';
+import { useAlarmStore } from '../../storage/alarmStore';
 
 /** Explains, and offers to fix, anything that would stop alarms from ringing reliably. */
 export function PermissionBanners() {

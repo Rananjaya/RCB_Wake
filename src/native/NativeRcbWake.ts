@@ -5,8 +5,8 @@
  * Kotlin owns all persistence (SQLite + preferences). This module is the only way JavaScript
  * reads or writes alarms, timers, world clocks and settings.
  */
-import type {CodegenTypes, TurboModule} from 'react-native';
-import {TurboModuleRegistry} from 'react-native';
+import type { CodegenTypes, TurboModule } from 'react-native';
+import { TurboModuleRegistry } from 'react-native';
 
 export type AlarmConfig = {
   /** 0 creates a new alarm; a positive id updates an existing one. */
@@ -192,11 +192,19 @@ export interface Spec extends TurboModule {
   pickCustomSound(): Promise<Sound | null>;
   previewSound(uri: string): void;
   stopPreview(): void;
-  showTimePicker(hour: number, minute: number, is24Hour: boolean): Promise<PickedTime>;
+  showTimePicker(
+    hour: number,
+    minute: number,
+    is24Hour: boolean,
+  ): Promise<PickedTime>;
 
   // Timers
   getTimers(): Promise<TimerRecord[]>;
-  createTimer(label: string, durationMillis: number, start: boolean): Promise<TimerRecord>;
+  createTimer(
+    label: string,
+    durationMillis: number,
+    start: boolean,
+  ): Promise<TimerRecord>;
   startTimer(timerId: number): Promise<TimerRecord>;
   pauseTimer(timerId: number): Promise<TimerRecord>;
   resetTimer(timerId: number): Promise<TimerRecord>;

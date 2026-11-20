@@ -1,10 +1,10 @@
 export type RootStackParamList = {
-  Tabs: {screen?: keyof TabParamList} | undefined;
-  AlarmEditor: {alarmId?: number};
+  Tabs: { screen?: keyof TabParamList } | undefined;
+  AlarmEditor: { alarmId?: number };
   Settings: undefined;
   About: undefined;
   /** `weather` picks the widget weather city instead of adding a world clock. */
-  CityPicker: {mode?: 'worldclock' | 'weather'} | undefined;
+  CityPicker: { mode?: 'worldclock' | 'weather' } | undefined;
   Challenge: undefined;
 };
 

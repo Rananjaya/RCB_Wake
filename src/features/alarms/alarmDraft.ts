@@ -1,11 +1,14 @@
-import type {AlarmConfig, AlarmRecord, Settings} from '../../services/engine';
+import type { AlarmConfig, AlarmRecord, Settings } from '../../services/engine';
 
 export const SNOOZE_OPTIONS = [5, 10, 15, 20, 30];
 export const MIN_QUESTIONS = 1;
 export const MAX_QUESTIONS = 10;
 
 /** A new alarm draft: next whole hour plus the user's defaults. */
-export function newAlarmDraft(settings: Settings, now = new Date()): AlarmConfig {
+export function newAlarmDraft(
+  settings: Settings,
+  now = new Date(),
+): AlarmConfig {
   return {
     id: 0,
     hour: (now.getHours() + 1) % 24,

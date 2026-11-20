@@ -1,5 +1,5 @@
-import {create} from 'zustand';
-import {engine, type Settings} from '../services/engine';
+import { create } from 'zustand';
+import { engine, type Settings } from '../services/engine';
 
 export const defaultSettings: Settings = {
   theme: 'midnight',
@@ -32,16 +32,16 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   loaded: false,
   load: async () => {
     const settings = await engine.getSettings();
-    set({settings, loaded: true});
+    set({ settings, loaded: true });
   },
   update: async patch => {
     const previous = get().settings;
-    const next = {...previous, ...patch};
-    set({settings: next});
+    const next = { ...previous, ...patch };
+    set({ settings: next });
     try {
-      set({settings: await engine.saveSettings(next)});
+      set({ settings: await engine.saveSettings(next) });
     } catch (e) {
-      set({settings: previous});
+      set({ settings: previous });
       throw e;
     }
   },

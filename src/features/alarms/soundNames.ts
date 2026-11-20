@@ -1,4 +1,4 @@
-import type {StringKey, Translate} from '../../i18n';
+import type { StringKey, Translate } from '../../i18n';
 
 const BUILT_IN_NAME_KEYS: Record<string, StringKey> = {
   'builtin:dawn': 'soundDawn',
@@ -9,7 +9,11 @@ const BUILT_IN_NAME_KEYS: Record<string, StringKey> = {
 };
 
 /** Localised name for bundled sounds; custom files keep their file name. */
-export function soundDisplayName(uri: string, storedName: string, t: Translate): string {
+export function soundDisplayName(
+  uri: string,
+  storedName: string,
+  t: Translate,
+): string {
   const key = BUILT_IN_NAME_KEYS[uri];
   return key ? t(key) : storedName;
 }

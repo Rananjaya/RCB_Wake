@@ -1,5 +1,5 @@
-import type {EventSubscription} from 'react-native';
-import NativeRcbWake, {type EngineEvent} from '../native/NativeRcbWake';
+import type { EventSubscription } from 'react-native';
+import NativeRcbWake, { type EngineEvent } from '../native/NativeRcbWake';
 
 export type {
   AlarmConfig,
@@ -17,6 +17,8 @@ export type {
 /** The Kotlin engine. All persistence and scheduling goes through this object. */
 export const engine = NativeRcbWake;
 
-export function subscribeEngine(listener: (event: EngineEvent) => void): EventSubscription {
+export function subscribeEngine(
+  listener: (event: EngineEvent) => void,
+): EventSubscription {
   return NativeRcbWake.onEngineEvent(listener);
 }

@@ -1,4 +1,4 @@
-import type {Strings} from './en';
+import type { Strings } from './en';
 
 export const si: Strings = {
   appName: 'RCB Wake',
@@ -55,11 +55,14 @@ export const si: Strings = {
   off: 'අක්‍රිය',
 
   permExactTitle: 'නිවැරදි එලාම් අක්‍රියයි',
-  permExactBody: 'එලාම් ප්‍රමාද විය හැක. නියමිත වේලාවට නාද වීමට නිවැරදි එලාම් සඳහා ඉඩ දෙන්න.',
+  permExactBody:
+    'එලාම් ප්‍රමාද විය හැක. නියමිත වේලාවට නාද වීමට නිවැරදි එලාම් සඳහා ඉඩ දෙන්න.',
   permNotifTitle: 'දැනුම්දීම් අක්‍රියයි',
-  permNotifBody: 'නාද වන තිරය සහ නිදි පාලන පෙන්වීමට එලාම් සඳහා දැනුම්දීම් අවශ්‍යයි.',
+  permNotifBody:
+    'නාද වන තිරය සහ නිදි පාලන පෙන්වීමට එලාම් සඳහා දැනුම්දීම් අවශ්‍යයි.',
   permFsiTitle: 'සම්පූර්ණ තිර එලාම් අක්‍රියයි',
-  permFsiBody: 'අගුළු තිරය මත එලාම් එක පෙන්වීමට සම්පූර්ණ තිර ඇඟවීම් සඳහා ඉඩ දෙන්න.',
+  permFsiBody:
+    'අගුළු තිරය මත එලාම් එක පෙන්වීමට සම්පූර්ණ තිර ඇඟවීම් සඳහා ඉඩ දෙන්න.',
 
   newAlarm: 'නව එලාම්',
   editAlarm: 'එලාම් සංස්කරණය',
@@ -93,7 +96,8 @@ export const si: Strings = {
   soundClassic: 'සම්ප්‍රදායික',
   alarmSetIn: 'එලාම් එක දැන් සිට {duration} කට සකසා ඇත',
   alarmSetInexact: 'සුරැකිණි, නමුත් නිවැරදි එලාම් අක්‍රිය නිසා ප්‍රමාද විය හැක',
-  alarmScheduleFailed: 'සුරැකිණි, නමුත් Android එය සැලසුම් කිරීම ප්‍රතික්ෂේප කළා. එලාම් අවසර පරීක්ෂා කරන්න.',
+  alarmScheduleFailed:
+    'සුරැකිණි, නමුත් Android එය සැලසුම් කිරීම ප්‍රතික්ෂේප කළා. එලාම් අවසර පරීක්ෂා කරන්න.',
   errorTitle: 'යමක් වැරදුණා',
 
   challengeTitle: 'අවදි වීමේ අභියෝගය',
@@ -147,7 +151,8 @@ export const si: Strings = {
 
   widgetWeather: 'විජට් කාලගුණය',
   weatherToggle: 'ඔරලෝසු විජට් එකේ කාලගුණය පෙන්වන්න',
-  weatherHint: 'පෙරනිමියෙන් අක්‍රියයි. සක්‍රිය කළ විට, තෝරාගත් නගරයේ ස්ථානය පමණක් ආසන්න වශයෙන් විනාඩි 30කට වරක් Open-Meteo වෙත යවයි.',
+  weatherHint:
+    'පෙරනිමියෙන් අක්‍රියයි. සක්‍රිය කළ විට, තෝරාගත් නගරයේ ස්ථානය පමණක් ආසන්න වශයෙන් විනාඩි 30කට වරක් Open-Meteo වෙත යවයි.',
   weatherCity: 'නගරය',
   chooseCity: 'නගරයක් තෝරන්න',
   temperatureUnit: 'උෂ්ණත්වය',

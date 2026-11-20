@@ -1,5 +1,5 @@
-import {create} from 'zustand';
-import {engine, type TimerRecord} from '../services/engine';
+import { create } from 'zustand';
+import { engine, type TimerRecord } from '../services/engine';
 
 type TimerState = {
   timers: TimerRecord[];
@@ -14,7 +14,7 @@ type TimerState = {
 
 /** Thin view of native timer state. Every action round-trips through Kotlin, which owns the truth. */
 export const useTimerStore = create<TimerState>(set => {
-  const reload = async () => set({timers: await engine.getTimers()});
+  const reload = async () => set({ timers: await engine.getTimers() });
   return {
     timers: [],
     load: reload,

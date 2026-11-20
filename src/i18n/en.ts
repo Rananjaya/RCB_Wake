@@ -53,11 +53,14 @@ export const en = {
   off: 'off',
 
   permExactTitle: 'Exact alarms are off',
-  permExactBody: 'Alarms may ring late. Allow exact alarms so they ring on time.',
+  permExactBody:
+    'Alarms may ring late. Allow exact alarms so they ring on time.',
   permNotifTitle: 'Notifications are off',
-  permNotifBody: 'Alarms need notifications to show the ringing screen and snooze controls.',
+  permNotifBody:
+    'Alarms need notifications to show the ringing screen and snooze controls.',
   permFsiTitle: 'Full-screen alarms are off',
-  permFsiBody: 'Allow full-screen alerts so the alarm appears over the lock screen.',
+  permFsiBody:
+    'Allow full-screen alerts so the alarm appears over the lock screen.',
 
   newAlarm: 'New alarm',
   editAlarm: 'Edit alarm',
@@ -91,7 +94,8 @@ export const en = {
   soundClassic: 'Classic',
   alarmSetIn: 'Alarm set for {duration} from now',
   alarmSetInexact: 'Saved, but it may ring late because exact alarms are off',
-  alarmScheduleFailed: 'Saved, but Android refused to schedule it. Check alarm permissions.',
+  alarmScheduleFailed:
+    'Saved, but Android refused to schedule it. Check alarm permissions.',
   errorTitle: 'Something went wrong',
 
   challengeTitle: 'Wake-up challenge',
@@ -145,7 +149,8 @@ export const en = {
 
   widgetWeather: 'Widget weather',
   weatherToggle: 'Show weather on the clock widget',
-  weatherHint: 'Off by default. When on, only the chosen city’s location is sent to Open-Meteo about every 30 minutes.',
+  weatherHint:
+    'Off by default. When on, only the chosen city’s location is sent to Open-Meteo about every 30 minutes.',
   weatherCity: 'City',
   chooseCity: 'Choose a city',
   temperatureUnit: 'Temperature',

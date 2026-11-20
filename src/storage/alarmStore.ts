@@ -1,5 +1,11 @@
-import {create} from 'zustand';
-import {engine, type AlarmConfig, type AlarmRecord, type EngineStatus, type SessionInfo} from '../services/engine';
+import { create } from 'zustand';
+import {
+  engine,
+  type AlarmConfig,
+  type AlarmRecord,
+  type EngineStatus,
+  type SessionInfo,
+} from '../services/engine';
 
 type AlarmState = {
   alarms: AlarmRecord[];
@@ -20,13 +26,13 @@ export const useAlarmStore = create<AlarmState>((set, get) => ({
   session: null,
   loaded: false,
   load: async () => {
-    set({alarms: await engine.getAlarms(), loaded: true});
+    set({ alarms: await engine.getAlarms(), loaded: true });
   },
   refreshStatus: async () => {
-    set({status: await engine.getAlarmEngineStatus()});
+    set({ status: await engine.getAlarmEngineStatus() });
   },
   refreshSession: async () => {
-    set({session: await engine.getActiveSession()});
+    set({ session: await engine.getActiveSession() });
   },
   save: async config => {
     const saved = await engine.saveAlarm(config);
@@ -35,10 +41,12 @@ export const useAlarmStore = create<AlarmState>((set, get) => ({
   },
   setEnabled: async (id, enabled) => {
     // Optimistic toggle; the engine's answer (including schedule state) replaces it.
-    set({alarms: get().alarms.map(a => (a.id === id ? {...a, enabled} : a))});
+    set({
+      alarms: get().alarms.map(a => (a.id === id ? { ...a, enabled } : a)),
+    });
     try {
       const updated = await engine.setAlarmEnabled(id, enabled);
-      set({alarms: get().alarms.map(a => (a.id === id ? updated : a))});
+      set({ alarms: get().alarms.map(a => (a.id === id ? updated : a)) });
       return updated;
     } catch (e) {
       await get().load();
@@ -47,6 +55,6 @@ export const useAlarmStore = create<AlarmState>((set, get) => ({
   },
   remove: async id => {
     await engine.deleteAlarm(id);
-    set({alarms: get().alarms.filter(a => a.id !== id)});
+    set({ alarms: get().alarms.filter(a => a.id !== id) });
   },
 }));

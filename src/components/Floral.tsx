@@ -1,13 +1,23 @@
 import React from 'react';
-import type {StyleProp, ViewStyle} from 'react-native';
-import {View} from 'react-native';
-import Svg, {Circle, G, Path} from 'react-native-svg';
+import type { StyleProp, ViewStyle } from 'react-native';
+import { View } from 'react-native';
+import Svg, { Circle, G, Path } from 'react-native-svg';
 
 /** A small five-petal blossom used as a subtle accent in the Pink Dream theme. */
-export function Floral({size = 44, style}: {size?: number; style?: StyleProp<ViewStyle>}) {
+export function Floral({
+  size = 44,
+  style,
+}: {
+  size?: number;
+  style?: StyleProp<ViewStyle>;
+}) {
   const petals = [0, 72, 144, 216, 288];
   return (
-    <View style={style} pointerEvents="none" importantForAccessibility="no-hide-descendants">
+    <View
+      style={style}
+      pointerEvents="none"
+      importantForAccessibility="no-hide-descendants"
+    >
       <Svg width={size} height={size} viewBox="0 0 48 48" opacity={0.55}>
         <G transform="translate(24 24)">
           {petals.map(angle => (

@@ -1,7 +1,15 @@
-import type {StringKey, Translate} from '../i18n';
+import type { StringKey, Translate } from '../i18n';
 
 /** Monday-first day order matching the native repeat mask (bit 0 = Monday … bit 6 = Sunday). */
-export const DAY_KEYS: StringKey[] = ['dayMon', 'dayTue', 'dayWed', 'dayThu', 'dayFri', 'daySat', 'daySun'];
+export const DAY_KEYS: StringKey[] = [
+  'dayMon',
+  'dayTue',
+  'dayWed',
+  'dayThu',
+  'dayFri',
+  'daySat',
+  'daySun',
+];
 export const DAY_LETTER_KEYS: StringKey[] = [
   'letterMon',
   'letterTue',
@@ -18,19 +26,29 @@ export const WEEKENDS = 0b1100000;
 
 export const pad2 = (n: number) => String(n).padStart(2, '0');
 
-export type ClockParts = {time: string; period: 'am' | 'pm' | null};
+export type ClockParts = { time: string; period: 'am' | 'pm' | null };
 
-export function formatClock(hour: number, minute: number, is24Hour: boolean): ClockParts {
-  if (is24Hour) return {time: `${pad2(hour)}:${pad2(minute)}`, period: null};
+export function formatClock(
+  hour: number,
+  minute: number,
+  is24Hour: boolean,
+): ClockParts {
+  if (is24Hour) return { time: `${pad2(hour)}:${pad2(minute)}`, period: null };
   const h12 = hour % 12 === 0 ? 12 : hour % 12;
-  return {time: `${h12}:${pad2(minute)}`, period: hour < 12 ? 'am' : 'pm'};
+  return { time: `${h12}:${pad2(minute)}`, period: hour < 12 ? 'am' : 'pm' };
 }
 
-export function formatClockText(hour: number, minute: number, is24Hour: boolean, t: Translate): string {
-  const {time, period} = formatClock(hour, minute, is24Hour);
+export function formatClockText(
+  hour: number,
+  minute: number,
+  is24Hour: boolean,
+  t: Translate,
+): string {
+  const { time, period } = formatClock(hour, minute, is24Hour);
   return period ? `${time} ${t(period)}` : time;
 }
 
+/* eslint-disable no-bitwise -- the repeat-day mask is a bitfield shared with the native engine */
 export function toggleDay(mask: number, dayIndex: number): number {
   return mask ^ (1 << dayIndex);
 }
@@ -38,6 +56,7 @@ export function toggleDay(mask: number, dayIndex: number): number {
 export function isDaySelected(mask: number, dayIndex: number): boolean {
   return (mask & (1 << dayIndex)) !== 0;
 }
+/* eslint-enable no-bitwise */
 
 export function repeatSummary(mask: number, t: Translate): string {
   if (mask === 0) return t('repeatOnce');
@@ -50,13 +69,19 @@ export function repeatSummary(mask: number, t: Translate): string {
 }
 
 /** "7 h 12 min" style duration until a future instant, rounded up to the next minute. */
-export function formatUntil(fromMillis: number, toMillis: number, t: Translate): string {
+export function formatUntil(
+  fromMillis: number,
+  toMillis: number,
+  t: Translate,
+): string {
   const diff = toMillis - fromMillis;
   if (diff < 60_000) return t('durationUnderMinute');
   const totalMinutes = Math.ceil(diff / 60_000);
   const h = Math.floor(totalMinutes / 60);
   const m = totalMinutes % 60;
-  return h > 0 ? t('durationHoursMinutes', {h, m}) : t('durationMinutes', {m});
+  return h > 0
+    ? t('durationHoursMinutes', { h, m })
+    : t('durationMinutes', { m });
 }
 
 /** Countdown display: H:MM:SS when an hour or more remains, otherwise MM:SS. Rounds up. */
