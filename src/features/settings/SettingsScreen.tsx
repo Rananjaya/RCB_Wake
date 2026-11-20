@@ -30,6 +30,7 @@ import { clampQuestions, SNOOZE_OPTIONS } from '../alarms/alarmDraft';
 import { SoundPicker } from '../alarms/SoundPicker';
 import { soundDisplayName } from '../alarms/soundNames';
 import { AccentPicker } from './AccentPicker';
+import { AppIconPicker } from './AppIconPicker';
 import { CalendarSettings } from './CalendarSettings';
 import { NfcTagSettings } from './NfcTagSettings';
 import { SleepReminderSettings } from './SleepReminderSettings';
@@ -80,6 +81,8 @@ function SettingsContent({ navigation }: Props) {
         </View>
 
         <AccentPicker />
+
+        <AppIconPicker />
 
         <SectionTitle>{t('timeFormat')}</SectionTitle>
         <View style={styles.wrap}>

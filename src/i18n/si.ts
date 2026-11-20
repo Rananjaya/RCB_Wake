@@ -256,6 +256,8 @@ export const si: Strings = {
   privacyPointLicense:
     'RCB Wake is free for non-commercial use under the PolyForm Noncommercial License.',
   showTutorial: 'Show tutorial',
+  appIcon: 'App icon',
+  appIconHint: 'Your home screen may take a few seconds to show the new icon.',
   appearance: 'පෙනුම',
   theme: 'තේමාව',
   themeMidnight: 'Midnight Purple',

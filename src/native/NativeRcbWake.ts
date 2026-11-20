@@ -254,6 +254,10 @@ export interface Spec extends TurboModule {
    */
   dismissSession(method: string): Promise<boolean>;
 
+  // Launcher icon: `default` | `blue` | `teal` | `green` | `orange` | `rose` | `midnight` | `cream`
+  getAppIcon(): Promise<string>;
+  setAppIcon(variant: string): Promise<void>;
+
   // Widget calendar (optional, READ_CALENDAR)
   getCalendarSettings(): Promise<CalendarSettings>;
   /** Empty calendarIds means all visible calendars. */

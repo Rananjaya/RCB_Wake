@@ -78,7 +78,10 @@ Status legend: ✅ implemented and verified · 🟡 implemented, partially verif
 | Requirement | Status |
 | --- | --- |
 | Midnight Purple (default) and Pink Dream themes | ✅ |
-| Accent colours (default + 6) | ✅ |
+| Accent colours that recolour the whole theme (default + 6) | ✅ |
+| Selectable app icon (8 variants via launcher activity aliases) | ✅ verified on emulator |
+| First-launch privacy agreement and 5-page tutorial (replay from Settings) | ✅ |
+| NFC tag dismiss challenge | ⏸ built, on hold (hidden behind a feature flag) |
 | 12/24-hour, language selection | ✅ |
 | Alarm and challenge defaults | ✅ |
 | Bedtime sleep reminder | ✅ |

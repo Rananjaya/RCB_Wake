@@ -304,6 +304,15 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         }
     }
 
+    // ---- App icon ----
+
+    override fun getAppIcon(promise: Promise) = guard(promise) { promise.resolve(AppIcon.current(context)) }
+
+    override fun setAppIcon(variant: String, promise: Promise) = guard(promise) {
+        AppIcon.set(context, variant)
+        promise.resolve(null)
+    }
+
     // ---- Widget calendar ----
 
     override fun getCalendarSettings(promise: Promise) = guard(promise) {
