@@ -214,6 +214,48 @@ export const si: Strings = {
     'Reads events from calendars on this device, such as Google Calendar or RCB Calendar. Events never leave your phone.',
   widgetCalendarNone: 'No calendars found on this device',
 
+  tutorialSkip: 'මඟ හරින්න',
+  tutorialBack: 'ආපසු',
+  tutorialNext: 'ඊළඟ',
+  tutorialGetStarted: 'අරඹන්න',
+  tutorialDone: 'හරි',
+  tutorialClose: 'වසන්න',
+  tutorialCounter: '{n} / {total}',
+  tut1Title: 'RCB Wake වෙත සාදරයෙන් පිළිගනිමු',
+  tut1Body:
+    'යෙදුම වසා ඇති විට, තිරය අක්‍රිය විට හෝ නැවත ආරම්භ කළ පසුත් නියමිත වේලාවට නාද වන එලාම්.\nසියල්ල ඔබේ දුරකථනයේම පවතී.',
+  tut2Title: 'ඔබේ ආකාරයට එලාම්',
+  tut2Body:
+    'එලාම් එකක් එක් කිරීමට + ඔබා දින, ශබ්දය, කම්පනය සහ නිදි කාලය තෝරන්න.\nනැගිටීමට උදව් අවශ්‍ය නම් ගණිත අභියෝගය සක්‍රිය කරන්න.',
+  tut3Title: 'ටයිමර් සහ අවධානය',
+  tut3Body:
+    'ටයිමර් කිහිපයක් එකවර ධාවනය කරන්න, නැතහොත් අවධානය සහ විවේකය මාරු කිරීමට පොමොඩෝරෝ භාවිත කරන්න.\nනැවතුම් ඔරලෝසුව ඔබේ වට සටහන් කරයි.',
+  tut4Title: 'ඔරලෝසු සහ විජට්',
+  tut4Body:
+    'ලොව පුරා වේලාවන් සසඳන්න.\nවේලාව, ඊළඟ එලාම් එක සහ විකල්ප කාලගුණය හා දින දර්ශනය සඳහා RCB Wake විජට් එක මුල් තිරයට එක් කරන්න.',
+  tut5Title: 'ඔබටම ගැළපෙන ලෙස',
+  tut5Body:
+    'සැකසුම් තුළ තේමාව, වර්ණය, භාෂාව සහ නින්ද සිහිකැඳවීම තෝරන්න.\nඑලාම් තිරය පෙන්වීමට දැනුම්දීම් සඳහා ඉඩ දෙන්න.',
+  agreementTitle: 'Your privacy',
+  agreementIntro:
+    'Before you start, here is exactly how RCB Wake handles your data.',
+  agreementAgree: 'I agree',
+  agreementExit: 'Exit',
+  agreementVersion: 'Privacy agreement version {v}',
+  privacyPointLocal:
+    'Alarms, timers, cities and settings are stored only on this phone.',
+  privacyPointOffline:
+    'RCB Wake works offline. The only network use is optional widget weather from Open-Meteo, off by default.',
+  privacyPointTracking: 'No accounts, analytics, ads or tracking.',
+  privacyPointBackup:
+    'Your data is excluded from cloud backup and device transfer.',
+  privacyPointOptional:
+    'Location and calendar are used only if you turn on weather by location or the widget calendar, and never leave your phone except rounded weather coordinates.',
+  privacyPointPermissions:
+    'Permissions are asked only when a feature needs them, and you can change them any time in system settings.',
+  privacyPointLicense:
+    'RCB Wake is free for non-commercial use under the PolyForm Noncommercial License.',
+  showTutorial: 'Show tutorial',
   appearance: 'පෙනුම',
   theme: 'තේමාව',
   themeMidnight: 'Midnight Purple',

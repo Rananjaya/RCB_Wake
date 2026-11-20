@@ -172,4 +172,26 @@ export const ja: Translation = {
   license: 'ライセンス',
   licenseBody:
     'RCB Wake のソースコードは PolyForm Noncommercial License 1.0.0 のもとで公開されています。非商用目的であれば使用・研究・改変できます。商用利用には作者の書面による許可が必要です。サードパーティのライブラリにはそれぞれのライセンスが適用されます。リポジトリの THIRD_PARTY_NOTICES をご覧ください。',
+  tutorialSkip: 'スキップ',
+  tutorialBack: '戻る',
+  tutorialNext: '次へ',
+  tutorialGetStarted: 'はじめる',
+  tutorialDone: '完了',
+  tutorialClose: '閉じる',
+  tutorialCounter: '{n} / {total}',
+  tut1Title: 'RCB Wake へようこそ',
+  tut1Body:
+    'アプリを閉じていても、画面がオフでも、再起動後でも、アラームは必ず時間どおりに鳴ります。\nデータはすべてスマホの中に保存されます。',
+  tut2Title: '思いどおりのアラーム',
+  tut2Body:
+    '＋をタップしてアラームを追加し、曜日、サウンド、バイブ、スヌーズを選びましょう。\n起きるのが苦手なら計算チャレンジをオンに。',
+  tut3Title: 'タイマーと集中',
+  tut3Body:
+    '複数のタイマーを同時に使ったり、ポモドーロで集中と休憩を切り替えたりできます。\nストップウォッチはラップを記録します。',
+  tut4Title: '時計とウィジェット',
+  tut4Body:
+    '世界の時刻を比べられます。\nRCB Wake ウィジェットをホーム画面に追加すると、時刻、次のアラーム、天気や予定（任意）を表示できます。',
+  tut5Title: 'あなた好みに',
+  tut5Body:
+    '設定でテーマ、色、言語、就寝リマインダーを選べます。\nアラーム画面を表示するため、通知を許可してください。',
 };

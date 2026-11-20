@@ -164,4 +164,26 @@ export const es: Translation = {
   license: 'Licencia',
   licenseBody:
     'El código de RCB Wake está disponible bajo la PolyForm Noncommercial License 1.0.0: puedes usarlo, estudiarlo y modificarlo con fines no comerciales. El uso comercial requiere el permiso por escrito del autor. Las bibliotecas de terceros conservan sus propias licencias; consulta THIRD_PARTY_NOTICES en el repositorio.',
+  tutorialSkip: 'Omitir',
+  tutorialBack: 'Atrás',
+  tutorialNext: 'Siguiente',
+  tutorialGetStarted: 'Empezar',
+  tutorialDone: 'Listo',
+  tutorialClose: 'Cerrar',
+  tutorialCounter: '{n} de {total}',
+  tut1Title: 'Te damos la bienvenida a RCB Wake',
+  tut1Body:
+    'Alarmas que suenan a su hora, siempre: con la app cerrada, la pantalla apagada o tras reiniciar.\nTodo se queda en tu teléfono.',
+  tut2Title: 'Alarmas a tu manera',
+  tut2Body:
+    'Toca + para añadir una alarma y elige los días, el sonido, la vibración y el tiempo de posponer.\nActiva el reto matemático si te cuesta levantarte.',
+  tut3Title: 'Temporizadores y concentración',
+  tut3Body:
+    'Usa varios temporizadores a la vez o alterna trabajo y descansos con Pomodoro.\nEl cronómetro guarda tus vueltas.',
+  tut4Title: 'Relojes y widget',
+  tut4Body:
+    'Compara la hora en todo el mundo.\nAñade el widget de RCB Wake a tu pantalla de inicio para ver la hora, tu próxima alarma y, si quieres, el tiempo y el calendario.',
+  tut5Title: 'Hazlo tuyo',
+  tut5Body:
+    'Elige en Ajustes el tema, el color, el idioma y un recordatorio para dormir.\nPermite las notificaciones para que aparezca la pantalla de alarma.',
 };

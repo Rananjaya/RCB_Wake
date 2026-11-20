@@ -213,6 +213,48 @@ export const en = {
     'Reads events from calendars on this device, such as Google Calendar or RCB Calendar. Events never leave your phone.',
   widgetCalendarNone: 'No calendars found on this device',
 
+  tutorialSkip: 'Skip',
+  tutorialBack: 'Back',
+  tutorialNext: 'Next',
+  tutorialGetStarted: 'Get started',
+  tutorialDone: 'Done',
+  tutorialClose: 'Close',
+  tutorialCounter: '{n} of {total}',
+  tut1Title: 'Welcome to RCB Wake',
+  tut1Body:
+    'Alarms that ring on time, every time — even with the app closed, the screen off or after a restart.\nEverything stays on your phone.',
+  tut2Title: 'Alarms your way',
+  tut2Body:
+    'Tap + to add an alarm and choose the days, sound, vibration and snooze.\nTurn on the math challenge if you need help getting up.',
+  tut3Title: 'Timers and focus',
+  tut3Body:
+    'Run several timers at once, or use Pomodoro to alternate focus and breaks.\nThe stopwatch keeps your laps.',
+  tut4Title: 'Clocks and widget',
+  tut4Body:
+    'Compare times around the world.\nAdd the RCB Wake widget to your home screen for the time, your next alarm, and optional weather and calendar.',
+  tut5Title: 'Make it yours',
+  tut5Body:
+    'Pick a theme, colour, language and bedtime reminder in Settings.\nAllow notifications so alarms can show the ringing screen.',
+  agreementTitle: 'Your privacy',
+  agreementIntro:
+    'Before you start, here is exactly how RCB Wake handles your data.',
+  agreementAgree: 'I agree',
+  agreementExit: 'Exit',
+  agreementVersion: 'Privacy agreement version {v}',
+  privacyPointLocal:
+    'Alarms, timers, cities and settings are stored only on this phone.',
+  privacyPointOffline:
+    'RCB Wake works offline. The only network use is optional widget weather from Open-Meteo, off by default.',
+  privacyPointTracking: 'No accounts, analytics, ads or tracking.',
+  privacyPointBackup:
+    'Your data is excluded from cloud backup and device transfer.',
+  privacyPointOptional:
+    'Location and calendar are used only if you turn on weather by location or the widget calendar, and never leave your phone except rounded weather coordinates.',
+  privacyPointPermissions:
+    'Permissions are asked only when a feature needs them, and you can change them any time in system settings.',
+  privacyPointLicense:
+    'RCB Wake is free for non-commercial use under the PolyForm Noncommercial License.',
+  showTutorial: 'Show tutorial',
   appearance: 'Appearance',
   theme: 'Theme',
   themeMidnight: 'Midnight Purple',

@@ -164,4 +164,26 @@ export const fr: Translation = {
   license: 'Licence',
   licenseBody:
     'Le code de RCB Wake est disponible sous la PolyForm Noncommercial License 1.0.0 : vous pouvez l’utiliser, l’étudier et le modifier à des fins non commerciales. Toute utilisation commerciale nécessite l’autorisation écrite de l’auteur. Les bibliothèques tierces conservent leurs propres licences ; voir THIRD_PARTY_NOTICES dans le dépôt.',
+  tutorialSkip: 'Passer',
+  tutorialBack: 'Retour',
+  tutorialNext: 'Suivant',
+  tutorialGetStarted: 'Commencer',
+  tutorialDone: 'Terminé',
+  tutorialClose: 'Fermer',
+  tutorialCounter: '{n} sur {total}',
+  tut1Title: 'Bienvenue dans RCB Wake',
+  tut1Body:
+    'Des alarmes qui sonnent à l’heure, toujours — même application fermée, écran éteint ou après un redémarrage.\nTout reste sur votre téléphone.',
+  tut2Title: 'Des alarmes à votre façon',
+  tut2Body:
+    'Touchez + pour ajouter une alarme et choisissez les jours, le son, le vibreur et la répétition.\nActivez le défi mathématique si vous avez du mal à vous lever.',
+  tut3Title: 'Minuteurs et concentration',
+  tut3Body:
+    'Lancez plusieurs minuteurs à la fois, ou alternez travail et pauses avec Pomodoro.\nLe chronomètre garde vos tours.',
+  tut4Title: 'Horloges et widget',
+  tut4Body:
+    'Comparez les heures dans le monde.\nAjoutez le widget RCB Wake à l’écran d’accueil pour l’heure, votre prochaine alarme et, en option, la météo et l’agenda.',
+  tut5Title: 'À votre image',
+  tut5Body:
+    'Choisissez dans les Paramètres le thème, la couleur, la langue et un rappel du coucher.\nAutorisez les notifications pour que l’écran d’alarme s’affiche.',
 };

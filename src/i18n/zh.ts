@@ -167,4 +167,26 @@ export const zh: Translation = {
   license: '许可',
   licenseBody:
     'RCB Wake 的源代码以 PolyForm Noncommercial License 1.0.0 提供：你可以出于非商业目的使用、研究和修改它。商业用途需要作者的书面许可。第三方库保留各自的许可；请参阅代码仓库中的 THIRD_PARTY_NOTICES。',
+  tutorialSkip: '跳过',
+  tutorialBack: '上一步',
+  tutorialNext: '下一步',
+  tutorialGetStarted: '开始使用',
+  tutorialDone: '完成',
+  tutorialClose: '关闭',
+  tutorialCounter: '{n} / {total}',
+  tut1Title: '欢迎使用 RCB Wake',
+  tut1Body:
+    '闹钟总能准时响起——即使应用已关闭、屏幕已熄灭或手机重启。\n所有数据都保存在你的手机上。',
+  tut2Title: '随心设定闹钟',
+  tut2Body:
+    '点按 + 添加闹钟，选择日期、铃声、振动和稍后提醒。\n起床困难？开启数学挑战。',
+  tut3Title: '计时与专注',
+  tut3Body:
+    '同时运行多个计时器，或用番茄钟交替专注与休息。\n秒表会记录你的计圈。',
+  tut4Title: '时钟与小部件',
+  tut4Body:
+    '比较世界各地的时间。\n把 RCB Wake 小部件添加到主屏幕，查看时间、下一个闹钟，以及可选的天气和日程。',
+  tut5Title: '打造专属风格',
+  tut5Body:
+    '在设置中选择主题、颜色、语言和就寝提醒。\n请允许通知，以便显示闹钟响铃界面。',
 };

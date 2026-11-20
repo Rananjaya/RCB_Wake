@@ -5,6 +5,7 @@ import {
   Platform,
   StatusBar,
   StyleSheet,
+  View,
 } from 'react-native';
 import {
   createNavigationContainerRef,
@@ -16,6 +17,12 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import type { RootStackParamList, TabParamList } from '../navigation/types';
 import { RootNavigator } from '../navigation/RootNavigator';
+import {
+  onboardingStep,
+  useOnboardingStore,
+} from '../features/onboarding/onboarding';
+import { PrivacyAgreementScreen } from '../features/onboarding/PrivacyAgreementScreen';
+import { TutorialScreen } from '../features/onboarding/TutorialScreen';
 import { engine, subscribeEngine } from '../services/engine';
 import { useAlarmStore } from '../storage/alarmStore';
 import { usePomodoroStore } from '../storage/pomodoroStore';
@@ -48,7 +55,6 @@ function useEngineBootstrap() {
         timers.load(),
         alarms.refreshSession(),
       ]);
-      await requestNotificationPermission();
       await alarms.refreshStatus();
     })().catch(() => {
       // The engine reports per-operation errors to the screens; startup continues with defaults.
@@ -106,6 +112,34 @@ function useChallengeRouting() {
   }, [session]);
 }
 
+function OnboardingGate({ children }: { children: React.ReactNode }) {
+  const theme = useTheme();
+  const state = useOnboardingStore();
+  useEffect(() => {
+    state.load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const step = onboardingStep(state);
+  // Permissions are never requested during onboarding; ask for notifications once it is complete.
+  useEffect(() => {
+    if (step === 'done')
+      requestNotificationPermission().then(() =>
+        useAlarmStore.getState().refreshStatus(),
+      );
+  }, [step]);
+  if (step === 'loading')
+    return (
+      <View
+        style={[styles.root, { backgroundColor: theme.colors.background }]}
+      />
+    );
+  if (step === 'privacy')
+    return <PrivacyAgreementScreen onAgree={state.accept} />;
+  if (step === 'tutorial')
+    return <TutorialScreen onFinish={state.finishTutorial} />;
+  return <>{children}</>;
+}
+
 export default function App({ initialTab }: { initialTab?: string }) {
   const theme = useTheme();
   useEngineBootstrap();
@@ -130,15 +164,17 @@ export default function App({ initialTab }: { initialTab?: string }) {
     >
       <SafeAreaProvider>
         <StatusBar barStyle={theme.dark ? 'light-content' : 'dark-content'} />
-        <NavigationContainer
-          ref={navigationRef}
-          theme={navTheme}
-          onReady={() => useAlarmStore.getState().refreshSession()}
-        >
-          <RootNavigator
-            initialTab={initialTab ? TAB_BY_LAUNCH[initialTab] : undefined}
-          />
-        </NavigationContainer>
+        <OnboardingGate>
+          <NavigationContainer
+            ref={navigationRef}
+            theme={navTheme}
+            onReady={() => useAlarmStore.getState().refreshSession()}
+          >
+            <RootNavigator
+              initialTab={initialTab ? TAB_BY_LAUNCH[initialTab] : undefined}
+            />
+          </NavigationContainer>
+        </OnboardingGate>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

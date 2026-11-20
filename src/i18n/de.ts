@@ -164,4 +164,26 @@ export const de: Translation = {
   license: 'Lizenz',
   licenseBody:
     'RCB Wake ist quelloffen verfügbar unter der PolyForm Noncommercial License 1.0.0: Du darfst die App für nichtkommerzielle Zwecke nutzen, untersuchen und ändern. Kommerzielle Nutzung erfordert die schriftliche Erlaubnis des Autors. Bibliotheken Dritter behalten ihre eigenen Lizenzen; siehe THIRD_PARTY_NOTICES im Quell-Repository.',
+  tutorialSkip: 'Überspringen',
+  tutorialBack: 'Zurück',
+  tutorialNext: 'Weiter',
+  tutorialGetStarted: 'Los geht’s',
+  tutorialDone: 'Fertig',
+  tutorialClose: 'Schließen',
+  tutorialCounter: '{n} von {total}',
+  tut1Title: 'Willkommen bei RCB Wake',
+  tut1Body:
+    'Wecker, die pünktlich klingeln – auch bei geschlossener App, ausgeschaltetem Bildschirm oder nach einem Neustart.\nAlles bleibt auf deinem Handy.',
+  tut2Title: 'Wecker nach deinem Geschmack',
+  tut2Body:
+    'Tippe auf +, um einen Wecker hinzuzufügen, und wähle Tage, Ton, Vibration und Schlummern.\nSchalte die Mathe-Aufgabe ein, wenn du Hilfe beim Aufstehen brauchst.',
+  tut3Title: 'Timer und Fokus',
+  tut3Body:
+    'Lass mehrere Timer gleichzeitig laufen oder wechsle mit Pomodoro zwischen Fokus und Pausen.\nDie Stoppuhr speichert deine Runden.',
+  tut4Title: 'Uhren und Widget',
+  tut4Body:
+    'Vergleiche Uhrzeiten weltweit.\nFüge das RCB Wake-Widget zum Startbildschirm hinzu – für Uhrzeit, nächsten Wecker und optional Wetter und Kalender.',
+  tut5Title: 'Mach es zu deinem',
+  tut5Body:
+    'Wähle in den Einstellungen Design, Farbe, Sprache und eine Schlafenszeit-Erinnerung.\nErlaube Benachrichtigungen, damit der Weckbildschirm erscheinen kann.',
 };

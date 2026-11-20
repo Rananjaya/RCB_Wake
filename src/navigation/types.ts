@@ -6,6 +6,7 @@ export type RootStackParamList = {
   /** `weather` picks the widget weather city instead of adding a world clock. */
   CityPicker: { mode?: 'worldclock' | 'weather' } | undefined;
   Challenge: undefined;
+  Tutorial: undefined;
 };
 
 export type TabParamList = {

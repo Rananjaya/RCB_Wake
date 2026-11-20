@@ -10,6 +10,7 @@ import { ChallengeScreen } from '../features/challenges/ChallengeScreen';
 import { AboutScreen } from '../features/settings/AboutScreen';
 import { SettingsScreen } from '../features/settings/SettingsScreen';
 import { StopwatchScreen } from '../features/stopwatch/StopwatchScreen';
+import { TutorialScreen } from '../features/onboarding/TutorialScreen';
 import { TimerScreen } from '../features/timer/TimerScreen';
 import { CityPickerScreen } from '../features/worldclock/CityPickerScreen';
 import { WorldClockScreen } from '../features/worldclock/WorldClockScreen';
@@ -94,6 +95,14 @@ function Tabs({ initialTab }: { initialTab?: keyof TabParamList }) {
   );
 }
 
+function TutorialReplay({
+  navigation,
+}: {
+  navigation: { goBack: () => void };
+}) {
+  return <TutorialScreen replay onFinish={() => navigation.goBack()} />;
+}
+
 export function RootNavigator({
   initialTab,
 }: {
@@ -119,6 +128,7 @@ export function RootNavigator({
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="About" component={AboutScreen} />
       <Stack.Screen name="CityPicker" component={CityPickerScreen} />
+      <Stack.Screen name="Tutorial" component={TutorialReplay} />
       <Stack.Screen
         name="Challenge"
         component={ChallengeScreen}

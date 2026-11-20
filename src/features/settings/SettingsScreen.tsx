@@ -216,6 +216,11 @@ function SettingsContent({ navigation }: Props) {
             value={status ? t('version', { v: status.versionName }) : undefined}
             onPress={() => navigation.navigate('About')}
           />
+          <Divider />
+          <NavRow
+            label={t('showTutorial')}
+            onPress={() => navigation.navigate('Tutorial')}
+          />
         </Card>
       </ScrollView>
       <SoundPicker

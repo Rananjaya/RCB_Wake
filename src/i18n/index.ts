@@ -58,6 +58,20 @@ export const languageNames: Record<Language, string> = {
  * screen (always English) or by the NFC challenge (on hold).
  */
 export const FALLBACK_KEYS: StringKey[] = [
+  'agreementTitle',
+  'agreementIntro',
+  'agreementAgree',
+  'agreementExit',
+  'agreementVersion',
+  'privacyPointLocal',
+  'privacyPointOffline',
+  'privacyPointTracking',
+  'privacyPointBackup',
+  'privacyPointOptional',
+  'privacyPointPermissions',
+  'privacyPointLicense',
+  'showTutorial',
+
   'widgetCalendar',
   'widgetCalendarToggle',
   'widgetCalendarHint',
