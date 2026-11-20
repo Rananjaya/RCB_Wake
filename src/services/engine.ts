@@ -9,6 +9,7 @@ export type {
   Settings,
   Sound,
   TimerRecord,
+  WeatherInfo,
   WorldClockRecord,
   ZoneOffset,
 } from '../native/NativeRcbWake';

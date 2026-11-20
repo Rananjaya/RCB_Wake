@@ -36,6 +36,9 @@ import com.rcb.wake.storage.WorldClock
 import com.rcb.wake.storage.WorldClockRepository
 import com.rcb.wake.timer.TimerController
 import com.rcb.wake.timer.WakeTimer
+import com.rcb.wake.weather.WeatherRepository
+import com.rcb.wake.weather.WeatherSnapshot
+import com.rcb.wake.widget.ClockWidgetProvider
 import java.time.Instant
 import java.time.ZoneId
 
@@ -481,8 +484,14 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 defaultChallengeEnabled = settings.getBoolean("defaultChallengeEnabled"),
                 defaultChallengeDifficulty = settings.getString("defaultChallengeDifficulty").orEmpty(),
                 defaultChallengeQuestionCount = settings.getDouble("defaultChallengeQuestionCount").toInt(),
+                weatherEnabled = settings.getBoolean("weatherEnabled"),
+                weatherCity = settings.getString("weatherCity").orEmpty(),
+                weatherLatitude = settings.getDouble("weatherLatitude"),
+                weatherLongitude = settings.getDouble("weatherLongitude"),
+                temperatureUnit = settings.getString("temperatureUnit").orEmpty(),
             ),
         )
+        onWeatherSettingsSaved(saved)
         // Channel names are localised; refresh them when the language changes.
         if (saved.language != previousLanguage) WakeNotifications.ensureChannels(context)
         EngineEvents.emit(EngineEvents.SETTINGS_CHANGED)
@@ -501,6 +510,46 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putBoolean("defaultChallengeEnabled", s.defaultChallengeEnabled)
         putString("defaultChallengeDifficulty", s.defaultChallengeDifficulty)
         putInt("defaultChallengeQuestionCount", s.defaultChallengeQuestionCount)
+        putBoolean("weatherEnabled", s.weatherEnabled)
+        putString("weatherCity", s.weatherCity)
+        putDouble("weatherLatitude", s.weatherLatitude)
+        putDouble("weatherLongitude", s.weatherLongitude)
+        putString("temperatureUnit", s.temperatureUnit)
+    }
+
+    // ---- Weather (opt-in) ----
+
+    /** Disabling weather deletes the cached reading; enabling or changing city fetches in the background. */
+    private fun onWeatherSettingsSaved(s: WakeSettings) {
+        if (!s.weatherEnabled) {
+            WeatherRepository.clear(context)
+            ClockWidgetProvider.updateAll(context)
+        } else if (WeatherRepository.cached(context) == null) {
+            Thread {
+                WeatherRepository.refresh(context)
+                ClockWidgetProvider.updateAll(context)
+            }.start()
+        }
+    }
+
+    override fun getWeather(promise: Promise) = guard(promise) {
+        promise.resolve(WeatherRepository.cached(context)?.let(::weatherMap))
+    }
+
+    override fun refreshWeather(promise: Promise) {
+        Thread {
+            val snapshot = WeatherRepository.refresh(context)
+            ClockWidgetProvider.updateAll(context)
+            promise.resolve(snapshot?.let(::weatherMap))
+        }.start()
+    }
+
+    private fun weatherMap(w: WeatherSnapshot) = Arguments.createMap().apply {
+        putString("city", w.city)
+        putDouble("temperatureCelsius", w.temperatureCelsius)
+        putString("condition", w.condition.name)
+        putBoolean("isDay", w.isDay)
+        putDouble("fetchedAt", w.fetchedAt.toDouble())
     }
 
     private fun checkKey(key: String) = require(key.matches(KEY_PATTERN)) { "Invalid key" }

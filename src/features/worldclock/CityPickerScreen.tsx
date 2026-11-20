@@ -7,6 +7,7 @@ import {Toolbar} from '../../components/Toolbar';
 import {Divider} from '../../components/ui';
 import {useT} from '../../i18n';
 import type {RootStackParamList} from '../../navigation/types';
+import {useSettingsStore} from '../../storage/settingsStore';
 import {useWorldClockStore} from '../../storage/worldClockStore';
 import {useTheme} from '../../theme/useTheme';
 import {radius, spacing} from '../../theme/themes';
@@ -14,7 +15,9 @@ import {searchCities} from './cities';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CityPicker'>;
 
-export function CityPickerScreen({navigation}: Props) {
+export function CityPickerScreen({navigation, route}: Props) {
+  const weatherMode = route.params?.mode === 'weather';
+  const updateSettings = useSettingsStore(s => s.update);
   const theme = useTheme();
   const t = useT();
   const [query, setQuery] = useState('');
@@ -23,7 +26,7 @@ export function CityPickerScreen({navigation}: Props) {
 
   return (
     <SafeAreaView style={[styles.screen, {backgroundColor: theme.colors.background}]}>
-      <Toolbar title={t('addCity')} onBack={() => navigation.goBack()} />
+      <Toolbar title={weatherMode ? t('chooseCity') : t('addCity')} onBack={() => navigation.goBack()} />
       <View style={[styles.search, {backgroundColor: theme.colors.surface}]}>
         <Icon name="search" color={theme.colors.textSecondary} size={20} />
         <TextInput
@@ -47,7 +50,16 @@ export function CityPickerScreen({navigation}: Props) {
         renderItem={({item}) => (
           <Pressable
             onPress={async () => {
-              await add(item.name, item.zoneId);
+              if (weatherMode) {
+                await updateSettings({
+                  weatherEnabled: true,
+                  weatherCity: item.name,
+                  weatherLatitude: item.lat,
+                  weatherLongitude: item.lon,
+                });
+              } else {
+                await add(item.name, item.zoneId);
+              }
               navigation.goBack();
             }}
             accessibilityRole="button"

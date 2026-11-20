@@ -5,7 +5,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {Floral} from '../../components/Floral';
 import {Toolbar} from '../../components/Toolbar';
 import {Card, Chip, Divider, NavRow, SectionTitle, ToggleRow} from '../../components/ui';
-import {languageNames, useT, type Language} from '../../i18n';
+import {LanguageOverride, languageNames, useT, type Language} from '../../i18n';
 import type {RootStackParamList} from '../../navigation/types';
 import {engine} from '../../services/engine';
 import {useAlarmStore} from '../../storage/alarmStore';
@@ -17,10 +17,19 @@ import {DIFFICULTIES, QuestionStepper} from '../alarms/AlarmEditorScreen';
 import {clampQuestions, SNOOZE_OPTIONS} from '../alarms/alarmDraft';
 import {SoundPicker} from '../alarms/SoundPicker';
 import {soundDisplayName} from '../alarms/soundNames';
+import {WeatherSettings} from './WeatherSettings';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Settings'>;
 
-export function SettingsScreen({navigation}: Props) {
+export function SettingsScreen(props: Props) {
+  return (
+    <LanguageOverride language="en">
+      <SettingsContent {...props} />
+    </LanguageOverride>
+  );
+}
+
+function SettingsContent({navigation}: Props) {
   const theme = useTheme();
   const t = useT();
   const settings = useSettingsStore(s => s.settings);
@@ -124,6 +133,8 @@ export function SettingsScreen({navigation}: Props) {
             </>
           )}
         </Card>
+
+        <WeatherSettings />
 
         <SectionTitle>{t('permissions')}</SectionTitle>
         <Card style={styles.card}>

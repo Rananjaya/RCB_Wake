@@ -19,4 +19,13 @@
     <string name="difficulty_easy">எளிய</string>
     <string name="difficulty_medium">நடுத்தர</string>
     <string name="difficulty_hard">கடினமான</string>
+    <string name="widget_description">தேதி, அடுத்த அலாரம் மற்றும் விருப்ப வானிலையுடன் கடிகாரம்</string>
+    <string name="widget_alarm">அலாரம் · %1$s</string>
+    <string name="wx_clear">தெளிவு</string>
+    <string name="wx_partly_cloudy">ஓரளவு மேகமூட்டம்</string>
+    <string name="wx_cloudy">மேகமூட்டம்</string>
+    <string name="wx_fog">மூடுபனி</string>
+    <string name="wx_rain">மழை</string>
+    <string name="wx_snow">பனி</string>
+    <string name="wx_thunder">இடியுடன் மழை</string>
 </resources>

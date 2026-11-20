@@ -1,4 +1,4 @@
-import {useCallback} from 'react';
+import React, {createContext, useCallback, useContext} from 'react';
 import {useSettingsStore} from '../storage/settingsStore';
 import {en, type StringKey, type Strings} from './en';
 import {si} from './si';
@@ -23,8 +23,20 @@ export function translate(language: string, key: StringKey, params?: TranslatePa
 
 export type Translate = (key: StringKey, params?: TranslateParams) => string;
 
+/**
+ * Forces a fixed language for a subtree. The Settings screen is always shown in English so the
+ * language option can be found again whatever language is selected.
+ */
+const LanguageOverrideContext = createContext<Language | null>(null);
+
+export function LanguageOverride({language, children}: {language: Language; children: React.ReactNode}) {
+  return React.createElement(LanguageOverrideContext.Provider, {value: language}, children);
+}
+
 export function useT(): Translate {
-  const language = useSettingsStore(s => s.settings.language);
+  const selected = useSettingsStore(s => s.settings.language);
+  const override = useContext(LanguageOverrideContext);
+  const language = override ?? selected;
   return useCallback((key, params) => translate(language, key, params), [language]);
 }
 

@@ -20,4 +20,13 @@
     <string name="difficulty_easy">easy</string>
     <string name="difficulty_medium">medium</string>
     <string name="difficulty_hard">hard</string>
+    <string name="widget_description">Clock with date, next alarm and optional weather</string>
+    <string name="widget_alarm">Alarm · %1$s</string>
+    <string name="wx_clear">Clear</string>
+    <string name="wx_partly_cloudy">Partly cloudy</string>
+    <string name="wx_cloudy">Cloudy</string>
+    <string name="wx_fog">Fog</string>
+    <string name="wx_rain">Rain</string>
+    <string name="wx_snow">Snow</string>
+    <string name="wx_thunder">Thunderstorm</string>
 </resources>

@@ -3,7 +3,8 @@ export type RootStackParamList = {
   AlarmEditor: {alarmId?: number};
   Settings: undefined;
   About: undefined;
-  CityPicker: undefined;
+  /** `weather` picks the widget weather city instead of adding a world clock. */
+  CityPicker: {mode?: 'worldclock' | 'weather'} | undefined;
   Challenge: undefined;
 };
 

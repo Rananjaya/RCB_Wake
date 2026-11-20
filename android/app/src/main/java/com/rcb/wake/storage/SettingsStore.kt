@@ -19,6 +19,13 @@ data class WakeSettings(
     val defaultChallengeEnabled: Boolean,
     val defaultChallengeDifficulty: String,
     val defaultChallengeQuestionCount: Int,
+    /** Opt-in: when false the app makes no network requests at all. */
+    val weatherEnabled: Boolean,
+    val weatherCity: String,
+    val weatherLatitude: Double,
+    val weatherLongitude: Double,
+    /** `c` or `f` */
+    val temperatureUnit: String,
 ) {
     val is24Hour get() = timeFormat == "24"
 }
@@ -46,6 +53,11 @@ object SettingsStore {
             defaultChallengeEnabled = p.getBoolean("defaultChallengeEnabled", false),
             defaultChallengeDifficulty = p.getString("defaultChallengeDifficulty", ChallengeDifficulty.EASY)!!,
             defaultChallengeQuestionCount = p.getInt("defaultChallengeQuestionCount", 3),
+            weatherEnabled = p.getBoolean("weatherEnabled", false),
+            weatherCity = p.getString("weatherCity", "")!!,
+            weatherLatitude = p.getFloat("weatherLatitude", 0f).toDouble(),
+            weatherLongitude = p.getFloat("weatherLongitude", 0f).toDouble(),
+            temperatureUnit = p.getString("temperatureUnit", "c")!!,
         )
     }
 
@@ -57,6 +69,9 @@ object SettingsStore {
         require(s.defaultChallengeDifficulty in ChallengeDifficulty.ALL) { "difficulty" }
         require(s.defaultChallengeQuestionCount in AlarmLimits.MIN_QUESTIONS..AlarmLimits.MAX_QUESTIONS) { "questions" }
         require(AlarmSounds.isSupportedUri(s.defaultSoundUri)) { "sound" }
+        require(s.temperatureUnit == "c" || s.temperatureUnit == "f") { "temperature unit" }
+        require(s.weatherLatitude in -90.0..90.0 && s.weatherLongitude in -180.0..180.0) { "coordinates" }
+        require(!s.weatherEnabled || s.weatherCity.isNotBlank()) { "weather city required" }
         AppStorage.settings(context).edit()
             .putString("theme", s.theme)
             .putString("timeFormat", s.timeFormat)
@@ -69,6 +84,11 @@ object SettingsStore {
             .putBoolean("defaultChallengeEnabled", s.defaultChallengeEnabled)
             .putString("defaultChallengeDifficulty", s.defaultChallengeDifficulty)
             .putInt("defaultChallengeQuestionCount", s.defaultChallengeQuestionCount)
+            .putBoolean("weatherEnabled", s.weatherEnabled)
+            .putString("weatherCity", s.weatherCity.take(80))
+            .putFloat("weatherLatitude", s.weatherLatitude.toFloat())
+            .putFloat("weatherLongitude", s.weatherLongitude.toFloat())
+            .putString("temperatureUnit", s.temperatureUnit)
             .commit()
         return load(context)
     }

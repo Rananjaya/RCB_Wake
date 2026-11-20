@@ -19,4 +19,13 @@
     <string name="difficulty_easy">පහසු</string>
     <string name="difficulty_medium">මධ්‍යම</string>
     <string name="difficulty_hard">අපහසු</string>
+    <string name="widget_description">දිනය, ඊළඟ එලාම් සහ විකල්ප කාලගුණය සහිත ඔරලෝසුව</string>
+    <string name="widget_alarm">එලාම් · %1$s</string>
+    <string name="wx_clear">පැහැදිලි</string>
+    <string name="wx_partly_cloudy">අර්ධ වලාකුළු</string>
+    <string name="wx_cloudy">වලාකුළු සහිත</string>
+    <string name="wx_fog">මීදුම</string>
+    <string name="wx_rain">වැසි</string>
+    <string name="wx_snow">හිම</string>
+    <string name="wx_thunder">ගිගුරුම් සහිත වැසි</string>
 </resources>

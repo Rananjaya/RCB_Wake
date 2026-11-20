@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_glass"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <TextClock
+        android:id="@+id/widget_time"
+        android:format12Hour="h:mm"
+        android:format24Hour="HH:mm"
+        style="@style/WidgetText.Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="76sp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextClock
+            android:id="@+id/widget_date"
+        android:format12Hour="MMM, EEEE d"
+        android:format24Hour="MMM, EEEE d"
+            style="@style/WidgetText.Detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:maxLines="1"
+            android:textSize="18sp" />
+    <LinearLayout
+        android:id="@+id/widget_weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/widget_weather_icon"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginEnd="6dp" />
+        <TextView
+            android:id="@+id/widget_weather_temp"
+            style="@style/WidgetText.Detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
+    </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/widget_alarm"
+        style="@style/WidgetText.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:visibility="gone" />
+</LinearLayout>

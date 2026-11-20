@@ -11,7 +11,9 @@ import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
+import com.rcb.wake.module.EngineEvents
 import com.rcb.wake.module.RcbWakePackage
+import com.rcb.wake.widget.ClockWidgetProvider
 
 class MainApplication : Application(), ReactApplication {
     override val reactHost: ReactHost by lazy {
@@ -25,6 +27,12 @@ class MainApplication : Application(), ReactApplication {
 
     override fun onCreate() {
         super.onCreate()
+        // Keep the home-screen widget's next-alarm and format in sync with engine changes.
+        EngineEvents.addListener { type ->
+            if (type == EngineEvents.ALARMS_CHANGED || type == EngineEvents.SETTINGS_CHANGED) {
+                ClockWidgetProvider.updateAll(this)
+            }
+        }
         // The alarm engine is Direct Boot aware, so this process can start before the user unlocks.
         // React Native is only needed for the UI, which cannot be opened until unlock.
         if (getSystemService(UserManager::class.java).isUserUnlocked) {

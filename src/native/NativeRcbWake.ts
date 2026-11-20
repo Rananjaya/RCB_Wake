@@ -136,6 +136,22 @@ export type Settings = {
   defaultChallengeEnabled: boolean;
   defaultChallengeDifficulty: string;
   defaultChallengeQuestionCount: number;
+  /** Opt-in widget weather. When false the app makes no network requests. */
+  weatherEnabled: boolean;
+  weatherCity: string;
+  weatherLatitude: number;
+  weatherLongitude: number;
+  /** `c` | `f` */
+  temperatureUnit: string;
+};
+
+export type WeatherInfo = {
+  city: string;
+  temperatureCelsius: number;
+  /** `CLEAR` | `PARTLY_CLOUDY` | `CLOUDY` | `FOG` | `DRIZZLE` | `RAIN` | `SNOW` | `THUNDERSTORM` */
+  condition: string;
+  isDay: boolean;
+  fetchedAt: number;
 };
 
 export type EngineEvent = {
@@ -202,6 +218,11 @@ export interface Spec extends TurboModule {
   getSettings(): Promise<Settings>;
   saveSettings(settings: Settings): Promise<Settings>;
   getValue(key: string): Promise<string | null>;
+
+  // Opt-in weather (Open-Meteo), shown on the home-screen widget
+  getWeather(): Promise<WeatherInfo | null>;
+  /** Fetches now. Resolves null when weather is disabled or the request fails. */
+  refreshWeather(): Promise<WeatherInfo | null>;
   setValue(key: string, value: string): Promise<void>;
   removeValue(key: string): Promise<void>;
 }

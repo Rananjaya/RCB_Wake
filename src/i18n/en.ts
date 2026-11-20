@@ -143,6 +143,18 @@ export const en = {
   nighttime: 'Night',
   removeCity: 'Remove {city}',
 
+  widgetWeather: 'Widget weather',
+  weatherToggle: 'Show weather on the clock widget',
+  weatherHint: 'Off by default. When on, only the chosen city’s location is sent to Open-Meteo about every 30 minutes.',
+  weatherCity: 'City',
+  chooseCity: 'Choose a city',
+  temperatureUnit: 'Temperature',
+  celsius: '°C',
+  fahrenheit: '°F',
+  weatherNow: '{temp} in {city}',
+  weatherNotYet: 'Waiting for the first update…',
+  weatherAttribution: 'Weather data by Open-Meteo.com (CC BY 4.0)',
+
   appearance: 'Appearance',
   theme: 'Theme',
   themeMidnight: 'Midnight Purple',
@@ -166,7 +178,7 @@ export const en = {
   aboutBody:
     'RCB Wake is a free, open-source alarm clock, timer, stopwatch and world clock for Android. Alarms are scheduled by Android itself, so they ring even when the app is closed.',
   privacyBody:
-    'RCB Wake works entirely offline. It has no internet permission, no accounts, no analytics, no ads and no tracking. Your alarms, timers, cities and settings stay on this device and are excluded from cloud backup. Custom alarm sounds are read from your device with your permission and are never copied or uploaded.',
+    'RCB Wake works offline. It has no accounts, no analytics, no ads and no tracking. Your alarms, timers, cities and settings stay on this device and are excluded from cloud backup. Custom alarm sounds are read from your device with your permission and are never copied or uploaded. The only network use is the optional widget weather: if you turn it on, the chosen city’s approximate coordinates are sent to Open-Meteo (open-meteo.com) about every 30 minutes. Nothing else ever leaves your device.',
   reliabilityNote:
     'If you force-stop RCB Wake from system settings, Android cancels its alarms until you open the app again.',
   license: 'License',

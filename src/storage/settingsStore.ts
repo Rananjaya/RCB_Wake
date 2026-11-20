@@ -13,6 +13,11 @@ export const defaultSettings: Settings = {
   defaultChallengeEnabled: false,
   defaultChallengeDifficulty: 'easy',
   defaultChallengeQuestionCount: 3,
+  weatherEnabled: false,
+  weatherCity: '',
+  weatherLatitude: 0,
+  weatherLongitude: 0,
+  temperatureUnit: 'c',
 };
 
 type SettingsState = {
