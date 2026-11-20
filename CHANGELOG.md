@@ -20,7 +20,8 @@ All notable changes to RCB Wake are documented here. The format follows
 - Bedtime sleep reminder.
 - Home-screen clock widget with optional Open-Meteo weather and optional coarse location.
 - Midnight Purple and Pink Dream themes, accent colours.
-- English, Sinhala and Tamil.
+- English, Sinhala, Tamil, German, Russian, Spanish, French, Portuguese, Hindi, Chinese
+  (Simplified) and Japanese.
 - Bundled original alarm tones and weather icons.
 
 ### Security

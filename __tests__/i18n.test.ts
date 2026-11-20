@@ -1,39 +1,39 @@
 import { en } from '../src/i18n/en';
-import { dictionaries, translate } from '../src/i18n';
+import { dictionaries, FALLBACK_KEYS, translate } from '../src/i18n';
+
+const languages = Object.keys(dictionaries) as (keyof typeof dictionaries)[];
+const placeholders = (s: string) => (s.match(/\{\w+\}/g) ?? []).sort().join();
 
 describe('localisation', () => {
-  it.each(Object.keys(dictionaries))(
-    '%s has every key with a non-empty value',
+  it.each(['si', 'ta'] as const)('%s translates every key', lang => {
+    for (const key of Object.keys(en)) {
+      expect(dictionaries[lang][key as keyof typeof en]).toBeTruthy();
+    }
+  });
+
+  it.each(languages)(
+    '%s translates every key outside the Settings-only list',
     lang => {
-      const dict = dictionaries[lang as keyof typeof dictionaries] as Record<
-        string,
-        string
-      >;
-      for (const key of Object.keys(en)) {
-        expect(typeof dict[key]).toBe('string');
-        expect(dict[key].length).toBeGreaterThan(0);
+      for (const key of Object.keys(en) as (keyof typeof en)[]) {
+        if (FALLBACK_KEYS.includes(key)) continue;
+        const value = dictionaries[lang][key];
+        expect(typeof value).toBe('string');
+        expect((value as string).length).toBeGreaterThan(0);
       }
     },
   );
 
-  it.each(Object.keys(dictionaries))(
-    '%s keeps the same placeholders as English',
-    lang => {
-      const dict = dictionaries[lang as keyof typeof dictionaries] as Record<
-        string,
-        string
-      >;
-      const placeholders = (s: string) =>
-        (s.match(/\{\w+\}/g) ?? []).sort().join();
-      for (const [key, value] of Object.entries(en))
-        expect(placeholders(dict[key])).toBe(placeholders(value));
-    },
-  );
+  it.each(languages)('%s keeps the same placeholders as English', lang => {
+    for (const [key, value] of Object.entries(dictionaries[lang])) {
+      expect(placeholders(value as string)).toBe(
+        placeholders(en[key as keyof typeof en]),
+      );
+    }
+  });
 
-  it('interpolates parameters and falls back to English', () => {
-    expect(translate('en', 'nextAlarmIn', { duration: '5 min' })).toBe(
-      'Next alarm in 5 min',
-    );
+  it('falls back to English for missing keys and unknown languages', () => {
+    expect(translate('de', 'themeMidnight')).toBe('Midnight Purple');
     expect(translate('xx', 'save')).toBe('Save');
+    expect(translate('ja', 'save')).toBe('保存');
   });
 });

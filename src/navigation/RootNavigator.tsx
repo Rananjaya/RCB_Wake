@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -32,6 +33,20 @@ function tabIcon(name: keyof TabParamList) {
   };
 }
 
+/** Long translations (e.g. Japanese "Stopwatch") shrink to fit instead of being cut off. */
+function tabLabel({ color, children }: { color: string; children: string }) {
+  return (
+    <Text
+      numberOfLines={1}
+      adjustsFontSizeToFit
+      minimumFontScale={0.7}
+      style={[styles.tabLabel, { color }]}
+    >
+      {children}
+    </Text>
+  );
+}
+
 function Tabs({ initialTab }: { initialTab?: keyof TabParamList }) {
   const theme = useTheme();
   const t = useT();
@@ -52,6 +67,7 @@ function Tabs({ initialTab }: { initialTab?: keyof TabParamList }) {
         },
         tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
         tabBarIcon: tabIcon(route.name),
+        tabBarLabel: tabLabel,
       })}
     >
       <Tab.Screen
@@ -115,3 +131,7 @@ export function RootNavigator({
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  tabLabel: { fontSize: 12, fontWeight: '600', paddingHorizontal: 2 },
+});

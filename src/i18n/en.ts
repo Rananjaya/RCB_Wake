@@ -242,3 +242,5 @@ export const en = {
 
 export type Strings = typeof en;
 export type StringKey = keyof Strings;
+/** Other languages may omit keys listed in FALLBACK_KEYS (src/i18n/index.ts). */
+export type Translation = Partial<Strings>;

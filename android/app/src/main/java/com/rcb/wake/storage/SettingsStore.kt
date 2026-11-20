@@ -42,7 +42,7 @@ object SettingsStore {
     const val THEME_MIDNIGHT = "midnight"
     const val THEME_PINK = "pink"
     val THEMES = setOf(THEME_MIDNIGHT, THEME_PINK)
-    val LANGUAGES = setOf("en", "si", "ta")
+    val LANGUAGES = setOf("en", "si", "ta", "de", "ru", "es", "fr", "pt", "hi", "zh", "ja")
 
     /** Ringing-screen colours per accent: background, primary, surface for dark and light. Mirrors src/theme/themes.ts. */
     data class AccentColors(val darkBg: String, val darkPrimary: String, val darkSurface: String, val lightBg: String, val lightPrimary: String, val lightSurface: String)

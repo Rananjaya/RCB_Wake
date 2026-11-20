@@ -31,7 +31,8 @@ timer, a stopwatch, a world clock and a home-screen clock widget. Offline-first 
 - **Bedtime reminder.** A nudge to go to bed based on your next alarm and sleep goal.
 - **Home-screen widget.** Frameless, resizable clock with date, next alarm and optional weather.
 - **Themes.** Midnight Purple (default) and Pink Dream, plus accent colours.
-- **Languages.** English, Sinhala and Tamil.
+- **Languages.** English, Sinhala, Tamil, German, Russian, Spanish, French, Portuguese, Hindi,
+  Chinese (Simplified) and Japanese.
 
 ## Privacy
 

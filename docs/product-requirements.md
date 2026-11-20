@@ -88,5 +88,5 @@ Status legend: ✅ implemented and verified · 🟡 implemented, partially verif
 | Language | Status |
 | --- | --- |
 | English, Sinhala, Tamil | ✅ (Sinhala/Tamil written by the developer; native-speaker review recommended) |
-| German, Russian, Spanish, French, Portuguese, Hindi, Chinese (Simplified), Japanese | ⏳ requested; in progress |
-| Arabic and other right-to-left languages | ⏳ needs an RTL layout review |
+| German, Russian, Spanish, French, Portuguese, Hindi, Chinese (Simplified), Japanese | ✅ (developer translations; Settings stays English by design; native-speaker review recommended) |
+| Arabic and other right-to-left languages | ⏳ not planned for 1.0 (owner decision) |

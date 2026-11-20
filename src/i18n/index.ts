@@ -1,18 +1,121 @@
 import React, { createContext, useCallback, useContext } from 'react';
 import { useSettingsStore } from '../storage/settingsStore';
-import { en, type StringKey, type Strings } from './en';
+import { de } from './de';
+import { en, type StringKey, type Translation } from './en';
+import { es } from './es';
+import { fr } from './fr';
+import { hi } from './hi';
+import { ja } from './ja';
+import { pt } from './pt';
+import { ru } from './ru';
 import { si } from './si';
 import { ta } from './ta';
+import { zh } from './zh';
 
-export type Language = 'en' | 'si' | 'ta';
+export type Language =
+  | 'en'
+  | 'si'
+  | 'ta'
+  | 'de'
+  | 'ru'
+  | 'es'
+  | 'fr'
+  | 'pt'
+  | 'hi'
+  | 'zh'
+  | 'ja';
 
-export const dictionaries: Record<Language, Strings> = { en, si, ta };
+export const dictionaries: Record<Language, Translation> = {
+  en,
+  si,
+  ta,
+  de,
+  ru,
+  es,
+  fr,
+  pt,
+  hi,
+  zh,
+  ja,
+};
 
 export const languageNames: Record<Language, string> = {
   en: 'English',
   si: 'සිංහල',
   ta: 'தமிழ்',
+  de: 'Deutsch',
+  es: 'Español',
+  fr: 'Français',
+  pt: 'Português',
+  ru: 'Русский',
+  hi: 'हिन्दी',
+  zh: '中文（简体）',
+  ja: '日本語',
 };
+
+/**
+ * Keys a language may leave out; English is shown instead. These are only used on the Settings
+ * screen (always English) or by the NFC challenge (on hold).
+ */
+export const FALLBACK_KEYS: StringKey[] = [
+  'widgetWeather',
+  'weatherToggle',
+  'weatherHint',
+  'weatherCity',
+  'weatherUseLocation',
+  'weatherUseLocationHint',
+  'weatherFallbackCity',
+  'currentLocation',
+  'temperatureUnit',
+  'celsius',
+  'fahrenheit',
+  'weatherNow',
+  'weatherNotYet',
+  'weatherAttribution',
+  'sleepReminder',
+  'sleepReminderToggle',
+  'sleepReminderHint',
+  'sleepGoal',
+  'sleepReminderLead',
+  'atBedtime',
+  'sleepReminderPreview',
+  'sleepReminderNone',
+  'appearance',
+  'theme',
+  'themeMidnight',
+  'themePink',
+  'accentColor',
+  'accentDefault',
+  'timeFormat',
+  'format12',
+  'format24',
+  'language',
+  'alarmDefaults',
+  'defaultSound',
+  'defaultSnooze',
+  'permissions',
+  'exactAlarms',
+  'notifications',
+  'fullScreenAlerts',
+  'granted',
+  'notGranted',
+  'reliabilityNote',
+  'nfcTags',
+  'nfcTagsHint',
+  'nfcAddTag',
+  'nfcHoldNear',
+  'nfcTagAdded',
+  'nfcScanTimeout',
+  'nfcOff',
+  'challengeType',
+  'challengeMath',
+  'challengeNfc',
+  'challengeNfcNeedsTag',
+  'nfcChallengeTitle',
+  'nfcChallengeBody',
+  'nfcChallengeOff',
+  'nfcTurnOn',
+];
 
 export type TranslateParams = Record<string, string | number>;
 
