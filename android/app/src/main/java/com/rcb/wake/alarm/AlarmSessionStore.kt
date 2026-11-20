@@ -17,6 +17,8 @@ data class AlarmSession(
     val challengeRequired: Boolean,
     val challengeDifficulty: String,
     val challengeQuestionCount: Int,
+    /** `nfc` if any alarm in the session needs an NFC tag, otherwise `math`. */
+    val challengeType: String = ChallengeType.MATH,
 ) {
     fun withAlarm(alarm: Alarm): AlarmSession {
         if (alarm.id in alarmIds) return this
@@ -27,7 +29,18 @@ data class AlarmSession(
             else -> harder(challengeDifficulty, alarm.challengeDifficulty)
         }
         val count = if (alarm.challengeEnabled) maxOf(challengeQuestionCount, alarm.challengeQuestionCount) else challengeQuestionCount
-        return copy(alarmIds = alarmIds + alarm.id, challengeRequired = required, challengeDifficulty = difficulty, challengeQuestionCount = count)
+        val type = if (challengeType == ChallengeType.NFC || (alarm.challengeEnabled && alarm.challengeType == ChallengeType.NFC)) {
+            ChallengeType.NFC
+        } else {
+            ChallengeType.MATH
+        }
+        return copy(
+            alarmIds = alarmIds + alarm.id,
+            challengeRequired = required,
+            challengeDifficulty = difficulty,
+            challengeQuestionCount = count,
+            challengeType = type,
+        )
     }
 
     companion object {
@@ -37,6 +50,7 @@ data class AlarmSession(
             challengeRequired = alarm.challengeEnabled,
             challengeDifficulty = alarm.challengeDifficulty,
             challengeQuestionCount = if (alarm.challengeEnabled) alarm.challengeQuestionCount else 0,
+            challengeType = if (alarm.challengeEnabled) alarm.challengeType else ChallengeType.MATH,
         )
 
         private val order = listOf(ChallengeDifficulty.EASY, ChallengeDifficulty.MEDIUM, ChallengeDifficulty.HARD)
@@ -60,6 +74,7 @@ object AlarmSessionStore {
                 challengeRequired = o.getBoolean("challengeRequired"),
                 challengeDifficulty = o.getString("challengeDifficulty"),
                 challengeQuestionCount = o.getInt("challengeQuestionCount"),
+                challengeType = o.optString("challengeType", ChallengeType.MATH),
             )
         }.getOrNull()
     }
@@ -71,6 +86,7 @@ object AlarmSessionStore {
             .put("challengeRequired", session.challengeRequired)
             .put("challengeDifficulty", session.challengeDifficulty)
             .put("challengeQuestionCount", session.challengeQuestionCount)
+            .put("challengeType", session.challengeType)
         AppStorage.state(context).edit().putString(KEY, o.toString()).commit()
     }
 

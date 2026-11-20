@@ -42,4 +42,8 @@
     <string name="sleep_reminder_body">உங்கள் அலாரம் %1$s க்கு. %2$s தூக்கம் பெற விரைவில் படுக்கைக்குச் செல்லுங்கள்.</string>
     <string name="sleep_goal_hours">%1$d மணி</string>
     <string name="sleep_goal_hours_minutes">%1$d மணி %2$d நிமி</string>
+    <string name="ringing_nfc_info">நிறுத்த பதிவுசெய்த NFC டேக்கைத் தொடவும்</string>
+    <string name="ringing_nfc_off">NFC முடக்கப்பட்டுள்ளது. டேக்கை ஸ்கேன் செய்ய இயக்கவும்.</string>
+    <string name="action_scan_tag">NFC டேக்கை ஸ்கேன் செய்</string>
+    <string name="action_nfc_settings">NFC ஐ இயக்கு</string>
 </resources>

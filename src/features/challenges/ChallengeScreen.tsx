@@ -28,6 +28,87 @@ const EMERGENCY_HOLD_MILLIS = 3000;
  * asks the engine to dismiss once every question is solved (or on emergency dismissal).
  */
 export function ChallengeScreen() {
+  const session = useAlarmStore(s => s.session);
+  if (session?.challengeType === 'nfc') return <NfcChallenge />;
+  return <MathChallenge />;
+}
+
+/** Dismissed natively when a registered tag is scanned; this screen only guides the user. */
+function NfcChallenge() {
+  const theme = useTheme();
+  const t = useT();
+  const [enabled, setEnabled] = useState(true);
+  useEffect(() => {
+    engine.getNfcStatus().then(s => setEnabled(s.enabled));
+    engine.listenForDismissTag();
+    return () => engine.stopNfcListening();
+  }, []);
+  return (
+    <SafeAreaView
+      style={[styles.screen, { backgroundColor: theme.colors.background }]}
+    >
+      <View style={styles.questionBox}>
+        <Text
+          style={[styles.title, styles.center, { color: theme.colors.text }]}
+          accessibilityRole="header"
+        >
+          {t('nfcChallengeTitle')}
+        </Text>
+        <Text
+          style={[
+            styles.label,
+            styles.center,
+            { color: theme.colors.textSecondary },
+          ]}
+        >
+          {enabled ? t('nfcChallengeBody') : t('nfcChallengeOff')}
+        </Text>
+        {!enabled && (
+          <Button
+            label={t('nfcTurnOn')}
+            variant="secondary"
+            onPress={() => engine.openNfcSettings()}
+            style={styles.nfcButton}
+          />
+        )}
+      </View>
+      <ChallengeFooter />
+    </SafeAreaView>
+  );
+}
+
+function ChallengeFooter() {
+  const theme = useTheme();
+  const t = useT();
+  return (
+    <View style={styles.bottom}>
+      <Button
+        label={t('snooze')}
+        variant="secondary"
+        onPress={() => engine.snoozeSession()}
+      />
+      <Pressable
+        testID="emergency-dismiss"
+        delayLongPress={EMERGENCY_HOLD_MILLIS}
+        onLongPress={() => engine.dismissSession('emergency')}
+        accessibilityRole="button"
+        accessibilityHint={t('emergencyHint')}
+        style={styles.emergency}
+      >
+        <Text style={[styles.emergencyText, { color: theme.colors.danger }]}>
+          {t('emergencyDismiss')}
+        </Text>
+        <Text
+          style={[styles.emergencyHint, { color: theme.colors.textSecondary }]}
+        >
+          {t('emergencyHint')}
+        </Text>
+      </Pressable>
+    </View>
+  );
+}
+
+function MathChallenge() {
   const theme = useTheme();
   const t = useT();
   const session = useAlarmStore(s => s.session);
@@ -189,33 +270,7 @@ export function ChallengeScreen() {
         </Animated.View>
       )}
 
-      <View style={styles.bottom}>
-        <Button
-          label={t('snooze')}
-          variant="secondary"
-          onPress={() => engine.snoozeSession()}
-        />
-        <Pressable
-          testID="emergency-dismiss"
-          delayLongPress={EMERGENCY_HOLD_MILLIS}
-          onLongPress={() => engine.dismissSession('emergency')}
-          accessibilityRole="button"
-          accessibilityHint={t('emergencyHint')}
-          style={styles.emergency}
-        >
-          <Text style={[styles.emergencyText, { color: theme.colors.danger }]}>
-            {t('emergencyDismiss')}
-          </Text>
-          <Text
-            style={[
-              styles.emergencyHint,
-              { color: theme.colors.textSecondary },
-            ]}
-          >
-            {t('emergencyHint')}
-          </Text>
-        </Pressable>
-      </View>
+      <ChallengeFooter />
     </SafeAreaView>
   );
 }
@@ -251,6 +306,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   optionText: { fontSize: 30, fontWeight: '500' },
+  center: { textAlign: 'center' },
+  nfcButton: { marginTop: spacing.xl, alignSelf: 'center' },
   bottom: { paddingBottom: spacing.xl, gap: spacing.lg },
   emergency: { alignItems: 'center', paddingVertical: spacing.sm },
   emergencyText: { fontSize: 15, fontWeight: '700' },

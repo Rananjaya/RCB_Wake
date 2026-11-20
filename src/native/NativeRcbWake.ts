@@ -27,6 +27,8 @@ export type AlarmConfig = {
   /** `easy` | `medium` | `hard` */
   challengeDifficulty: string;
   challengeQuestionCount: number;
+  /** `math` | `nfc` */
+  challengeType: string;
 };
 
 export type AlarmRecord = {
@@ -44,6 +46,8 @@ export type AlarmRecord = {
   challengeEnabled: boolean;
   challengeDifficulty: string;
   challengeQuestionCount: number;
+  /** `math` | `nfc` */
+  challengeType: string;
   createdAt: number;
   updatedAt: number;
   /** 0 when not snoozed. */
@@ -80,6 +84,18 @@ export type SessionInfo = {
   challengeRequired: boolean;
   challengeDifficulty: string;
   challengeQuestionCount: number;
+  /** `math` | `nfc` */
+  challengeType: string;
+};
+
+export type NfcStatus = {
+  supported: boolean;
+  enabled: boolean;
+};
+
+export type NfcTagInfo = {
+  id: string;
+  name: string;
 };
 
 export type Sound = {
@@ -220,6 +236,16 @@ export interface Spec extends TurboModule {
    * solved) or `emergency`. Resolves false if no session is ringing.
    */
   dismissSession(method: string): Promise<boolean>;
+
+  // NFC dismiss challenge
+  getNfcStatus(): Promise<NfcStatus>;
+  getNfcTags(): Promise<NfcTagInfo[]>;
+  /** Waits up to 30 s for a tag on the current screen; resolves null on timeout. */
+  registerNfcTag(name: string): Promise<NfcTagInfo | null>;
+  removeNfcTag(id: string): Promise<void>;
+  listenForDismissTag(): void;
+  stopNfcListening(): void;
+  openNfcSettings(): void;
 
   // Sounds and pickers
   getBuiltInSounds(): Promise<Sound[]>;

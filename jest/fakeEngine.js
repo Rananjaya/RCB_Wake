@@ -255,6 +255,13 @@ const engine = {
       state.pomodoro.remainingMillis = config.focusMinutes * 60_000;
     return engine.getPomodoro();
   },
+  getNfcStatus: async () => ({ supported: false, enabled: false }),
+  getNfcTags: async () => [],
+  registerNfcTag: async () => null,
+  removeNfcTag: async () => {},
+  listenForDismissTag: () => {},
+  stopNfcListening: () => {},
+  openNfcSettings: () => {},
   getWeather: async () => null,
   updateLocation: async () => false,
   refreshWeather: async () => null,

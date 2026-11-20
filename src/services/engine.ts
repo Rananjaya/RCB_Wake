@@ -6,6 +6,8 @@ export type {
   AlarmRecord,
   EngineStatus,
   SessionInfo,
+  NfcStatus,
+  NfcTagInfo,
   PomodoroConfig,
   PomodoroState,
   Settings,

@@ -36,6 +36,7 @@ class AlarmRepository(context: Context) {
             put("challenge_enabled", input.challengeEnabled.toInt())
             put("challenge_difficulty", input.challengeDifficulty)
             put("challenge_question_count", input.challengeQuestionCount)
+            put("challenge_type", input.challengeType)
             put("updated_at", now)
             // Editing an alarm always cancels a pending snooze.
             putNull("snoozed_until")
@@ -101,6 +102,7 @@ class AlarmRepository(context: Context) {
             challengeEnabled = i("challenge_enabled") == 1,
             challengeDifficulty = s("challenge_difficulty"),
             challengeQuestionCount = i("challenge_question_count"),
+            challengeType = s("challenge_type"),
             createdAt = l("created_at"),
             updatedAt = l("updated_at"),
             snoozedUntil = ln("snoozed_until"),

@@ -43,4 +43,8 @@
     <string name="sleep_reminder_body">Your alarm is at %1$s. Head to bed soon to get %2$s of sleep.</string>
     <string name="sleep_goal_hours">%1$d h</string>
     <string name="sleep_goal_hours_minutes">%1$d h %2$d min</string>
+    <string name="ringing_nfc_info">Tap your registered NFC tag to dismiss</string>
+    <string name="ringing_nfc_off">NFC is off. Turn it on to scan your tag.</string>
+    <string name="action_scan_tag">Scan NFC tag</string>
+    <string name="action_nfc_settings">Turn on NFC</string>
 </resources>

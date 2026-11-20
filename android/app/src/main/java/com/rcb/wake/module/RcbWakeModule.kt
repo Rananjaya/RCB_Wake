@@ -23,6 +23,7 @@ import com.rcb.wake.alarm.AlarmController
 import com.rcb.wake.alarm.AlarmInput
 import com.rcb.wake.alarm.AlarmSessionStore
 import com.rcb.wake.alarm.InvalidAlarmException
+import com.rcb.wake.alarm.NfcTags
 import com.rcb.wake.alarm.ScheduleState
 import com.rcb.wake.audio.AlarmPlayer
 import com.rcb.wake.audio.AlarmSounds
@@ -184,6 +185,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
             challengeEnabled = config.getBoolean("challengeEnabled"),
             challengeDifficulty = config.getString("challengeDifficulty").orEmpty(),
             challengeQuestionCount = config.getDouble("challengeQuestionCount").toInt(),
+            challengeType = if (config.hasKey("challengeType")) config.getString("challengeType") ?: "math" else "math",
         )
         promise.resolve(alarmMap(alarms.save(input)))
     }
@@ -236,6 +238,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putBoolean("challengeEnabled", a.challengeEnabled)
         putString("challengeDifficulty", a.challengeDifficulty)
         putInt("challengeQuestionCount", a.challengeQuestionCount)
+        putString("challengeType", a.challengeType)
         putDouble("createdAt", a.createdAt.toDouble())
         putDouble("updatedAt", a.updatedAt.toDouble())
         putDouble("snoozedUntil", (a.snoozedUntil ?: 0L).toDouble())
@@ -262,6 +265,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 putBoolean("challengeRequired", session.challengeRequired)
                 putString("challengeDifficulty", session.challengeDifficulty)
                 putInt("challengeQuestionCount", session.challengeQuestionCount)
+                putString("challengeType", session.challengeType)
             },
         )
     }
@@ -297,6 +301,81 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 activity.setTurnScreenOn(false)
             }
         }
+    }
+
+    // ---- NFC tags ----
+
+    override fun getNfcStatus(promise: Promise) = guard(promise) {
+        promise.resolve(
+            Arguments.createMap().apply {
+                putBoolean("supported", NfcTags.isSupported(context))
+                putBoolean("enabled", NfcTags.isEnabled(context))
+            },
+        )
+    }
+
+    override fun getNfcTags(promise: Promise) = guard(promise) {
+        promise.resolve(Arguments.createArray().apply { NfcTags.all(context).forEach { pushMap(nfcTagMap(it)) } })
+    }
+
+    /** Scans one tag on the current screen (30 s timeout) and registers it. Resolves null on timeout. */
+    override fun registerNfcTag(name: String, promise: Promise) {
+        val activity = context.currentActivity
+        if (activity == null || !NfcTags.isEnabled(context)) {
+            promise.reject("E_NFC_UNAVAILABLE", "NFC is not available or turned off")
+            return
+        }
+        var done = false
+        val timeout = Runnable {
+            if (!done) {
+                done = true
+                NfcTags.disableReader(activity)
+                promise.resolve(null)
+            }
+        }
+        UiThreadUtil.runOnUiThread {
+            NfcTags.enableReader(activity) { tag ->
+                UiThreadUtil.runOnUiThread {
+                    if (done) return@runOnUiThread
+                    done = true
+                    UiThreadUtil.getUiThreadHandler().removeCallbacks(timeout)
+                    NfcTags.disableReader(activity)
+                    guard(promise) { promise.resolve(nfcTagMap(NfcTags.add(context, name, NfcTags.hashOf(context, tag)))) }
+                }
+            }
+            UiThreadUtil.getUiThreadHandler().postDelayed(timeout, 30_000)
+        }
+    }
+
+    override fun removeNfcTag(id: String, promise: Promise) = guard(promise) {
+        NfcTags.remove(context, id)
+        promise.resolve(null)
+    }
+
+    /** While the challenge screen is open, dismiss the session when a registered tag is scanned. */
+    override fun listenForDismissTag() {
+        val activity = context.currentActivity ?: return
+        UiThreadUtil.runOnUiThread {
+            NfcTags.enableReader(activity) { tag ->
+                if (NfcTags.isRegistered(context, NfcTags.hashOf(context, tag))) {
+                    context.startService(RingingService.dismissIntent(context, RingingService.METHOD_CHALLENGE))
+                }
+            }
+        }
+    }
+
+    override fun stopNfcListening() {
+        val activity = context.currentActivity ?: return
+        UiThreadUtil.runOnUiThread { NfcTags.disableReader(activity) }
+    }
+
+    override fun openNfcSettings() {
+        startSettings(Intent(Settings.ACTION_NFC_SETTINGS))
+    }
+
+    private fun nfcTagMap(t: com.rcb.wake.alarm.NfcTag) = Arguments.createMap().apply {
+        putString("id", t.id)
+        putString("name", t.name)
     }
 
     // ---- Sounds and pickers ----

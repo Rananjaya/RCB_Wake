@@ -112,6 +112,24 @@ export const ta: Strings = {
   solveToDismiss: 'தீர்த்து நிறுத்து',
   challengeDone: 'சவால் முடிந்தது',
 
+  challengeType: 'நிறுத்தும் முறை',
+  challengeMath: 'கணிதம்',
+  challengeNfc: 'NFC டேக்',
+  challengeNfcNeedsTag: 'முதலில் அமைப்புகளில் NFC டேக்கைப் பதிவுசெய்யவும்',
+  nfcChallengeTitle: 'உங்கள் NFC டேக்கை ஸ்கேன் செய்யவும்',
+  nfcChallengeBody:
+    'டேக் இருக்கும் இடத்திற்குச் சென்று தொலைபேசியின் பின்புறத்தை அதன் மீது வைக்கவும்.',
+  nfcChallengeOff: 'NFC முடக்கப்பட்டுள்ளது. டேக்கை ஸ்கேன் செய்ய இயக்கவும்.',
+  nfcTurnOn: 'NFC ஐ இயக்கு',
+  nfcTags: 'NFC tags',
+  nfcTagsHint:
+    'Stick a tag somewhere away from bed, like the bathroom. Alarms set to “NFC tag” only stop when you scan it.',
+  nfcAddTag: 'Add NFC tag',
+  nfcHoldNear: 'Hold your phone near the tag…',
+  nfcTagAdded: 'Tag registered',
+  nfcScanTimeout: 'No tag found. Try again.',
+  nfcOff: 'NFC is off or unavailable',
+
   newTimer: 'புதிய டைமர்',
   start: 'தொடங்கு',
   pause: 'இடைநிறுத்து',

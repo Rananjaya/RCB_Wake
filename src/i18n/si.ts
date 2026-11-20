@@ -111,6 +111,23 @@ export const si: Strings = {
   solveToDismiss: 'විසඳා නවත්වන්න',
   challengeDone: 'අභියෝගය සම්පූර්ණයි',
 
+  challengeType: 'නැවැත්වීමේ ක්‍රමය',
+  challengeMath: 'ගණිතය',
+  challengeNfc: 'NFC ටැගය',
+  challengeNfcNeedsTag: 'පළමුව සැකසුම් තුළ NFC ටැගයක් ලියාපදිංචි කරන්න',
+  nfcChallengeTitle: 'ඔබේ NFC ටැගය ස්කෑන් කරන්න',
+  nfcChallengeBody: 'ඔබේ ටැගය ඇති තැනට ගොස් දුරකථනයේ පිටුපස එයට ළං කරන්න.',
+  nfcChallengeOff: 'NFC අක්‍රියයි. ටැගය ස්කෑන් කිරීමට එය සක්‍රිය කරන්න.',
+  nfcTurnOn: 'NFC සක්‍රිය කරන්න',
+  nfcTags: 'NFC tags',
+  nfcTagsHint:
+    'Stick a tag somewhere away from bed, like the bathroom. Alarms set to “NFC tag” only stop when you scan it.',
+  nfcAddTag: 'Add NFC tag',
+  nfcHoldNear: 'Hold your phone near the tag…',
+  nfcTagAdded: 'Tag registered',
+  nfcScanTimeout: 'No tag found. Try again.',
+  nfcOff: 'NFC is off or unavailable',
+
   newTimer: 'නව ටයිමරය',
   start: 'අරඹන්න',
   pause: 'විරාම කරන්න',

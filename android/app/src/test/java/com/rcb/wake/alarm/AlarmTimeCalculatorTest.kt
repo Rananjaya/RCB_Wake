@@ -138,9 +138,10 @@ fun sampleAlarm(
     challengeEnabled: Boolean = false,
     difficulty: String = ChallengeDifficulty.EASY,
     questions: Int = 3,
+    challengeType: String = ChallengeType.MATH,
 ) = Alarm(
     id = id, hour = 6, minute = 30, enabled = enabled, repeatDays = repeatDays, label = "", soundUri = "builtin:dawn",
     soundName = "Dawn", vibrationEnabled = true, gradualVolumeEnabled = true, snoozeMinutes = 10,
-    challengeEnabled = challengeEnabled, challengeDifficulty = difficulty, challengeQuestionCount = questions,
+    challengeEnabled = challengeEnabled, challengeDifficulty = difficulty, challengeQuestionCount = questions, challengeType = challengeType,
     createdAt = 0, updatedAt = 0, snoozedUntil = snoozedUntil, nextTriggerAt = null, scheduleState = ScheduleState.NONE,
 )

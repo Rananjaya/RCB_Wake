@@ -109,6 +109,24 @@ export const en = {
   solveToDismiss: 'Solve to dismiss',
   challengeDone: 'Challenge complete',
 
+  challengeType: 'Dismiss with',
+  challengeMath: 'Math',
+  challengeNfc: 'NFC tag',
+  challengeNfcNeedsTag: 'Register an NFC tag in Settings first',
+  nfcChallengeTitle: 'Scan your NFC tag',
+  nfcChallengeBody:
+    'Go to where your tag is and hold the back of your phone against it.',
+  nfcChallengeOff: 'NFC is off. Turn it on to scan your tag.',
+  nfcTurnOn: 'Turn on NFC',
+  nfcTags: 'NFC tags',
+  nfcTagsHint:
+    'Stick a tag somewhere away from bed, like the bathroom. Alarms set to “NFC tag” only stop when you scan it.',
+  nfcAddTag: 'Add NFC tag',
+  nfcHoldNear: 'Hold your phone near the tag…',
+  nfcTagAdded: 'Tag registered',
+  nfcScanTimeout: 'No tag found. Try again.',
+  nfcOff: 'NFC is off or unavailable',
+
   newTimer: 'New timer',
   start: 'Start',
   pause: 'Pause',

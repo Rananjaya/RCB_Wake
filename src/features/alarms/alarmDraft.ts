@@ -24,6 +24,7 @@ export function newAlarmDraft(
     challengeEnabled: settings.defaultChallengeEnabled,
     challengeDifficulty: settings.defaultChallengeDifficulty,
     challengeQuestionCount: settings.defaultChallengeQuestionCount,
+    challengeType: 'math',
   };
 }
 
@@ -44,6 +45,7 @@ export function draftFromRecord(record: AlarmRecord): AlarmConfig {
     challengeEnabled: record.challengeEnabled,
     challengeDifficulty: record.challengeDifficulty,
     challengeQuestionCount: record.challengeQuestionCount,
+    challengeType: record.challengeType,
   };
 }
 

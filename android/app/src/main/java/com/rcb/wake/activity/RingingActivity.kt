@@ -17,6 +17,8 @@ import com.rcb.wake.MainActivity
 import com.rcb.wake.R
 import com.rcb.wake.alarm.AlarmController
 import com.rcb.wake.alarm.AlarmSessionStore
+import com.rcb.wake.alarm.ChallengeType
+import com.rcb.wake.alarm.NfcTags
 import com.rcb.wake.module.EngineEvents
 import com.rcb.wake.notification.Localized
 import com.rcb.wake.notification.WakeNotifications
@@ -39,6 +41,10 @@ class RingingActivity : Activity() {
             handler.postDelayed(this, 1_000)
         }
     }
+    private val emergency = Runnable {
+        startService(RingingService.dismissIntent(this, RingingService.METHOD_EMERGENCY))
+    }
+
     private val sessionListener = EngineEvents.Listener { type ->
         if (type == EngineEvents.SESSION_ENDED) handler.post { finishAndRemoveTask() }
     }
@@ -56,6 +62,14 @@ class RingingActivity : Activity() {
             startService(RingingService.snoozeIntent(this))
         }
         findViewById<Button>(R.id.dismiss).setOnClickListener { onDismissPressed() }
+        // Emergency dismissal is always available: hold Dismiss for 3 seconds.
+        findViewById<Button>(R.id.dismiss).setOnTouchListener { _, event ->
+            when (event.actionMasked) {
+                android.view.MotionEvent.ACTION_DOWN -> handler.postDelayed(emergency, EMERGENCY_HOLD_MILLIS)
+                android.view.MotionEvent.ACTION_UP, android.view.MotionEvent.ACTION_CANCEL -> handler.removeCallbacks(emergency)
+            }
+            false
+        }
         EngineEvents.addListener(sessionListener)
     }
 
@@ -67,10 +81,24 @@ class RingingActivity : Activity() {
         }
         bindSession()
         handler.post(clockTick)
+        startNfcIfNeeded()
+    }
+
+    /** For NFC challenges, listen for a registered tag while this screen is visible. */
+    private fun startNfcIfNeeded() {
+        val session = AlarmSessionStore.load(this) ?: return
+        if (!session.challengeRequired || session.challengeType != ChallengeType.NFC) return
+        NfcTags.enableReader(this) { tag ->
+            if (NfcTags.isRegistered(this, NfcTags.hashOf(this, tag))) {
+                startService(RingingService.dismissIntent(this, RingingService.METHOD_CHALLENGE))
+            }
+        }
     }
 
     override fun onPause() {
         handler.removeCallbacks(clockTick)
+        handler.removeCallbacks(emergency)
+        NfcTags.disableReader(this)
         super.onPause()
     }
 
@@ -103,7 +131,13 @@ class RingingActivity : Activity() {
             if (labels.isEmpty()) getString(R.string.alarm_default_label) else labels.joinToString(" · ")
         val challenge = findViewById<TextView>(R.id.challenge_info)
         val dismiss = findViewById<Button>(R.id.dismiss)
-        if (session.challengeRequired) {
+        if (session.challengeRequired && session.challengeType == ChallengeType.NFC) {
+            challenge.visibility = View.VISIBLE
+            challenge.text = getString(
+                if (NfcTags.isEnabled(this)) R.string.ringing_nfc_info else R.string.ringing_nfc_off,
+            )
+            dismiss.text = getString(if (NfcTags.isEnabled(this)) R.string.action_scan_tag else R.string.action_nfc_settings)
+        } else if (session.challengeRequired) {
             val difficulty = when (session.challengeDifficulty) {
                 "hard" -> getString(R.string.difficulty_hard)
                 "medium" -> getString(R.string.difficulty_medium)
@@ -132,6 +166,13 @@ class RingingActivity : Activity() {
         val session = AlarmSessionStore.load(this) ?: return finishAndRemoveTask()
         if (!session.challengeRequired) {
             startService(RingingService.dismissIntent(this, RingingService.METHOD_NORMAL))
+            return
+        }
+        if (session.challengeType == ChallengeType.NFC) {
+            // Tapping does not dismiss; a registered tag does. If NFC is off, open its settings.
+            if (!NfcTags.isEnabled(this)) {
+                runCatching { startActivity(Intent(android.provider.Settings.ACTION_NFC_SETTINGS)) }
+            }
             return
         }
         // The challenge UI is React Native. MainActivity shows over the lock screen while a
@@ -166,5 +207,9 @@ class RingingActivity : Activity() {
             backgroundTintList = ColorStateList.valueOf(surface)
             setTextColor(text)
         }
+    }
+
+    private companion object {
+        const val EMERGENCY_HOLD_MILLIS = 3_000L
     }
 }

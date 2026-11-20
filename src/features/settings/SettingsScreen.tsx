@@ -30,6 +30,7 @@ import { clampQuestions, SNOOZE_OPTIONS } from '../alarms/alarmDraft';
 import { SoundPicker } from '../alarms/SoundPicker';
 import { soundDisplayName } from '../alarms/soundNames';
 import { AccentPicker } from './AccentPicker';
+import { NfcTagSettings } from './NfcTagSettings';
 import { SleepReminderSettings } from './SleepReminderSettings';
 import { WeatherSettings } from './WeatherSettings';
 
@@ -176,6 +177,8 @@ function SettingsContent({ navigation }: Props) {
         </Card>
 
         <SleepReminderSettings />
+
+        <NfcTagSettings />
 
         <WeatherSettings />
 

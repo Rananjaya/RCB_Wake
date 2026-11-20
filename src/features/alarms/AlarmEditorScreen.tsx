@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Pressable,
@@ -67,6 +67,13 @@ export function AlarmEditorScreen({ navigation, route }: Props) {
   );
   const [soundPickerOpen, setSoundPickerOpen] = useState(false);
   const [saving, setSaving] = useState(false);
+  // null = device has no NFC (option hidden); otherwise the number of registered tags.
+  const [nfcTagCount, setNfcTagCount] = useState<number | null>(null);
+  useEffect(() => {
+    engine.getNfcStatus().then(async status => {
+      if (status.supported) setNfcTagCount((await engine.getNfcTags()).length);
+    });
+  }, []);
   const is24 = settings.timeFormat === '24';
   const update = (patch: Partial<AlarmConfig>) =>
     setDraft(d => ({ ...d, ...patch }));
@@ -248,6 +255,37 @@ export function AlarmEditorScreen({ navigation, route }: Props) {
           />
           {draft.challengeEnabled && (
             <>
+              <Text
+                style={[styles.subLabel, { color: theme.colors.textSecondary }]}
+              >
+                {t('challengeType')}
+              </Text>
+              <View style={styles.wrap}>
+                <Chip
+                  label={t('challengeMath')}
+                  selected={draft.challengeType !== 'nfc'}
+                  onPress={() => update({ challengeType: 'math' })}
+                />
+                {nfcTagCount !== null && (
+                  <Chip
+                    label={t('challengeNfc')}
+                    selected={draft.challengeType === 'nfc'}
+                    onPress={() =>
+                      nfcTagCount > 0 && update({ challengeType: 'nfc' })
+                    }
+                  />
+                )}
+              </View>
+              {nfcTagCount === 0 && (
+                <Text
+                  style={[
+                    styles.subLabel,
+                    { color: theme.colors.textSecondary },
+                  ]}
+                >
+                  {t('challengeNfcNeedsTag')}
+                </Text>
+              )}
               <Text
                 style={[styles.subLabel, { color: theme.colors.textSecondary }]}
               >

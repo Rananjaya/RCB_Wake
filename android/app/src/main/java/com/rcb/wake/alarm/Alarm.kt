@@ -19,6 +19,8 @@ data class Alarm(
     val challengeEnabled: Boolean,
     val challengeDifficulty: String,
     val challengeQuestionCount: Int,
+    /** `math` or `nfc`. */
+    val challengeType: String,
     val createdAt: Long,
     val updatedAt: Long,
     val snoozedUntil: Long?,
@@ -51,6 +53,12 @@ object ChallengeDifficulty {
     const val MEDIUM = "medium"
     const val HARD = "hard"
     val ALL = setOf(EASY, MEDIUM, HARD)
+}
+
+object ChallengeType {
+    const val MATH = "math"
+    const val NFC = "nfc"
+    val ALL = setOf(MATH, NFC)
 }
 
 object AlarmLimits {

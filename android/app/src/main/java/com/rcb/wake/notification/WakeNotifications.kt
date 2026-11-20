@@ -137,7 +137,9 @@ object WakeNotifications {
             .setContentIntent(fullScreen)
             .setFullScreenIntent(fullScreen, true)
             .addAction(Notification.Action.Builder(null, c.getString(R.string.action_snooze), snooze).build())
-        if (session.challengeRequired) {
+        if (session.challengeRequired && session.challengeType == com.rcb.wake.alarm.ChallengeType.NFC) {
+            builder.addAction(Notification.Action.Builder(null, c.getString(R.string.action_scan_tag), fullScreen).build())
+        } else if (session.challengeRequired) {
             builder.addAction(
                 Notification.Action.Builder(null, c.getString(R.string.action_solve), openAppIntent(context, 102, challenge = true)).build(),
             )

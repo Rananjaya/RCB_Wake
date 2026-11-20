@@ -40,7 +40,8 @@ class WakeDatabase private constructor(context: Context) :
                 updated_at INTEGER NOT NULL,
                 snoozed_until INTEGER,
                 next_trigger_at INTEGER,
-                schedule_state TEXT NOT NULL
+                schedule_state TEXT NOT NULL,
+                challenge_type TEXT NOT NULL DEFAULT 'math'
             )
             """.trimIndent(),
         )
@@ -71,12 +72,13 @@ class WakeDatabase private constructor(context: Context) :
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // Version 1 is the first schema. Future migrations are added here, never destructive.
+        // Migrations are additive and never destructive.
+        if (oldVersion < 2) db.execSQL("ALTER TABLE alarms ADD COLUMN challenge_type TEXT NOT NULL DEFAULT 'math'")
     }
 
     companion object {
         private const val DB_NAME = "rcb_wake.db"
-        private const val DB_VERSION = 1
+        private const val DB_VERSION = 2
 
         @Volatile private var instance: WakeDatabase? = null
 

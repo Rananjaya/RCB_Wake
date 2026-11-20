@@ -16,6 +16,7 @@ data class AlarmInput(
     val challengeEnabled: Boolean,
     val challengeDifficulty: String,
     val challengeQuestionCount: Int,
+    val challengeType: String = ChallengeType.MATH,
 )
 
 class InvalidAlarmException(message: String) : IllegalArgumentException(message)
@@ -35,6 +36,7 @@ object AlarmValidator {
         if (input.challengeQuestionCount !in AlarmLimits.MIN_QUESTIONS..AlarmLimits.MAX_QUESTIONS) {
             throw InvalidAlarmException("challengeQuestionCount must be 1-10")
         }
+        if (input.challengeType !in ChallengeType.ALL) throw InvalidAlarmException("unknown challenge type")
         if (allowedSoundSchemes.none { input.soundUri.startsWith(it) }) throw InvalidAlarmException("unsupported sound uri")
         if (input.id != null && input.id <= 0) throw InvalidAlarmException("invalid id")
         return input.copy(
