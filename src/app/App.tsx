@@ -18,6 +18,7 @@ import type { RootStackParamList, TabParamList } from '../navigation/types';
 import { RootNavigator } from '../navigation/RootNavigator';
 import { engine, subscribeEngine } from '../services/engine';
 import { useAlarmStore } from '../storage/alarmStore';
+import { usePomodoroStore } from '../storage/pomodoroStore';
 import { useSettingsStore } from '../storage/settingsStore';
 import { useTimerStore } from '../storage/timerStore';
 import { useTheme } from '../theme/useTheme';
@@ -61,6 +62,9 @@ function useEngineBootstrap() {
           break;
         case 'timersChanged':
           useTimerStore.getState().load();
+          break;
+        case 'pomodoroChanged':
+          usePomodoroStore.getState().load();
           break;
         case 'sessionStarted':
         case 'sessionEnded':

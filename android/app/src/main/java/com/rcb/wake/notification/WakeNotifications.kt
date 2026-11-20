@@ -18,6 +18,8 @@ import com.rcb.wake.audio.AlarmSounds
 import com.rcb.wake.receiver.NotificationActionReceiver
 import com.rcb.wake.service.RingingService
 import com.rcb.wake.storage.SettingsStore
+import com.rcb.wake.timer.PomodoroPhase
+import com.rcb.wake.timer.PomodoroState
 import com.rcb.wake.timer.WakeTimer
 import java.util.Date
 
@@ -26,12 +28,15 @@ object WakeNotifications {
     const val CHANNEL_STATUS = "alarm_status"
     const val CHANNEL_TIMER_RUNNING = "timer_running"
     const val CHANNEL_TIMER_DONE = "timer_done"
+    const val CHANNEL_POMODORO = "pomodoro"
 
     const val RINGING_NOTIFICATION_ID = 1
     private const val TAG_SNOOZE = "snooze"
     private const val TAG_MISSED = "missed"
     private const val TAG_TIMER = "timer"
     private const val TAG_TIMER_DONE = "timer_done"
+    private const val TAG_POMODORO = "pomodoro"
+    private const val TAG_POMODORO_DONE = "pomodoro_done"
 
     const val EXTRA_OPEN_CHALLENGE = "com.rcb.wake.extra.OPEN_CHALLENGE"
     const val EXTRA_OPEN_TAB = "com.rcb.wake.extra.OPEN_TAB"
@@ -69,6 +74,18 @@ object WakeNotifications {
                 )
                 enableVibration(true)
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            },
+        )
+        // A single gentle chime at each phase change; not insistent like finished timers.
+        nm.createNotificationChannel(
+            NotificationChannel(CHANNEL_POMODORO, c.getString(R.string.channel_pomodoro), NotificationManager.IMPORTANCE_HIGH).apply {
+                setSound(
+                    AlarmSounds.builtInUri(context, R.raw.tone_chime),
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build(),
+                )
             },
         )
     }
@@ -213,4 +230,45 @@ object WakeNotifications {
     fun cancelTimerDone(context: Context, timerId: Long) = manager(context).cancel(TAG_TIMER_DONE, timerId.toInt())
 
     private const val TIMER_ALERT_TIMEOUT_MILLIS = 10 * 60_000L
+
+    private fun phaseName(c: Context, phase: PomodoroPhase) = c.getString(
+        when (phase) {
+            PomodoroPhase.FOCUS -> R.string.pomodoro_focus
+            PomodoroPhase.SHORT_BREAK -> R.string.pomodoro_short_break
+            PomodoroPhase.LONG_BREAK -> R.string.pomodoro_long_break
+        },
+    )
+
+    fun showPomodoroRunning(context: Context, state: PomodoroState) {
+        val c = Localized.context(context)
+        val remaining = (state.endElapsedMillis ?: return) - SystemClock.elapsedRealtime()
+        val n = Notification.Builder(context, CHANNEL_TIMER_RUNNING)
+            .setSmallIcon(R.drawable.ic_stat_timer)
+            .setContentTitle(phaseName(c, state.phase))
+            .setContentText(c.getString(R.string.pomodoro_round, state.completedFocus + 1, state.config.roundsBeforeLongBreak))
+            .setUsesChronometer(true)
+            .setChronometerCountDown(true)
+            .setWhen(System.currentTimeMillis() + remaining)
+            .setShowWhen(true)
+            .setOngoing(true)
+            .setOnlyAlertOnce(true)
+            .setContentIntent(openAppIntent(context, 800, tab = "timer"))
+            .build()
+        manager(context).notify(TAG_POMODORO, 0, n)
+    }
+
+    fun cancelPomodoro(context: Context) = manager(context).cancel(TAG_POMODORO, 0)
+
+    fun showPomodoroPhaseDone(context: Context, finished: PomodoroPhase, next: PomodoroPhase) {
+        val c = Localized.context(context)
+        val n = Notification.Builder(context, CHANNEL_POMODORO)
+            .setSmallIcon(R.drawable.ic_stat_timer)
+            .setContentTitle(c.getString(R.string.pomodoro_phase_done, phaseName(c, finished)))
+            .setContentText(c.getString(R.string.pomodoro_next, phaseName(c, next)))
+            .setAutoCancel(true)
+            .setTimeoutAfter(5 * 60_000L)
+            .setContentIntent(openAppIntent(context, 801, tab = "timer"))
+            .build()
+        manager(context).notify(TAG_POMODORO_DONE, 0, n)
+    }
 }

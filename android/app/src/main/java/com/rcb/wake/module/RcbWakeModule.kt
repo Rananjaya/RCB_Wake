@@ -34,6 +34,9 @@ import com.rcb.wake.storage.SettingsStore
 import com.rcb.wake.storage.WakeSettings
 import com.rcb.wake.storage.WorldClock
 import com.rcb.wake.storage.WorldClockRepository
+import com.rcb.wake.timer.PomodoroConfig
+import com.rcb.wake.timer.PomodoroController
+import com.rcb.wake.timer.PomodoroState
 import com.rcb.wake.timer.TimerController
 import com.rcb.wake.timer.WakeTimer
 import com.rcb.wake.weather.WeatherRepository
@@ -49,6 +52,7 @@ import java.time.ZoneId
 class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWakeSpec(context) {
     private val alarms by lazy { AlarmController(context) }
     private val timers by lazy { TimerController(context) }
+    private val pomodoro by lazy { PomodoroController(context) }
     private val clocks by lazy { WorldClockRepository(context) }
     private var previewPlayer: AlarmPlayer? = null
     private var pendingSoundPick: Promise? = null
@@ -109,6 +113,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         WakeNotifications.ensureChannels(context)
         alarms.reconcileAll("app-start")
         timers.reconcileAll()
+        pomodoro.reconcile()
         promise.resolve(status())
     }
 
@@ -414,6 +419,50 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putDouble("endElapsedMillis", (t.endElapsedMillis ?: 0L).toDouble())
         putString("status", t.status.name)
         putDouble("createdAt", t.createdAt.toDouble())
+    }
+
+    // ---- Pomodoro ----
+
+    override fun getPomodoro(promise: Promise) = guard(promise) { promise.resolve(pomodoroMap(pomodoro.get())) }
+
+    override fun startPomodoro(promise: Promise) = guard(promise) { promise.resolve(pomodoroMap(pomodoro.start())) }
+
+    override fun pausePomodoro(promise: Promise) = guard(promise) { promise.resolve(pomodoroMap(pomodoro.pause())) }
+
+    override fun skipPomodoroPhase(promise: Promise) = guard(promise) { promise.resolve(pomodoroMap(pomodoro.skip())) }
+
+    override fun resetPomodoro(promise: Promise) = guard(promise) { promise.resolve(pomodoroMap(pomodoro.reset())) }
+
+    override fun savePomodoroConfig(config: ReadableMap, promise: Promise) = guard(promise) {
+        val saved = pomodoro.saveConfig(
+            PomodoroConfig(
+                focusMinutes = config.getDouble("focusMinutes").toInt(),
+                shortBreakMinutes = config.getDouble("shortBreakMinutes").toInt(),
+                longBreakMinutes = config.getDouble("longBreakMinutes").toInt(),
+                roundsBeforeLongBreak = config.getDouble("roundsBeforeLongBreak").toInt(),
+                autoStartNext = config.getBoolean("autoStartNext"),
+            ),
+        )
+        promise.resolve(pomodoroMap(saved))
+    }
+
+    private fun pomodoroMap(s: PomodoroState) = Arguments.createMap().apply {
+        putMap(
+            "config",
+            Arguments.createMap().apply {
+                putInt("focusMinutes", s.config.focusMinutes)
+                putInt("shortBreakMinutes", s.config.shortBreakMinutes)
+                putInt("longBreakMinutes", s.config.longBreakMinutes)
+                putInt("roundsBeforeLongBreak", s.config.roundsBeforeLongBreak)
+                putBoolean("autoStartNext", s.config.autoStartNext)
+            },
+        )
+        putString("status", s.status.name)
+        putString("phase", s.phase.name)
+        putInt("completedFocus", s.completedFocus)
+        putInt("totalFocus", s.totalFocus)
+        putDouble("remainingMillis", s.remainingMillis.toDouble())
+        putDouble("endElapsedMillis", (s.endElapsedMillis ?: 0L).toDouble())
     }
 
     // ---- Clocks ----

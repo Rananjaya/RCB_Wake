@@ -98,3 +98,33 @@ describe('settings', () => {
     expect(useSettingsStore.getState().settings.theme).toBe('pink');
   });
 });
+
+describe('pomodoro', () => {
+  it('cycles focus, short breaks and a long break after the configured rounds', async () => {
+    const { usePomodoroStore } = require('../src/storage/pomodoroStore');
+    const store = usePomodoroStore.getState();
+    await store.reset();
+    await store.saveConfig({
+      focusMinutes: 20,
+      shortBreakMinutes: 4,
+      longBreakMinutes: 12,
+      roundsBeforeLongBreak: 2,
+      autoStartNext: true,
+    });
+    expect(usePomodoroStore.getState().state.remainingMillis).toBe(20 * 60_000);
+
+    await store.start();
+    fake.__advance(5 * 60_000);
+    await store.pause();
+    expect(usePomodoroStore.getState().state.remainingMillis).toBe(15 * 60_000);
+
+    const phases: string[] = [];
+    for (let i = 0; i < 4; i++) {
+      await store.skip();
+      phases.push(usePomodoroStore.getState().state.phase);
+    }
+    expect(phases).toEqual(['SHORT_BREAK', 'FOCUS', 'LONG_BREAK', 'FOCUS']);
+    expect(usePomodoroStore.getState().state.totalFocus).toBe(2);
+    expect(usePomodoroStore.getState().state.completedFocus).toBe(0);
+  });
+});

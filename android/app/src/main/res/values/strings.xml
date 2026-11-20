@@ -31,4 +31,11 @@
     <string name="wx_thunder">Thunderstorm</string>
     <string name="wx_showers">Scattered showers</string>
     <string name="wx_snow_showers">Scattered snow showers</string>
+    <string name="channel_pomodoro">Pomodoro</string>
+    <string name="pomodoro_focus">Focus</string>
+    <string name="pomodoro_short_break">Short break</string>
+    <string name="pomodoro_long_break">Long break</string>
+    <string name="pomodoro_round">Round %1$d of %2$d</string>
+    <string name="pomodoro_phase_done">%1$s finished</string>
+    <string name="pomodoro_next">Next: %1$s</string>
 </resources>

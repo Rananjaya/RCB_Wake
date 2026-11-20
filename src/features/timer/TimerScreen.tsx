@@ -33,6 +33,7 @@ import {
   PRESETS_MINUTES,
   pushDigit,
 } from './timerEntry';
+import { PomodoroPanel } from './PomodoroPanel';
 
 /** Re-renders periodically while any timer is running. Display only; completion is native. */
 function useElapsedTick(active: boolean): number {
@@ -53,6 +54,7 @@ export function TimerScreen() {
   const timers = useTimerStore(s => s.timers);
   const create = useTimerStore(s => s.create);
   const [entryOpen, setEntryOpen] = useState(false);
+  const [mode, setMode] = useState<'timers' | 'pomodoro'>('timers');
   const showEntry = entryOpen || timers.length === 0;
   const nowElapsed = useElapsedTick(timers.some(x => x.status === 'RUNNING'));
 
@@ -69,24 +71,44 @@ export function TimerScreen() {
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
       >
-        {timers.map(timer => (
-          <TimerCard key={timer.id} timer={timer} nowElapsed={nowElapsed} />
-        ))}
-        {showEntry ? (
-          <TimerEntry
-            onStart={async (label, millis) => {
-              await create(label, millis);
-              setEntryOpen(false);
-            }}
-            onCancel={timers.length > 0 ? () => setEntryOpen(false) : undefined}
+        <View style={styles.modes}>
+          <Chip
+            label={t('timersMode')}
+            selected={mode === 'timers'}
+            onPress={() => setMode('timers')}
           />
+          <Chip
+            label={t('pomodoroMode')}
+            selected={mode === 'pomodoro'}
+            onPress={() => setMode('pomodoro')}
+          />
+        </View>
+        {mode === 'pomodoro' ? (
+          <PomodoroPanel />
         ) : (
-          <Button
-            label={t('addTimer')}
-            icon="plus"
-            variant="secondary"
-            onPress={() => setEntryOpen(true)}
-          />
+          <>
+            {timers.map(timer => (
+              <TimerCard key={timer.id} timer={timer} nowElapsed={nowElapsed} />
+            ))}
+            {showEntry ? (
+              <TimerEntry
+                onStart={async (label, millis) => {
+                  await create(label, millis);
+                  setEntryOpen(false);
+                }}
+                onCancel={
+                  timers.length > 0 ? () => setEntryOpen(false) : undefined
+                }
+              />
+            ) : (
+              <Button
+                label={t('addTimer')}
+                icon="plus"
+                variant="secondary"
+                onPress={() => setEntryOpen(true)}
+              />
+            )}
+          </>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -323,6 +345,7 @@ function TimerEntry({
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
+  modes: { flexDirection: 'row', gap: 8, justifyContent: 'center' },
   content: {
     paddingHorizontal: spacing.lg,
     paddingBottom: 48,

@@ -30,4 +30,11 @@
     <string name="wx_thunder">ගිගුරුම් සහිත වැසි</string>
     <string name="wx_showers">ඉඳහිට වැසි</string>
     <string name="wx_snow_showers">ඉඳහිට හිම</string>
+    <string name="channel_pomodoro">පොමොඩෝරෝ</string>
+    <string name="pomodoro_focus">අවධානය</string>
+    <string name="pomodoro_short_break">කෙටි විවේකය</string>
+    <string name="pomodoro_long_break">දිගු විවේකය</string>
+    <string name="pomodoro_round">වටය %1$d / %2$d</string>
+    <string name="pomodoro_phase_done">%1$s අවසන්</string>
+    <string name="pomodoro_next">ඊළඟට: %1$s</string>
 </resources>

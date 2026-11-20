@@ -6,6 +6,8 @@ export type {
   AlarmRecord,
   EngineStatus,
   SessionInfo,
+  PomodoroConfig,
+  PomodoroState,
   Settings,
   Sound,
   TimerRecord,

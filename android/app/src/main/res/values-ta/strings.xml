@@ -30,4 +30,11 @@
     <string name="wx_thunder">இடியுடன் மழை</string>
     <string name="wx_showers">ஆங்காங்கே மழை</string>
     <string name="wx_snow_showers">ஆங்காங்கே பனிப்பொழிவு</string>
+    <string name="channel_pomodoro">பொமோடோரோ</string>
+    <string name="pomodoro_focus">கவனம்</string>
+    <string name="pomodoro_short_break">சிறு இடைவேளை</string>
+    <string name="pomodoro_long_break">நீண்ட இடைவேளை</string>
+    <string name="pomodoro_round">சுற்று %1$d / %2$d</string>
+    <string name="pomodoro_phase_done">%1$s முடிந்தது</string>
+    <string name="pomodoro_next">அடுத்து: %1$s</string>
 </resources>

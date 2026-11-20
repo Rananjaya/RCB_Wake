@@ -31,7 +31,28 @@ const defaults = {
   temperatureUnit: 'c',
 };
 
+const defaultPomodoroConfig = {
+  focusMinutes: 25,
+  shortBreakMinutes: 5,
+  longBreakMinutes: 15,
+  roundsBeforeLongBreak: 4,
+  autoStartNext: true,
+};
+
+function freshPomodoro(config = defaultPomodoroConfig) {
+  return {
+    config: { ...config },
+    status: 'IDLE',
+    phase: 'FOCUS',
+    completedFocus: 0,
+    totalFocus: 0,
+    remainingMillis: config.focusMinutes * 60_000,
+    endElapsedMillis: 0,
+  };
+}
+
 function reset() {
+  state.pomodoro = freshPomodoro();
   state.alarms = [];
   state.timers = [];
   state.clocks = [];
@@ -180,6 +201,54 @@ const engine = {
   },
   removeValue: async key => {
     delete state.values[key];
+  },
+  getPomodoro: async () => ({
+    ...state.pomodoro,
+    config: { ...state.pomodoro.config },
+  }),
+  startPomodoro: async () => {
+    const p = state.pomodoro;
+    p.status = 'RUNNING';
+    p.endElapsedMillis = state.elapsed + p.remainingMillis;
+    return engine.getPomodoro();
+  },
+  pausePomodoro: async () => {
+    const p = state.pomodoro;
+    p.remainingMillis = Math.max(0, p.endElapsedMillis - state.elapsed);
+    p.status = 'PAUSED';
+    p.endElapsedMillis = 0;
+    return engine.getPomodoro();
+  },
+  skipPomodoroPhase: async () => {
+    const p = state.pomodoro;
+    if (p.phase === 'FOCUS') {
+      p.completedFocus += 1;
+      p.totalFocus += 1;
+      p.phase =
+        p.completedFocus >= p.config.roundsBeforeLongBreak
+          ? 'LONG_BREAK'
+          : 'SHORT_BREAK';
+    } else {
+      if (p.phase === 'LONG_BREAK') p.completedFocus = 0;
+      p.phase = 'FOCUS';
+    }
+    const minutes = {
+      FOCUS: 'focusMinutes',
+      SHORT_BREAK: 'shortBreakMinutes',
+      LONG_BREAK: 'longBreakMinutes',
+    }[p.phase];
+    p.remainingMillis = p.config[minutes] * 60_000;
+    return engine.getPomodoro();
+  },
+  resetPomodoro: async () => {
+    state.pomodoro = freshPomodoro(state.pomodoro.config);
+    return engine.getPomodoro();
+  },
+  savePomodoroConfig: async config => {
+    state.pomodoro.config = { ...config };
+    if (state.pomodoro.status === 'IDLE')
+      state.pomodoro.remainingMillis = config.focusMinutes * 60_000;
+    return engine.getPomodoro();
   },
   getWeather: async () => null,
   refreshWeather: async () => null,

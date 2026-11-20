@@ -12,6 +12,7 @@ object EngineEvents {
     const val SESSION_STARTED = "sessionStarted"
     const val SESSION_ENDED = "sessionEnded"
     const val SETTINGS_CHANGED = "settingsChanged"
+    const val POMODORO_CHANGED = "pomodoroChanged"
 
     fun interface Listener {
         fun onEvent(type: String)

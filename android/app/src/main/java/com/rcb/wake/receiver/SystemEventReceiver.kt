@@ -5,7 +5,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.rcb.wake.alarm.AlarmController
+import com.rcb.wake.timer.PomodoroController
 import com.rcb.wake.timer.TimerController
+import com.rcb.wake.widget.ClockWidgetProvider
 
 /**
  * Re-registers alarms and timers whenever the OS may have dropped or invalidated them:
@@ -21,6 +23,10 @@ class SystemEventReceiver : BroadcastReceiver() {
             try {
                 AlarmController(context).reconcileAll(action.substringAfterLast('.'))
                 TimerController(context).reconcileAll()
+                PomodoroController(context).reconcile()
+                // Resource ids change between app versions; re-render so the launcher drops
+                // RemoteViews that reference stale drawables.
+                ClockWidgetProvider.updateAll(context)
             } finally {
                 pending.finish()
             }

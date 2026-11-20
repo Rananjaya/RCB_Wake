@@ -106,6 +106,29 @@ export type TimerRecord = {
   createdAt: number;
 };
 
+export type PomodoroConfig = {
+  focusMinutes: number;
+  shortBreakMinutes: number;
+  longBreakMinutes: number;
+  roundsBeforeLongBreak: number;
+  autoStartNext: boolean;
+};
+
+export type PomodoroState = {
+  config: PomodoroConfig;
+  /** `IDLE` | `RUNNING` | `PAUSED` */
+  status: string;
+  /** `FOCUS` | `SHORT_BREAK` | `LONG_BREAK` */
+  phase: string;
+  /** Focus sessions finished in the current cycle. */
+  completedFocus: number;
+  /** Focus sessions finished since the last reset. */
+  totalFocus: number;
+  remainingMillis: number;
+  /** SystemClock.elapsedRealtime() at which the running phase ends; 0 otherwise. */
+  endElapsedMillis: number;
+};
+
 export type WorldClockRecord = {
   id: number;
   cityName: string;
@@ -155,7 +178,7 @@ export type WeatherInfo = {
 };
 
 export type EngineEvent = {
-  /** `alarmsChanged` | `timersChanged` | `sessionStarted` | `sessionEnded` | `settingsChanged` */
+  /** `alarmsChanged` | `timersChanged` | `pomodoroChanged` | `sessionStarted` | `sessionEnded` | `settingsChanged` */
   type: string;
 };
 
@@ -210,6 +233,14 @@ export interface Spec extends TurboModule {
   resetTimer(timerId: number): Promise<TimerRecord>;
   addTimerTime(timerId: number, millis: number): Promise<TimerRecord>;
   deleteTimer(timerId: number): Promise<void>;
+
+  // Pomodoro (native, survives the app being closed)
+  getPomodoro(): Promise<PomodoroState>;
+  startPomodoro(): Promise<PomodoroState>;
+  pausePomodoro(): Promise<PomodoroState>;
+  skipPomodoroPhase(): Promise<PomodoroState>;
+  resetPomodoro(): Promise<PomodoroState>;
+  savePomodoroConfig(config: PomodoroConfig): Promise<PomodoroState>;
 
   // Clocks (synchronous, monotonic)
   elapsedRealtime(): number;
