@@ -9,37 +9,45 @@ export type Question = {
 
 export type Rng = () => number;
 
-const int = (rng: Rng, min: number, max: number) => Math.floor(rng() * (max - min + 1)) + min;
+const int = (rng: Rng, min: number, max: number) =>
+  Math.floor(rng() * (max - min + 1)) + min;
 
-function makePrompt(difficulty: Difficulty, rng: Rng): {prompt: string; answer: number} {
+function makePrompt(
+  difficulty: Difficulty,
+  rng: Rng,
+): { prompt: string; answer: number } {
   if (difficulty === 'easy') {
     const a = int(rng, 2, 20);
     const b = int(rng, 2, 20);
-    if (rng() < 0.5) return {prompt: `${a} + ${b}`, answer: a + b};
+    if (rng() < 0.5) return { prompt: `${a} + ${b}`, answer: a + b };
     const [hi, lo] = a >= b ? [a, b] : [b, a];
-    return {prompt: `${hi} − ${lo}`, answer: hi - lo};
+    return { prompt: `${hi} − ${lo}`, answer: hi - lo };
   }
   if (difficulty === 'medium') {
     const kind = int(rng, 0, 2);
     if (kind === 0) {
       const a = int(rng, 12, 89);
       const b = int(rng, 12, 89);
-      return {prompt: `${a} + ${b}`, answer: a + b};
+      return { prompt: `${a} + ${b}`, answer: a + b };
     }
     if (kind === 1) {
       const a = int(rng, 40, 99);
       const b = int(rng, 11, a - 1);
-      return {prompt: `${a} − ${b}`, answer: a - b};
+      return { prompt: `${a} − ${b}`, answer: a - b };
     }
     const a = int(rng, 3, 12);
     const b = int(rng, 3, 9);
-    return {prompt: `${a} × ${b}`, answer: a * b};
+    return { prompt: `${a} × ${b}`, answer: a * b };
   }
   const a = int(rng, 12, 29);
   const b = int(rng, 3, 9);
-  const c = int(rng, 5, 60);
-  if (rng() < 0.5) return {prompt: `${a} × ${b} + ${c}`, answer: a * b + c};
-  return {prompt: `${a} × ${b} − ${c}`, answer: a * b - c};
+  if (rng() < 0.5) {
+    const c = int(rng, 5, 60);
+    return { prompt: `${a} × ${b} + ${c}`, answer: a * b + c };
+  }
+  // Keep answers positive: a sleepy user should never have to reason about negatives.
+  const c = int(rng, 5, Math.min(60, a * b - 1));
+  return { prompt: `${a} × ${b} − ${c}`, answer: a * b - c };
 }
 
 /** Plausible wrong answers near the correct one (off-by-one, off-by-ten, sign slips). */
@@ -48,7 +56,8 @@ function distractors(answer: number, rng: Rng): number[] {
   const result = new Set<number>();
   let guard = 0;
   while (result.size < 3 && guard++ < 100) {
-    const offset = offsets[int(rng, 0, offsets.length - 1)] * (rng() < 0.5 ? -1 : 1);
+    const offset =
+      offsets[int(rng, 0, offsets.length - 1)] * (rng() < 0.5 ? -1 : 1);
     const candidate = answer + offset;
     if (candidate >= 0 && candidate !== answer) result.add(candidate);
   }
@@ -69,9 +78,16 @@ function shuffle<T>(items: T[], rng: Rng): T[] {
   return a;
 }
 
-export function generateQuestion(difficulty: Difficulty, rng: Rng = Math.random): Question {
-  const {prompt, answer} = makePrompt(difficulty, rng);
-  return {prompt, answer, options: shuffle([answer, ...distractors(answer, rng)], rng)};
+export function generateQuestion(
+  difficulty: Difficulty,
+  rng: Rng = Math.random,
+): Question {
+  const { prompt, answer } = makePrompt(difficulty, rng);
+  return {
+    prompt,
+    answer,
+    options: shuffle([answer, ...distractors(answer, rng)], rng),
+  };
 }
 
 export function toDifficulty(value: string): Difficulty {
@@ -85,11 +101,18 @@ export type ChallengeProgress = {
   current: Question;
 };
 
-export function parseProgress(raw: string | null, sessionStartedAt: number): ChallengeProgress | null {
+export function parseProgress(
+  raw: string | null,
+  sessionStartedAt: number,
+): ChallengeProgress | null {
   if (!raw) return null;
   try {
     const p = JSON.parse(raw) as ChallengeProgress;
-    if (p.sessionStartedAt !== sessionStartedAt || !Array.isArray(p.current?.options)) return null;
+    if (
+      p.sessionStartedAt !== sessionStartedAt ||
+      !Array.isArray(p.current?.options)
+    )
+      return null;
     return p;
   } catch {
     return null;
