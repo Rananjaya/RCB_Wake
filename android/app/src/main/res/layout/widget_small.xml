@@ -22,7 +22,6 @@
         style="@style/WidgetText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
         android:textSize="38sp" />
     <TextView
         style="@style/WidgetText.Small"

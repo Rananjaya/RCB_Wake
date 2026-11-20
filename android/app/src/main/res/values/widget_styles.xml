@@ -1,22 +1,20 @@
 <resources>
-    <style name="WidgetText">
+    <!-- Widget text follows the device's system font and font-size settings: DeviceDefault text
+         appearances, no fixed font family, and sizes in sp. -->
+    <style name="WidgetText" parent="@android:style/TextAppearance.DeviceDefault">
         <item name="android:textColor">#FFFFFFFF</item>
         <item name="android:shadowColor">#99000000</item>
         <item name="android:shadowRadius">8</item>
         <item name="android:shadowDy">1</item>
-        <item name="android:fontFamily">sans-serif</item>
         <item name="android:includeFontPadding">false</item>
     </style>
     <style name="WidgetText.Time">
         <item name="android:textStyle">bold</item>
-        <item name="android:letterSpacing">-0.02</item>
     </style>
     <style name="WidgetText.Detail">
-        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">15sp</item>
     </style>
     <style name="WidgetText.Small">
-        <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">#E6FFFFFF</item>
     </style>
