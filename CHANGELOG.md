@@ -4,6 +4,12 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.8.4] — 2026-11-22
+
+### Changed
+- While an event or alarm is "Soon", My Day pages switch automatically even when automatic
+  switching is turned off; it stops again when the event or alarm is over.
+
 ## [1.8.3] — 2026-11-22
 
 ### Changed

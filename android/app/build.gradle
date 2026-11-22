@@ -98,8 +98,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        versionCode 115
-        versionName "1.8.3"
+        versionCode 116
+        versionName "1.8.4"
     }
     signingConfigs {
         debug {

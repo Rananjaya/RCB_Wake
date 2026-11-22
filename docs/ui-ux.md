@@ -90,7 +90,8 @@ automatically, off by default); a double tap opens the app (taps go through the 
 the time between them). Each page carries its own vertical page dots on the right. From 10 minutes
 before a timed calendar event or an alarm until it starts (events: until they end), the widget
 jumps once to "Soon" on page 2 with only the item(s) that are soon (plus connected earphones);
-taps and automatic switching (if enabled) keep working, and "Soon" ends when the item is over. Launchers use horizontal swipes to change home-screen pages and widgets cannot receive them,
+pages then switch automatically even if that setting is off, taps keep working, and "Soon" (and
+its automatic switching) ends when the item is over. Launchers use horizontal swipes to change home-screen pages and widgets cannot receive them,
 so a tap is used instead of a swipe. If page 2 has nothing to show, the widget has one page and a
 tap opens the app. The greeting is refreshed at each boundary by an inexact `RTC` alarm.
 
