@@ -70,9 +70,9 @@ export const fr: Translation = {
   gradualVolumeHint: 'Commence doucement et augmente en 30 secondes',
   snooze: 'Répéter',
   snoozeMinutes: '{m} min',
-  challenge: 'Défi de réveil',
-  challengeHint:
-    'Résolvez des calculs ou scannez un code QR avant de pouvoir arrêter l’alarme',
+  challenge: 'Défi mathématique',
+  challengeHint: 'Résolvez des calculs avant de pouvoir arrêter l’alarme',
+  qrChallenge: 'Défi code QR',
   difficulty: 'Difficulté',
   difficultyEasy: 'Facile',
   difficultyMedium: 'Moyen',

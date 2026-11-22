@@ -74,9 +74,9 @@ export const en = {
   gradualVolumeHint: 'Starts quietly and rises over 30 seconds',
   snooze: 'Snooze',
   snoozeMinutes: '{m} min',
-  challenge: 'Wake-up challenge',
-  challengeHint:
-    'Solve math questions or scan a QR code before the alarm can be dismissed',
+  challenge: 'Math challenge',
+  challengeHint: 'Solve questions before the alarm can be dismissed',
+  qrChallenge: 'QR code challenge',
   difficulty: 'Difficulty',
   difficultyEasy: 'Easy',
   difficultyMedium: 'Medium',

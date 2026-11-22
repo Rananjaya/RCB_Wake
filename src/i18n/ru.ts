@@ -70,9 +70,9 @@ export const ru: Translation = {
   gradualVolumeHint: 'Начинается тихо и усиливается за 30 секунд',
   snooze: 'Отложить',
   snoozeMinutes: '{m} мин',
-  challenge: 'Задание для пробуждения',
-  challengeHint:
-    'Решите примеры или отсканируйте QR-код, чтобы выключить будильник',
+  challenge: 'Математическая задача',
+  challengeHint: 'Решите примеры, чтобы выключить будильник',
+  qrChallenge: 'Задание с QR-кодом',
   difficulty: 'Сложность',
   difficultyEasy: 'Лёгкая',
   difficultyMedium: 'Средняя',

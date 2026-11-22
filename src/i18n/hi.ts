@@ -69,9 +69,9 @@ export const hi: Translation = {
   gradualVolumeHint: 'धीमे शुरू होकर 30 सेकंड में बढ़ती है',
   snooze: 'स्नूज़',
   snoozeMinutes: '{m} मि',
-  challenge: 'जागने की चुनौती',
-  challengeHint:
-    'अलार्म बंद करने से पहले गणित के सवाल हल करें या QR कोड स्कैन करें',
+  challenge: 'गणित चुनौती',
+  challengeHint: 'अलार्म बंद करने से पहले सवाल हल करें',
+  qrChallenge: 'QR कोड चुनौती',
   difficulty: 'कठिनाई',
   difficultyEasy: 'आसान',
   difficultyMedium: 'मध्यम',

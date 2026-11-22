@@ -70,9 +70,9 @@ export const de: Translation = {
   gradualVolumeHint: 'Beginnt leise und wird in 30 Sekunden lauter',
   snooze: 'Schlummern',
   snoozeMinutes: '{m} Min.',
-  challenge: 'Weck-Aufgabe',
-  challengeHint:
-    'Löse Rechenaufgaben oder scanne einen QR-Code, bevor der Wecker beendet werden kann',
+  challenge: 'Mathe-Aufgabe',
+  challengeHint: 'Löse Rechenaufgaben, bevor der Wecker beendet werden kann',
+  qrChallenge: 'QR-Code-Aufgabe',
   difficulty: 'Schwierigkeit',
   difficultyEasy: 'Leicht',
   difficultyMedium: 'Mittel',

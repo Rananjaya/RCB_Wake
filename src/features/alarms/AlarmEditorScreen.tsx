@@ -254,93 +254,75 @@ export function AlarmEditorScreen({ navigation, route }: Props) {
             testID="challenge-toggle"
             label={t('challenge')}
             hint={t('challengeHint')}
-            value={draft.challengeEnabled}
-            onValueChange={v => update({ challengeEnabled: v })}
+            value={draft.challengeEnabled && draft.challengeType === 'math'}
+            onValueChange={v =>
+              update(
+                v
+                  ? { challengeEnabled: true, challengeType: 'math' }
+                  : { challengeEnabled: false },
+              )
+            }
           />
-          {draft.challengeEnabled && (
+          {draft.challengeEnabled && draft.challengeType === 'math' && (
             <>
               <Text
                 style={[styles.subLabel, { color: theme.colors.textSecondary }]}
               >
-                {t('challengeType')}
+                {t('difficulty')}
               </Text>
               <View style={styles.wrap}>
-                <Chip
-                  label={t('challengeMath')}
-                  selected={draft.challengeType === 'math'}
-                  onPress={() => update({ challengeType: 'math' })}
-                />
-                <Chip
-                  label={t('challengeQr')}
-                  selected={draft.challengeType === 'qr'}
-                  onPress={async () => {
-                    // Ask for the camera now, not when the alarm is ringing.
-                    const result = await PermissionsAndroid.request(
-                      PermissionsAndroid.PERMISSIONS.CAMERA,
-                    );
-                    if (result === PermissionsAndroid.RESULTS.GRANTED) {
-                      update({ challengeType: 'qr' });
-                    }
-                  }}
-                />
-                {nfcTagCount !== null && (
+                {DIFFICULTIES.map(d => (
                   <Chip
-                    label={t('challengeNfc')}
-                    selected={draft.challengeType === 'nfc'}
-                    onPress={() =>
-                      nfcTagCount > 0 && update({ challengeType: 'nfc' })
-                    }
+                    key={d.value}
+                    label={t(d.key)}
+                    selected={draft.challengeDifficulty === d.value}
+                    onPress={() => update({ challengeDifficulty: d.value })}
                   />
-                )}
+                ))}
               </View>
-              {nfcTagCount === 0 && (
-                <Text
-                  style={[
-                    styles.subLabel,
-                    { color: theme.colors.textSecondary },
-                  ]}
-                >
-                  {t('challengeNfcNeedsTag')}
-                </Text>
-              )}
-              {draft.challengeType === 'qr' && (
-                <Text
-                  style={[
-                    styles.subLabel,
-                    { color: theme.colors.textSecondary },
-                  ]}
-                >
-                  {t('challengeQrHint')}
-                </Text>
-              )}
-              {draft.challengeType === 'math' && (
-                <>
-                  <Text
-                    style={[
-                      styles.subLabel,
-                      { color: theme.colors.textSecondary },
-                    ]}
-                  >
-                    {t('difficulty')}
-                  </Text>
-                  <View style={styles.wrap}>
-                    {DIFFICULTIES.map(d => (
-                      <Chip
-                        key={d.value}
-                        label={t(d.key)}
-                        selected={draft.challengeDifficulty === d.value}
-                        onPress={() => update({ challengeDifficulty: d.value })}
-                      />
-                    ))}
-                  </View>
-                  <QuestionStepper
-                    value={draft.challengeQuestionCount}
-                    onChange={n =>
-                      update({ challengeQuestionCount: clampQuestions(n) })
-                    }
-                  />
-                </>
-              )}
+              <QuestionStepper
+                value={draft.challengeQuestionCount}
+                onChange={n =>
+                  update({ challengeQuestionCount: clampQuestions(n) })
+                }
+              />
+            </>
+          )}
+          <Divider />
+          <ToggleRow
+            testID="qr-challenge-toggle"
+            label={t('qrChallenge')}
+            hint={t('challengeQrHint')}
+            value={draft.challengeEnabled && draft.challengeType === 'qr'}
+            onValueChange={async v => {
+              if (!v) {
+                update({ challengeEnabled: false });
+                return;
+              }
+              // Ask for the camera now, not when the alarm is ringing.
+              const result = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.CAMERA,
+              );
+              if (result === PermissionsAndroid.RESULTS.GRANTED) {
+                update({ challengeEnabled: true, challengeType: 'qr' });
+              }
+            }}
+          />
+          {nfcTagCount !== null && (
+            <>
+              <Divider />
+              <ToggleRow
+                label={t('challengeNfc')}
+                hint={nfcTagCount === 0 ? t('challengeNfcNeedsTag') : undefined}
+                value={draft.challengeEnabled && draft.challengeType === 'nfc'}
+                onValueChange={v =>
+                  update(
+                    v && nfcTagCount > 0
+                      ? { challengeEnabled: true, challengeType: 'nfc' }
+                      : { challengeEnabled: false },
+                  )
+                }
+              />
             </>
           )}
         </Card>

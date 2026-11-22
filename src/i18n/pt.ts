@@ -70,9 +70,9 @@ export const pt: Translation = {
   gradualVolumeHint: 'Começa baixo e aumenta em 30 segundos',
   snooze: 'Adiar',
   snoozeMinutes: '{m} min',
-  challenge: 'Desafio para acordar',
-  challengeHint:
-    'Resolva contas ou leia um código QR antes de poder desligar o alarme',
+  challenge: 'Desafio de matemática',
+  challengeHint: 'Resolva contas antes de poder desligar o alarme',
+  qrChallenge: 'Desafio de código QR',
   difficulty: 'Dificuldade',
   difficultyEasy: 'Fácil',
   difficultyMedium: 'Médio',
