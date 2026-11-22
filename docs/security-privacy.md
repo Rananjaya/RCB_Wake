@@ -15,10 +15,17 @@ Off by default. When the user enables it in Settings → Widget weather:
 
 | What is sent | To | When |
 | --- | --- | --- |
-| Latitude and longitude rounded to 2 decimals (~1 km) — of the chosen city, or of the device's coarse location if "Use my location" is on | `https://api.open-meteo.com/v1/forecast` | When enabled, when the city or location changes, and at most every 30 min (widget update period) |
+| Latitude and longitude rounded to 2 decimals (~1 km) — of the chosen city, or of the device's coarse location if "Use my location" is on | `https://api.open-meteo.com/v1/forecast` (default) | When enabled, when the city or location changes, and at the user's refresh interval (15 min, 30 min, 1 h or 3 h; default 30 min) while a widget is on the home screen |
+| The same rounded coordinates **and the user's own API key** | `https://api.openweathermap.org/data/2.5/weather` — only if the user picks OpenWeatherMap as the provider | Same as above |
 
-No identifiers, API keys, cookies or account data are sent. Open-Meteo, like any web server, can
-see the device's IP address. Turning weather off stops all requests and deletes the cached reading.
+With Open-Meteo no identifiers, API keys, cookies or account data are sent. With OpenWeatherMap the
+user's own key is sent, so OpenWeather can associate requests with the user's OpenWeather account.
+The key is stored only in the app's device-protected settings (excluded from backup) and is never
+logged. Either provider, like any web server, can see the device's IP address. Turning weather off
+stops all requests and deletes the cached reading.
+
+The refresh is an inexact, non-waking `AlarmManager` alarm, so it never wakes the device; a refresh
+that falls due while the device sleeps runs at the next wake-up.
 
 ### Optional location
 

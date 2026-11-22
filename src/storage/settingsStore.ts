@@ -24,6 +24,10 @@ export const defaultSettings: Settings = {
   sleepReminderEnabled: false,
   sleepGoalMinutes: 480,
   sleepReminderLeadMinutes: 30,
+  widgetTextColor: 'white',
+  weatherRefreshMinutes: 30,
+  weatherProvider: 'openmeteo',
+  openWeatherMapApiKey: '',
 };
 
 type SettingsState = {

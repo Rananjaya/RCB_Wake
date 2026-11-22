@@ -33,6 +33,14 @@ data class WakeSettings(
     val sleepReminderEnabled: Boolean,
     val sleepGoalMinutes: Int,
     val sleepReminderLeadMinutes: Int,
+    /** Widget text: `white`, `material` (Material You wallpaper colours, Android 12+) or `accent`. */
+    val widgetTextColor: String = "white",
+    /** How often the widget weather is refreshed; one of [SettingsStore.WEATHER_REFRESH_MINUTES]. */
+    val weatherRefreshMinutes: Int = 30,
+    /** `openmeteo` (default, no key) or `openweathermap` (user's own API key). */
+    val weatherProvider: String = "openmeteo",
+    /** User-supplied OpenWeatherMap key; stays on the device and is only sent to OpenWeatherMap. */
+    val openWeatherMapApiKey: String = "",
     /** Device 12/24-hour preference, captured when settings are loaded. */
     val systemIs24Hour: Boolean = false,
 ) {
@@ -45,6 +53,12 @@ object SettingsStore {
     const val THEME_MIDNIGHT = "midnight"
     const val THEME_PINK = "pink"
     val THEMES = setOf(THEME_MIDNIGHT, THEME_PINK)
+    val WIDGET_TEXT_COLORS = setOf("white", "material", "accent")
+    val WEATHER_REFRESH_MINUTES = setOf(15, 30, 60, 180)
+    const val PROVIDER_OPEN_METEO = "openmeteo"
+    const val PROVIDER_OPEN_WEATHER_MAP = "openweathermap"
+    val WEATHER_PROVIDERS = setOf(PROVIDER_OPEN_METEO, PROVIDER_OPEN_WEATHER_MAP)
+    private val API_KEY = Regex("^[A-Za-z0-9]{16,64}$")
     val LANGUAGES = setOf("en", "si", "ta", "de", "ru", "es", "fr", "pt", "hi", "zh", "ja")
 
     /** Ringing-screen colours per accent: background, primary, surface for dark and light. Mirrors src/theme/themes.ts. */
@@ -83,6 +97,10 @@ object SettingsStore {
             sleepReminderEnabled = p.getBoolean("sleepReminderEnabled", false),
             sleepGoalMinutes = p.getInt("sleepGoalMinutes", 8 * 60),
             sleepReminderLeadMinutes = p.getInt("sleepReminderLeadMinutes", 30),
+            widgetTextColor = p.getString("widgetTextColor", "white")!!,
+            weatherRefreshMinutes = p.getInt("weatherRefreshMinutes", 30),
+            weatherProvider = p.getString("weatherProvider", PROVIDER_OPEN_METEO)!!,
+            openWeatherMapApiKey = p.getString("openWeatherMapApiKey", "")!!,
             systemIs24Hour = DateFormat.is24HourFormat(context),
         )
     }
@@ -101,6 +119,11 @@ object SettingsStore {
         require(!s.weatherEnabled || s.weatherCity.isNotBlank() || s.weatherUseLocation) { "weather city required" }
         require(s.sleepGoalMinutes in 240..720) { "sleep goal 4-12 h" }
         require(s.sleepReminderLeadMinutes in 0..120) { "reminder lead 0-120 min" }
+        require(s.widgetTextColor in WIDGET_TEXT_COLORS) { "widget text colour" }
+        require(s.weatherRefreshMinutes in WEATHER_REFRESH_MINUTES) { "weather refresh interval" }
+        require(s.weatherProvider in WEATHER_PROVIDERS) { "weather provider" }
+        require(s.openWeatherMapApiKey.isEmpty() || API_KEY.matches(s.openWeatherMapApiKey)) { "API key" }
+        require(!s.weatherEnabled || s.weatherProvider != PROVIDER_OPEN_WEATHER_MAP || s.openWeatherMapApiKey.isNotEmpty()) { "API key required" }
         AppStorage.settings(context).edit()
             .putString("theme", s.theme)
             .putString("accentColor", s.accentColor)
@@ -123,6 +146,10 @@ object SettingsStore {
             .putBoolean("sleepReminderEnabled", s.sleepReminderEnabled)
             .putInt("sleepGoalMinutes", s.sleepGoalMinutes)
             .putInt("sleepReminderLeadMinutes", s.sleepReminderLeadMinutes)
+            .putString("widgetTextColor", s.widgetTextColor)
+            .putInt("weatherRefreshMinutes", s.weatherRefreshMinutes)
+            .putString("weatherProvider", s.weatherProvider)
+            .putString("openWeatherMapApiKey", s.openWeatherMapApiKey.trim())
             .commit()
         return load(context)
     }

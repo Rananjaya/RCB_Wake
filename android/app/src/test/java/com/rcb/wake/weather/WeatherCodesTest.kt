@@ -23,4 +23,18 @@ class WeatherCodesTest {
         assertEquals("86°F", WeatherCodes.formatTemperature(30.0, "f"))
         assertEquals("-2°C", WeatherCodes.formatTemperature(-2.4, "c"))
     }
+
+    @Test
+    fun mapsOpenWeatherMapIds() {
+        assertEquals(WeatherCondition.THUNDERSTORM, WeatherCodes.openWeatherCondition(211))
+        assertEquals(WeatherCondition.DRIZZLE, WeatherCodes.openWeatherCondition(301))
+        assertEquals(WeatherCondition.RAIN, WeatherCodes.openWeatherCondition(501))
+        assertEquals(WeatherCondition.SHOWERS, WeatherCodes.openWeatherCondition(521))
+        assertEquals(WeatherCondition.SNOW, WeatherCodes.openWeatherCondition(601))
+        assertEquals(WeatherCondition.SNOW_SHOWERS, WeatherCodes.openWeatherCondition(621))
+        assertEquals(WeatherCondition.FOG, WeatherCodes.openWeatherCondition(741))
+        assertEquals(WeatherCondition.CLEAR, WeatherCodes.openWeatherCondition(800))
+        assertEquals(WeatherCondition.PARTLY_CLOUDY, WeatherCodes.openWeatherCondition(802))
+        assertEquals(WeatherCondition.CLOUDY, WeatherCodes.openWeatherCondition(804))
+    }
 }

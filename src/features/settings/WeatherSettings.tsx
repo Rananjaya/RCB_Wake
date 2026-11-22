@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { PermissionsAndroid, StyleSheet, Text, View } from 'react-native';
+import {
+  PermissionsAndroid,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
+  Button,
   Card,
   Chip,
   Divider,
@@ -31,6 +38,11 @@ export function WeatherSettings() {
   const settings = useSettingsStore(s => s.settings);
   const update = useSettingsStore(s => s.update);
   const [weather, setWeather] = useState<WeatherInfo | null>(null);
+  const [apiKey, setApiKey] = useState(settings.openWeatherMapApiKey);
+  // Choosing OpenWeatherMap only opens the key field; it is saved together with a valid key.
+  const [owmDraft, setOwmDraft] = useState(false);
+  const owm = settings.weatherProvider === 'openweathermap' || owmDraft;
+  const keyValid = /^[A-Za-z0-9]{16,64}$/.test(apiKey.trim());
 
   useEffect(() => {
     if (!settings.weatherEnabled) {
@@ -45,7 +57,26 @@ export function WeatherSettings() {
     settings.weatherEnabled,
     settings.weatherCity,
     settings.weatherUseLocation,
+    settings.weatherProvider,
+    settings.openWeatherMapApiKey,
   ]);
+
+  const chooseProvider = (provider: string) => {
+    if (provider === 'openweathermap' && !settings.openWeatherMapApiKey) {
+      setOwmDraft(true);
+      return;
+    }
+    setOwmDraft(false);
+    update({ weatherProvider: provider }).catch(() => undefined);
+  };
+
+  const saveKey = () =>
+    update({
+      openWeatherMapApiKey: apiKey.trim(),
+      weatherProvider: 'openweathermap',
+    })
+      .then(() => setOwmDraft(false))
+      .catch(() => undefined);
 
   /** Coarse location only; asked at the moment the user opts in, never in the background. */
   const toggleLocation = async (on: boolean) => {
@@ -117,6 +148,87 @@ export function WeatherSettings() {
                 onPress={() => update({ temperatureUnit: 'f' })}
               />
             </View>
+            <Divider />
+            <View style={styles.unitRow}>
+              <Text style={[styles.label, { color: theme.colors.text }]}>
+                {t('weatherRefresh')}
+              </Text>
+            </View>
+            <View style={styles.chips}>
+              {[15, 30, 60, 180].map(m => (
+                <Chip
+                  key={m}
+                  label={
+                    m < 60
+                      ? t('snoozeMinutes', { m })
+                      : t('hoursShort', { h: m / 60 })
+                  }
+                  selected={settings.weatherRefreshMinutes === m}
+                  onPress={() => update({ weatherRefreshMinutes: m })}
+                />
+              ))}
+            </View>
+            <Divider />
+            <View style={styles.unitRow}>
+              <Text style={[styles.label, { color: theme.colors.text }]}>
+                {t('weatherProvider')}
+              </Text>
+            </View>
+            <View style={styles.chips}>
+              <Chip
+                label={t('providerOpenMeteo')}
+                selected={!owm}
+                onPress={() => chooseProvider('openmeteo')}
+              />
+              <Chip
+                label={t('providerOpenWeatherMap')}
+                selected={owm}
+                onPress={() => chooseProvider('openweathermap')}
+              />
+            </View>
+            {owm && (
+              <View style={styles.keyBox}>
+                <Text style={[styles.label, { color: theme.colors.text }]}>
+                  {t('owmApiKey')}
+                </Text>
+                <Text
+                  style={[styles.hint, { color: theme.colors.textSecondary }]}
+                >
+                  {t('owmApiKeyHint')}
+                </Text>
+                <TextInput
+                  value={apiKey}
+                  onChangeText={setApiKey}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  maxLength={64}
+                  placeholder="••••••••••••••••"
+                  placeholderTextColor={theme.colors.textSecondary}
+                  accessibilityLabel={t('owmApiKey')}
+                  style={[
+                    styles.input,
+                    {
+                      backgroundColor: theme.colors.elevated,
+                      color: theme.colors.text,
+                    },
+                  ]}
+                />
+                {apiKey.length > 0 && !keyValid && (
+                  <Text style={[styles.hint, { color: theme.colors.danger }]}>
+                    {t('owmApiKeyInvalid')}
+                  </Text>
+                )}
+                <Button
+                  label={t('owmSave')}
+                  disabled={
+                    !keyValid ||
+                    apiKey.trim() === settings.openWeatherMapApiKey
+                  }
+                  onPress={saveKey}
+                />
+              </View>
+            )}
             <Text
               style={[styles.status, { color: theme.colors.textSecondary }]}
             >
@@ -128,6 +240,8 @@ export function WeatherSettings() {
                     ),
                     city: weather.city || t('currentLocation'),
                   })
+                : owm
+                ? t('owmNoWeather')
                 : t('weatherNotYet')}
             </Text>
             <Text
@@ -136,7 +250,7 @@ export function WeatherSettings() {
                 { color: theme.colors.textSecondary },
               ]}
             >
-              {t('weatherAttribution')}
+              {owm ? t('owmAttribution') : t('weatherAttribution')}
             </Text>
           </>
         )}
@@ -154,6 +268,15 @@ const styles = StyleSheet.create({
     minHeight: 56,
   },
   label: { flex: 1, fontSize: 16, fontWeight: '500' },
+  chips: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+    paddingBottom: spacing.md,
+  },
+  keyBox: { gap: spacing.sm, paddingBottom: spacing.md },
+  hint: { fontSize: 13 },
+  input: { borderRadius: 12, paddingHorizontal: spacing.lg, height: 48 },
   status: { fontSize: 14, paddingTop: spacing.sm },
   attribution: { fontSize: 12, paddingVertical: spacing.sm },
 });

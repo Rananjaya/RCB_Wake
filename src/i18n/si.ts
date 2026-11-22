@@ -184,7 +184,7 @@ export const si: Strings = {
   widgetWeather: 'විජට් කාලගුණය',
   weatherToggle: 'ඔරලෝසු විජට් එකේ කාලගුණය පෙන්වන්න',
   weatherHint:
-    'පෙරනිමියෙන් අක්‍රියයි. සක්‍රිය කළ විට, තෝරාගත් නගරයේ ස්ථානය පමණක් ආසන්න වශයෙන් විනාඩි 30කට වරක් Open-Meteo වෙත යවයි.',
+    'Off by default. When on, only the chosen location is sent to your weather provider, at the interval you choose.',
   weatherCity: 'නගරය',
   chooseCity: 'නගරයක් තෝරන්න',
   weatherUseLocation: 'මගේ ස්ථානය භාවිත කරන්න',
@@ -198,6 +198,26 @@ export const si: Strings = {
   weatherNow: '{city} හි {temp}',
   weatherNotYet: 'පළමු යාවත්කාලීනය බලාපොරොත්තුවෙන්…',
   weatherAttribution: 'කාලගුණ දත්ත Open-Meteo.com (CC BY 4.0) මගින්',
+  widgetSection: 'Home-screen widget',
+  widgetTextColor: 'Text colour',
+  widgetTextColorHint:
+    'Material You uses colours from your wallpaper (Android 12 and newer).',
+  widgetColorWhite: 'White',
+  widgetColorMaterial: 'Material You',
+  widgetColorAccent: 'App accent',
+  weatherRefresh: 'Update every',
+  hoursShort: '{h} h',
+  weatherProvider: 'Provider',
+  providerOpenMeteo: 'Open-Meteo',
+  providerOpenWeatherMap: 'OpenWeatherMap',
+  owmApiKey: 'OpenWeatherMap API key',
+  owmApiKeyHint:
+    'Use your own free key from openweathermap.org. It is stored only on this device and sent only to OpenWeatherMap.',
+  owmApiKeyInvalid: 'A key is 16 to 64 letters and numbers.',
+  owmSave: 'Save key',
+  owmNoWeather:
+    'No weather yet. New keys can take a while to activate; check the key if this persists.',
+  owmAttribution: 'Weather data provided by OpenWeather',
 
   sleepReminder: 'නින්ද සිහිකැඳවීම',
   sleepReminderToggle: 'නින්දට යාමට මතක් කරන්න',
@@ -245,7 +265,7 @@ export const si: Strings = {
   privacyPointLocal:
     'Alarms, timers, cities and settings are stored only on this phone.',
   privacyPointOffline:
-    'RCB Wake works offline. The only network use is optional widget weather from Open-Meteo, off by default.',
+    'RCB Wake works offline. The only network use is optional widget weather, off by default, from Open-Meteo or (with your own key) OpenWeatherMap.',
   privacyPointTracking: 'No accounts, analytics, ads or tracking.',
   privacyPointBackup:
     'Your data is excluded from cloud backup and device transfer.',

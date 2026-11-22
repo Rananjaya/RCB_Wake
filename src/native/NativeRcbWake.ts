@@ -211,6 +211,13 @@ export type Settings = {
   sleepGoalMinutes: number;
   /** 0-120 */
   sleepReminderLeadMinutes: number;
+  /** Widget text: `white` | `material` (Material You, Android 12+) | `accent` */
+  widgetTextColor: string;
+  /** 15 | 30 | 60 | 180 */
+  weatherRefreshMinutes: number;
+  /** `openmeteo` (default, no key) | `openweathermap` (user's own API key) */
+  weatherProvider: string;
+  openWeatherMapApiKey: string;
 };
 
 export type WeatherInfo = {

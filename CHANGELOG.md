@@ -19,10 +19,17 @@ All notable changes to RCB Wake are documented here. The format follows
 - World clock with about 100 cities.
 - Bedtime sleep reminder.
 - Home-screen clock widget with optional Open-Meteo weather and optional coarse location.
+- Optional OpenWeatherMap weather with the user's own API key, and a selectable weather refresh
+  interval (15 min, 30 min, 1 h, 3 h).
+- Widget text colour: white, Material You (Android 12+) or the app accent.
 - Midnight Purple and Pink Dream themes, accent colours.
 - English, Sinhala, Tamil, German, Russian, Spanish, French, Portuguese, Hindi, Chinese
   (Simplified) and Japanese.
 - Bundled original alarm tones and weather icons.
+
+### Fixed
+- Timer and Pomodoro countdowns no longer jump back a second or more when started.
+- Widget layout and clock size on launchers that do not report exact widget sizes (Xiaomi HyperOS).
 
 ### Security
 - No analytics, ads or tracking; data excluded from backups; immutable PendingIntents;

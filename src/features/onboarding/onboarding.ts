@@ -5,7 +5,7 @@ import { engine } from '../../services/engine';
  * Current privacy agreement version. Increase it when the agreement changes materially; users are
  * then asked to accept again on next launch.
  */
-export const PRIVACY_AGREEMENT_VERSION = 1;
+export const PRIVACY_AGREEMENT_VERSION = 2;
 
 const KEY_PRIVACY = 'privacy_ack_version';
 const KEY_TUTORIAL = 'tutorial_done';

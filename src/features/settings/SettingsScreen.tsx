@@ -35,6 +35,7 @@ import { CalendarSettings } from './CalendarSettings';
 import { NfcTagSettings } from './NfcTagSettings';
 import { SleepReminderSettings } from './SleepReminderSettings';
 import { WeatherSettings } from './WeatherSettings';
+import { WidgetSettings } from './WidgetSettings';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Settings'>;
 
@@ -188,6 +189,8 @@ function SettingsContent({ navigation }: Props) {
         <SleepReminderSettings />
 
         <NfcTagSettings />
+
+        <WidgetSettings />
 
         <WeatherSettings />
 

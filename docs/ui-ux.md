@@ -61,7 +61,7 @@ toolbar. Modal screens: alarm editor (modal), city picker, Settings, About, math
 | Timer | Timers / Pomodoro switch. Timers: cards with countdown and progress bar, keypad entry, presets. Pomodoro: progress ring, phase, round dots, Reset/Start/Skip, session lengths |
 | Stopwatch | Large elapsed time with centiseconds, current lap, lap list with fastest/slowest highlighting |
 | World clock | Large local time, city cards with day/night icon, relative day, time difference |
-| Settings | Always English. Theme cards, accent swatches, time format, language, alarm defaults, sleep reminder, widget weather, reliability status, About |
+| Settings | Always English. Theme cards, accent swatches, time format, language, alarm defaults, sleep reminder, widget text colour, widget weather (provider, API key, refresh interval), reliability status, About |
 
 ## Home-screen widget
 
@@ -70,6 +70,12 @@ Layouts by size: **bar** (time + weather), **small** (stacked hour/minute + date
 (time, date, weather), **wide** (time + next alarm | weather + date), **large** (time, date +
 weather, next alarm). Weather icons are original 3D-style artwork (gradient sun, translucent cloud,
 moon, rain, snow, storm, fog, showers).
+
+The clock text auto-sizes to the cell. On Android 12+ the launcher picks the layout from a size
+map; launchers that do not report exact sizes (Xiaomi HyperOS, many third-party launchers) get one
+layout chosen from the reported minimum width and height. Text colour (Settings → Home-screen
+widget) is white, Material You (wallpaper `system_accent` tones, Android 12+, follows wallpaper
+changes live) or the app's accent colour.
 
 ## Localisation
 

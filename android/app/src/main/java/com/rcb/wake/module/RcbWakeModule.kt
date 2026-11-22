@@ -669,6 +669,10 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 sleepReminderEnabled = settings.getBoolean("sleepReminderEnabled"),
                 sleepGoalMinutes = settings.getDouble("sleepGoalMinutes").toInt(),
                 sleepReminderLeadMinutes = settings.getDouble("sleepReminderLeadMinutes").toInt(),
+                widgetTextColor = if (settings.hasKey("widgetTextColor")) settings.getString("widgetTextColor").orEmpty() else "white",
+                weatherRefreshMinutes = if (settings.hasKey("weatherRefreshMinutes")) settings.getDouble("weatherRefreshMinutes").toInt() else 30,
+                weatherProvider = settings.getString("weatherProvider") ?: SettingsStore.PROVIDER_OPEN_METEO,
+                openWeatherMapApiKey = settings.getString("openWeatherMapApiKey").orEmpty().trim(),
             ),
         )
         onWeatherSettingsSaved(saved)
@@ -701,12 +705,17 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putBoolean("sleepReminderEnabled", s.sleepReminderEnabled)
         putInt("sleepGoalMinutes", s.sleepGoalMinutes)
         putInt("sleepReminderLeadMinutes", s.sleepReminderLeadMinutes)
+        putString("widgetTextColor", s.widgetTextColor)
+        putInt("weatherRefreshMinutes", s.weatherRefreshMinutes)
+        putString("weatherProvider", s.weatherProvider)
+        putString("openWeatherMapApiKey", s.openWeatherMapApiKey)
     }
 
     // ---- Weather (opt-in) ----
 
     /** Disabling weather deletes the cached reading; enabling or changing city fetches in the background. */
     private fun onWeatherSettingsSaved(s: WakeSettings) {
+        ClockWidgetProvider.scheduleWeatherRefresh(context)
         if (!s.weatherUseLocation) DeviceLocation.clear(context)
         if (!s.weatherEnabled) {
             WeatherRepository.clear(context)

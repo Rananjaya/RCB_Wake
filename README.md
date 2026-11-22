@@ -30,8 +30,9 @@ timer, a stopwatch, a world clock and a home-screen clock widget. Offline-first 
 - **Stopwatch.** Laps with fastest and slowest highlighted.
 - **World clock.** About 100 cities, day/night, time difference, daylight-saving aware.
 - **Bedtime reminder.** A nudge to go to bed based on your next alarm and sleep goal.
-- **Home-screen widget.** Frameless, resizable clock with date, next alarm, and optional weather
-  and next calendar event (Google Calendar, RCB Calendar or any calendar on the device).
+- **Home-screen widget.** Frameless, resizable clock with date, next alarm, text colour (white,
+  Material You or accent), optional weather (Open-Meteo, or OpenWeatherMap with your own key, at an
+  interval you choose) and next calendar event (Google Calendar, RCB Calendar or any calendar on the device).
 - **Themes.** Midnight Purple (default) and Pink Dream, plus accent colours.
 - **Languages.** English, Sinhala, Tamil, German, Russian, Spanish, French, Portuguese, Hindi,
   Chinese (Simplified) and Japanese.
@@ -43,7 +44,8 @@ on your device and are excluded from cloud backup.
 
 The **only** network use is the optional widget weather, which is **off by default**. When you turn
 it on, the coordinates of the city you choose — or your approximate location (rounded to about
-1 km) if you allow it — are sent to [Open-Meteo](https://open-meteo.com). Details:
+1 km) if you allow it — are sent to [Open-Meteo](https://open-meteo.com), or, if you choose it, to
+[OpenWeatherMap](https://openweathermap.org) together with your own API key. Details:
 [docs/security-privacy.md](docs/security-privacy.md).
 
 ## Permissions
@@ -117,4 +119,5 @@ acquiring the project.
 Copyright 2026 Rananjaya. See [NOTICE](NOTICE).
 
 Third-party components remain under their own licenses: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-Weather data by [Open-Meteo.com](https://open-meteo.com) (CC BY 4.0).
+Weather data by [Open-Meteo.com](https://open-meteo.com) (CC BY 4.0), or by
+[OpenWeather](https://openweathermap.org) when that provider is selected.

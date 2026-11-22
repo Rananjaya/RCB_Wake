@@ -71,3 +71,15 @@ permission. This makes RCB Wake *source-available* rather than OSI open source.
 ### ADR-015 · Bundled tones are synthesised
 To avoid redistribution questions, alarm tones are generated from sine waves by
 `scripts/generate-tones.py`.
+
+### ADR-016 · Optional OpenWeatherMap with the user's own key
+Some users prefer OpenWeatherMap. It requires an API key, and shipping a shared key would leak it
+and tie every user to the maintainer's account, so users enter their own (free tier is enough).
+Open-Meteo stays the default. Refresh interval is user-selectable (15 min – 3 h) and driven by an
+inexact, non-waking alarm, because the widget `updatePeriodMillis` cannot go below 30 minutes.
+
+### ADR-017 · Widget layout fallback for launchers without exact sizes
+On Android 12+ the widget sends a size map, and the launcher picks the layout. Launchers that do
+not report `OPTION_APPWIDGET_SIZES` (seen on Xiaomi HyperOS) fall back to the smallest entry, so
+the provider then chooses one layout from the reported min width and height instead. The clock
+text auto-sizes so it fits any cell size.

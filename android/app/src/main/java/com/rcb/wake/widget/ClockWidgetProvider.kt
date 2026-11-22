@@ -1,13 +1,16 @@
 package com.rcb.wake.widget
 
+import android.app.AlarmManager
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.SizeF
 import android.view.View
 import android.widget.RemoteViews
@@ -15,6 +18,7 @@ import com.rcb.wake.MainActivity
 import com.rcb.wake.R
 import com.rcb.wake.alarm.AlarmController
 import com.rcb.wake.notification.Localized
+import com.rcb.wake.storage.AppStorage
 import com.rcb.wake.storage.SettingsStore
 import com.rcb.wake.weather.WeatherCondition
 import com.rcb.wake.weather.WeatherCodes
@@ -32,8 +36,15 @@ class ClockWidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
         render(context, manager, ids)
+        scheduleWeatherRefresh(context)
         refreshWeatherIfStale(context)
     }
+
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == ACTION_REFRESH_WEATHER) refreshWeatherIfStale(context) else super.onReceive(context, intent)
+    }
+
+    override fun onDisabled(context: Context) = scheduleWeatherRefresh(context)
 
     override fun onAppWidgetOptionsChanged(context: Context, manager: AppWidgetManager, id: Int, options: Bundle) {
         render(context, manager, intArrayOf(id))
@@ -68,9 +79,45 @@ class ClockWidgetProvider : AppWidgetProvider() {
         MEDIUM(R.layout.widget_medium, splitClock = false, date = true, weather = true, alarm = false, event = true),
         WIDE(R.layout.widget_wide, splitClock = false, date = true, weather = true, alarm = true, event = true),
         LARGE(R.layout.widget_large, splitClock = false, date = true, weather = true, alarm = true, event = true),
+        ;
+
+        val primaryText get() = if (splitClock) listOf(R.id.widget_hour, R.id.widget_minute) else listOf(R.id.widget_time)
+        val secondaryText get() = buildList {
+            if (splitClock) add(R.id.widget_dot)
+            if (date) add(R.id.widget_date)
+            if (weather) add(R.id.widget_weather_temp)
+            if (alarm) add(R.id.widget_alarm)
+            if (event) add(R.id.widget_event)
+        }
     }
 
     companion object {
+        const val ACTION_REFRESH_WEATHER = "com.rcb.wake.action.REFRESH_WEATHER"
+        private const val SCHEDULED_KEY = "weather_refresh_scheduled_minutes"
+
+        /**
+         * Inexact, non-waking repeating alarm at the user's weather interval while weather is on and
+         * a widget exists. It never wakes the device; a refresh due while asleep runs on next wake.
+         */
+        fun scheduleWeatherRefresh(context: Context) {
+            val settings = SettingsStore.load(context)
+            val hasWidget = AppWidgetManager.getInstance(context)
+                .getAppWidgetIds(ComponentName(context, ClockWidgetProvider::class.java)).isNotEmpty()
+            val minutes = if (settings.weatherEnabled && hasWidget) settings.weatherRefreshMinutes else 0
+            val state = AppStorage.state(context)
+            val intent = Intent(context, ClockWidgetProvider::class.java).setAction(ACTION_REFRESH_WEATHER)
+            val existing = PendingIntent.getBroadcast(context, 901, intent, PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE)
+            // Re-arming would restart the countdown, so leave an alarm with the same interval alone.
+            if (existing != null && state.getInt(SCHEDULED_KEY, 0) == minutes) return
+            val alarms = context.getSystemService(AlarmManager::class.java)
+            existing?.let { alarms.cancel(it); it.cancel() }
+            state.edit().putInt(SCHEDULED_KEY, minutes).apply()
+            if (minutes == 0) return
+            val interval = minutes * 60_000L
+            val pending = PendingIntent.getBroadcast(context, 901, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            alarms.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + interval, interval, pending)
+        }
+
         fun updateAll(context: Context) {
             val manager = AppWidgetManager.getInstance(context)
             val ids = manager.getAppWidgetIds(ComponentName(context, ClockWidgetProvider::class.java))
@@ -90,7 +137,17 @@ class ClockWidgetProvider : AppWidgetProvider() {
             val content = WidgetContent.load(context)
             CalendarEvents.scheduleRefresh(context, content.event)
             for (id in ids) {
-                val views = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val options = manager.getAppWidgetOptions(id)
+                val sizes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    @Suppress("DEPRECATION")
+                    options.getParcelableArrayList<SizeF>(AppWidgetManager.OPTION_APPWIDGET_SIZES)
+                } else {
+                    null
+                }
+                // Launchers that report their exact sizes (Pixel) get a size map and switch layouts
+                // themselves. Others (Xiaomi HyperOS, many third-party launchers) leave the sizes out,
+                // and the size map then falls back to the smallest entry, so pick from min/max instead.
+                val views = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !sizes.isNullOrEmpty()) {
                     RemoteViews(
                         mapOf(
                             SizeF(100f, 100f) to build(context, Layout.SMALL, content),
@@ -101,9 +158,9 @@ class ClockWidgetProvider : AppWidgetProvider() {
                         ),
                     )
                 } else {
-                    val options = manager.getAppWidgetOptions(id)
+                    // Portrait uses min width and max height; take the smaller pair so nothing clips.
                     val w = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 250)
-                    val h = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT, 110)
+                    val h = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 110)
                     build(context, layoutFor(w, h), content)
                 }
                 manager.updateAppWidget(id, views)
@@ -139,6 +196,8 @@ class ClockWidgetProvider : AppWidgetProvider() {
                 }
             }
 
+            applyTextColor(context, views, layout, content)
+
             val open = PendingIntent.getActivity(
                 context,
                 900,
@@ -147,6 +206,22 @@ class ClockWidgetProvider : AppWidgetProvider() {
             )
             views.setOnClickPendingIntent(R.id.widget_root, open)
             return views
+        }
+
+        /** White by default (styles), Material You wallpaper tones on Android 12+, or the app accent. */
+        private fun applyTextColor(context: Context, views: RemoteViews, layout: Layout, content: WidgetContent) {
+            when {
+                content.textColor == "material" && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+                    // Resource ids resolve in the launcher, so colours follow wallpaper changes live.
+                    layout.primaryText.forEach { views.setColorStateList(it, "setTextColor", android.R.color.system_accent1_100) }
+                    layout.secondaryText.forEach { views.setColorStateList(it, "setTextColor", android.R.color.system_accent2_50) }
+                }
+                content.textColor == "accent" -> {
+                    val color = Color.parseColor(content.accentHex)
+                    layout.primaryText.forEach { views.setTextColor(it, color) }
+                    layout.secondaryText.forEach { views.setTextColor(it, color) }
+                }
+            }
         }
 
         /** TextClock uses format12 or format24 according to the device's live 12/24-hour setting. */
@@ -180,6 +255,10 @@ data class WidgetContent(
     val weatherDescription: String,
     val event: CalendarEvent?,
     val eventText: String?,
+    /** `white`, `material` or `accent`. */
+    val textColor: String = "white",
+    /** Bright accent for text on the wallpaper. */
+    val accentHex: String = "#A855F7",
 ) {
     /** 12/24-hour TextClock patterns: both when following the device, otherwise the forced one. */
     fun pattern(twelve: String, twentyFour: String): Pair<String, String> = when (timeFormat) {
@@ -221,6 +300,9 @@ data class WidgetContent(
                 weatherDescription = description,
                 event = event,
                 eventText = eventText,
+                textColor = settings.widgetTextColor,
+                accentHex = SettingsStore.ACCENTS[settings.accentColor]?.darkPrimary
+                    ?: if (settings.theme == SettingsStore.THEME_PINK) "#F49AC1" else "#A855F7",
             )
         }
 

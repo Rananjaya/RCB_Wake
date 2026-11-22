@@ -28,6 +28,7 @@ class SystemEventReceiver : BroadcastReceiver() {
                 // Resource ids change between app versions; re-render so the launcher drops
                 // RemoteViews that reference stale drawables.
                 ClockWidgetProvider.updateAll(context)
+                ClockWidgetProvider.scheduleWeatherRefresh(context)
                 SleepReminder.reschedule(context)
             } finally {
                 pending.finish()
