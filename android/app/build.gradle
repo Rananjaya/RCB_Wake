@@ -122,9 +122,14 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            // Uses the private release key when RCB_WAKE_SIGNING_PROPERTIES points to it; otherwise
+            // falls back to the debug key for local testing only (Google Play rejects such builds).
+            if (releaseSigning != null) {
+                signingConfig signingConfigs.release
+            } else {
+                logger.warn("RCB Wake: release signing properties not found; signing the release build with the DEBUG key (not for distribution).")
+                signingConfig signingConfigs.debug
+            }
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
@@ -134,6 +139,9 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    // QR wake-up challenge: offline barcode scanning (Apache-2.0).
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation("com.google.zxing:core:3.5.3")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
