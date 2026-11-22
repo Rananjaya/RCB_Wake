@@ -5,6 +5,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.media.AudioDeviceCallback
+import android.media.AudioDeviceInfo
+import android.media.AudioManager
+import android.os.Handler
+import android.os.Looper
 import android.os.UserManager
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
@@ -16,7 +21,9 @@ import com.rcb.wake.module.EngineEvents
 import com.rcb.wake.module.RcbWakePackage
 import com.rcb.wake.notification.WakeNotifications
 import com.rcb.wake.sleep.SleepReminder
+import com.rcb.wake.storage.SettingsStore
 import com.rcb.wake.widget.ClockWidgetProvider
+import com.rcb.wake.widget.GlanceWidgetProvider
 
 class MainApplication : Application(), ReactApplication {
     override val reactHost: ReactHost by lazy {
@@ -38,6 +45,14 @@ class MainApplication : Application(), ReactApplication {
                 WakeNotifications.updateNextAlarm(this, AlarmController(this).nextAlarm())
             }
         }
+        // Earphones plugged in or out (wired ones send no manifest broadcast) refresh the glance widget.
+        getSystemService(AudioManager::class.java).registerAudioDeviceCallback(
+            object : AudioDeviceCallback() {
+                override fun onAudioDevicesAdded(added: Array<out AudioDeviceInfo>) = refreshGlance()
+                override fun onAudioDevicesRemoved(removed: Array<out AudioDeviceInfo>) = refreshGlance()
+            },
+            Handler(Looper.getMainLooper()),
+        )
         // The alarm engine is Direct Boot aware, so this process can start before the user unlocks.
         // React Native is only needed for the UI, which cannot be opened until unlock.
         if (getSystemService(UserManager::class.java).isUserUnlocked) {
@@ -53,6 +68,10 @@ class MainApplication : Application(), ReactApplication {
                 IntentFilter(Intent.ACTION_USER_UNLOCKED),
             )
         }
+    }
+
+    private fun refreshGlance() {
+        if (SettingsStore.load(this).widgetShowHeadphones) GlanceWidgetProvider.updateAll(this)
     }
 
     private fun ensureReactNative() {

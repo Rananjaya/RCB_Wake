@@ -17,6 +17,7 @@
         android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
         android:maxLines="1"
+        android:text="@string/greeting_morning"
         android:textSize="24sp" />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -55,6 +56,30 @@
                 android:maxLines="1"
                 android:textSize="16sp" />
         </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/glance_headphones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/glance_headphones_icon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="5dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_widget_headphones" />
+        <TextView
+            android:id="@+id/glance_headphones_text"
+            style="@style/WidgetText.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="14sp" />
     </LinearLayout>
     <TextView
         android:id="@+id/glance_event"

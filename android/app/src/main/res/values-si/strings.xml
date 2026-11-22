@@ -64,4 +64,6 @@
     <string name="greeting_afternoon">සුබ දහවලක්</string>
     <string name="greeting_evening">සුබ සන්ධ්‍යාවක්</string>
     <string name="greeting_night">සුබ රාත්‍රියක්</string>
+    <string name="headphones_wired">වයර් සහිත හෙඩ්ෆෝන්</string>
+    <string name="headphones_bluetooth">බ්ලූටූත් හෙඩ්ෆෝන්</string>
 </resources>

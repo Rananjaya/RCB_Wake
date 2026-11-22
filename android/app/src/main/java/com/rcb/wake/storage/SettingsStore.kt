@@ -37,6 +37,8 @@ data class WakeSettings(
     val widgetTextColor: String = "white",
     /** Show the city / village name next to the widget temperature. */
     val widgetShowPlace: Boolean = true,
+    /** Show connected earphones (name, Bluetooth battery) on the At a glance widget. */
+    val widgetShowHeadphones: Boolean = false,
     /** How often the widget weather is refreshed; one of [SettingsStore.WEATHER_REFRESH_MINUTES]. */
     val weatherRefreshMinutes: Int = 30,
     /** `openmeteo` (default, no key) or `openweathermap` (user's own API key). */
@@ -102,6 +104,7 @@ object SettingsStore {
             widgetTextColor = p.getString("widgetTextColor", "white")!!,
             weatherRefreshMinutes = p.getInt("weatherRefreshMinutes", 30),
             widgetShowPlace = p.getBoolean("widgetShowPlace", true),
+            widgetShowHeadphones = p.getBoolean("widgetShowHeadphones", false),
             weatherProvider = p.getString("weatherProvider", PROVIDER_OPEN_METEO)!!,
             openWeatherMapApiKey = p.getString("openWeatherMapApiKey", "")!!,
             systemIs24Hour = DateFormat.is24HourFormat(context),
@@ -152,6 +155,7 @@ object SettingsStore {
             .putString("widgetTextColor", s.widgetTextColor)
             .putInt("weatherRefreshMinutes", s.weatherRefreshMinutes)
             .putBoolean("widgetShowPlace", s.widgetShowPlace)
+            .putBoolean("widgetShowHeadphones", s.widgetShowHeadphones)
             .putString("weatherProvider", s.weatherProvider)
             .putString("openWeatherMapApiKey", s.openWeatherMapApiKey.trim())
             .commit()

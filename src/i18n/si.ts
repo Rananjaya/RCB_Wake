@@ -215,6 +215,9 @@ export const si: Strings = {
   weatherNotYet: 'පළමු යාවත්කාලීනය බලාපොරොත්තුවෙන්…',
   weatherAttribution: 'කාලගුණ දත්ත Open-Meteo.com (CC BY 4.0) මගින්',
   widgetSection: 'Home-screen widget',
+  widgetAdd: 'Add to home screen',
+  widgetClockName: 'Clock',
+  widgetGlanceName: 'At a glance',
   widgetTextColor: 'Text colour',
   widgetTextColorHint:
     'Material You uses colours from your wallpaper (Android 12 and newer).',
@@ -224,6 +227,9 @@ export const si: Strings = {
   widgetShowPlace: 'Show city or village',
   widgetShowPlaceHint:
     'Name of the weather location next to the temperature, on the wider widget sizes.',
+  widgetShowHeadphones: 'Show connected earphones',
+  widgetShowHeadphonesHint:
+    'Earphone name, and battery for Bluetooth earphones, on the At a glance widget. Bluetooth details need the Nearby devices permission; nothing leaves your phone.',
   weatherRefresh: 'Update every',
   hoursShort: '{h} h',
   weatherProvider: 'Provider',

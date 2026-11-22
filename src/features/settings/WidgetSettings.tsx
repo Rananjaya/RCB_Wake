@@ -1,5 +1,11 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import {
+  PermissionsAndroid,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {
   Card,
   Chip,
@@ -8,6 +14,7 @@ import {
   ToggleRow,
 } from '../../components/ui';
 import { useT, type StringKey } from '../../i18n';
+import { engine } from '../../services/engine';
 import { useSettingsStore } from '../../storage/settingsStore';
 import { useTheme } from '../../theme/useTheme';
 import { spacing } from '../../theme/themes';
@@ -31,6 +38,22 @@ export function WidgetSettings() {
     <>
       <SectionTitle>{t('widgetSection')}</SectionTitle>
       <Card style={styles.card}>
+        <Text style={[styles.label, { color: theme.colors.text }]}>
+          {t('widgetAdd')}
+        </Text>
+        <View style={styles.chips}>
+          <Chip
+            label={t('widgetClockName')}
+            selected={false}
+            onPress={() => engine.pinWidget('clock').catch(() => false)}
+          />
+          <Chip
+            label={t('widgetGlanceName')}
+            selected={false}
+            onPress={() => engine.pinWidget('glance').catch(() => false)}
+          />
+        </View>
+        <Divider />
         <Text style={[styles.label, { color: theme.colors.text }]}>
           {t('widgetTextColor')}
         </Text>
@@ -59,6 +82,21 @@ export function WidgetSettings() {
           onValueChange={v =>
             update({ widgetShowPlace: v }).catch(() => undefined)
           }
+        />
+        <Divider />
+        <ToggleRow
+          label={t('widgetShowHeadphones')}
+          hint={t('widgetShowHeadphonesHint')}
+          value={settings.widgetShowHeadphones}
+          onValueChange={async v => {
+            // Bluetooth names and battery need "Nearby devices" on Android 12+; wired works without.
+            if (v && api >= 31) {
+              await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
+              );
+            }
+            update({ widgetShowHeadphones: v }).catch(() => undefined);
+          }}
         />
       </Card>
     </>

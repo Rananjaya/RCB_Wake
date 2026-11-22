@@ -65,4 +65,6 @@
     <string name="greeting_afternoon">Good afternoon</string>
     <string name="greeting_evening">Good evening</string>
     <string name="greeting_night">Good night</string>
+    <string name="headphones_wired">Wired headphones</string>
+    <string name="headphones_bluetooth">Bluetooth headphones</string>
 </resources>

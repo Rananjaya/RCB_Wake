@@ -38,6 +38,7 @@ const defaults = {
   widgetTextColor: 'white',
   weatherRefreshMinutes: 30,
   widgetShowPlace: true,
+  widgetShowHeadphones: false,
   weatherProvider: 'openmeteo',
   openWeatherMapApiKey: '',
 };
@@ -277,6 +278,7 @@ const engine = {
   stopNfcListening: () => {},
   openNfcSettings: () => {},
   openQrScanner: () => {},
+  pinWidget: async () => false,
   getWeather: async () => null,
   updateLocation: async () => false,
   refreshWeather: async () => null,

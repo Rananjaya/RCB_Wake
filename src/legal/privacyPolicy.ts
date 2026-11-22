@@ -57,6 +57,12 @@ export const PRIVACY_POLICY_SECTIONS: PolicySection[] = [
     ],
   },
   {
+    title: 'Optional earphones on the widget',
+    paragraphs: [
+      'If you turn on “Show connected earphones”, the At a glance widget shows the name of connected wired or Bluetooth earphones and, for Bluetooth earphones, their battery level. With the Nearby devices permission the app reads this from Android on your phone; it is only displayed and is never stored or sent anywhere.',
+    ],
+  },
+  {
     title: 'Optional QR-code wake-up challenge',
     paragraphs: [
       'If you choose the QR-code challenge for an alarm and grant camera permission, the camera is used only while the scanner is open during that alarm. Images are processed on the phone to detect a QR code; no photo or video is saved or sent, and the content of the scanned code is not kept.',
@@ -66,7 +72,7 @@ export const PRIVACY_POLICY_SECTIONS: PolicySection[] = [
     title: 'Permissions',
     paragraphs: [
       'Exact alarms, notifications, full-screen notifications, run at startup, foreground service (media playback), vibration and wake lock are used so that alarms, timers and reminders ring on time, over the lock screen and after a restart.',
-      'Internet (optional weather and place search), approximate location (optional), calendar (optional) and camera (optional QR challenge) are requested only when you turn on the feature that needs them. You can withdraw any permission at any time in Android settings.',
+      'Internet (optional weather and place search), approximate location (optional), calendar (optional), camera (optional QR challenge) and nearby devices (optional earphones on the widget) are requested only when you turn on the feature that needs them. You can withdraw any permission at any time in Android settings.',
     ],
   },
   {

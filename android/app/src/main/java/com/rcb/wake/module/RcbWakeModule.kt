@@ -415,6 +415,16 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         UiThreadUtil.runOnUiThread { NfcTags.disableReader(activity) }
     }
 
+    override fun pinWidget(kind: String, promise: Promise) = guard(promise) {
+        val manager = android.appwidget.AppWidgetManager.getInstance(context)
+        val provider = android.content.ComponentName(
+            context,
+            if (kind == "glance") com.rcb.wake.widget.GlanceWidgetProvider::class.java
+            else ClockWidgetProvider::class.java,
+        )
+        promise.resolve(manager.isRequestPinAppWidgetSupported && manager.requestPinAppWidget(provider, null, null))
+    }
+
     override fun openQrScanner() {
         val intent = Intent(context, com.rcb.wake.activity.QrScanActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -678,6 +688,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 widgetTextColor = if (settings.hasKey("widgetTextColor")) settings.getString("widgetTextColor").orEmpty() else "white",
                 weatherRefreshMinutes = if (settings.hasKey("weatherRefreshMinutes")) settings.getDouble("weatherRefreshMinutes").toInt() else 30,
                 widgetShowPlace = !settings.hasKey("widgetShowPlace") || settings.getBoolean("widgetShowPlace"),
+                widgetShowHeadphones = settings.hasKey("widgetShowHeadphones") && settings.getBoolean("widgetShowHeadphones"),
                 weatherProvider = settings.getString("weatherProvider") ?: SettingsStore.PROVIDER_OPEN_METEO,
                 openWeatherMapApiKey = settings.getString("openWeatherMapApiKey").orEmpty().trim(),
             ),
@@ -715,6 +726,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putString("widgetTextColor", s.widgetTextColor)
         putInt("weatherRefreshMinutes", s.weatherRefreshMinutes)
         putBoolean("widgetShowPlace", s.widgetShowPlace)
+        putBoolean("widgetShowHeadphones", s.widgetShowHeadphones)
         putString("weatherProvider", s.weatherProvider)
         putString("openWeatherMapApiKey", s.openWeatherMapApiKey)
     }

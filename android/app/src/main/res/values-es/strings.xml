@@ -60,4 +60,6 @@
     <string name="greeting_afternoon">Buenas tardes</string>
     <string name="greeting_evening">Buenas tardes</string>
     <string name="greeting_night">Buenas noches</string>
+    <string name="headphones_wired">Auriculares con cable</string>
+    <string name="headphones_bluetooth">Auriculares Bluetooth</string>
 </resources>

@@ -64,4 +64,6 @@
     <string name="greeting_afternoon">こんにちは</string>
     <string name="greeting_evening">こんばんは</string>
     <string name="greeting_night">おやすみなさい</string>
+    <string name="headphones_wired">有線ヘッドホン</string>
+    <string name="headphones_bluetooth">Bluetoothヘッドホン</string>
 </resources>

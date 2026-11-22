@@ -64,4 +64,6 @@
     <string name="greeting_afternoon">மதிய வணக்கம்</string>
     <string name="greeting_evening">மாலை வணக்கம்</string>
     <string name="greeting_night">இனிய இரவு</string>
+    <string name="headphones_wired">வயர் ஹெட்ஃபோன்கள்</string>
+    <string name="headphones_bluetooth">ப்ளூடூத் ஹெட்ஃபோன்கள்</string>
 </resources>

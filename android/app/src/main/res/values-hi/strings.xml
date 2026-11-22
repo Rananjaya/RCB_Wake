@@ -64,4 +64,6 @@
     <string name="greeting_afternoon">शुभ दोपहर</string>
     <string name="greeting_evening">शुभ संध्या</string>
     <string name="greeting_night">शुभ रात्रि</string>
+    <string name="headphones_wired">वायर्ड हेडफ़ोन</string>
+    <string name="headphones_bluetooth">ब्लूटूथ हेडफ़ोन</string>
 </resources>

@@ -4,6 +4,13 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- At a glance widget can show connected wired or Bluetooth earphones, with the Bluetooth battery
+  level (opt-in; uses the Nearby devices permission on Android 12+).
+- "Add to home screen" buttons for both widgets in Settings.
+
 ## [1.2.0] — 2026-11-22
 
 ### Added

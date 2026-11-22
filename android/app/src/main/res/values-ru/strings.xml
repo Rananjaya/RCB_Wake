@@ -60,4 +60,6 @@
     <string name="greeting_afternoon">Добрый день</string>
     <string name="greeting_evening">Добрый вечер</string>
     <string name="greeting_night">Доброй ночи</string>
+    <string name="headphones_wired">Проводные наушники</string>
+    <string name="headphones_bluetooth">Bluetooth-наушники</string>
 </resources>

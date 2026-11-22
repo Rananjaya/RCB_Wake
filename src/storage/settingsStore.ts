@@ -27,6 +27,7 @@ export const defaultSettings: Settings = {
   widgetTextColor: 'white',
   weatherRefreshMinutes: 30,
   widgetShowPlace: true,
+  widgetShowHeadphones: false,
   weatherProvider: 'openmeteo',
   openWeatherMapApiKey: '',
 };

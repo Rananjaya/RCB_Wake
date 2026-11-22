@@ -14,6 +14,7 @@ import android.widget.RemoteViews
 import com.rcb.wake.MainActivity
 import com.rcb.wake.R
 import com.rcb.wake.notification.Localized
+import com.rcb.wake.storage.SettingsStore
 import java.time.LocalDateTime
 import java.time.ZoneId
 
@@ -105,6 +106,9 @@ class GlanceWidgetProvider : AppWidgetProvider() {
                     content.placeName?.let { "${content.temperatureText} · $it" } ?: content.temperatureText,
                 )
             }
+            val headphones = if (SettingsStore.load(context).widgetShowHeadphones) Headphones.current(context) else null
+            views.setViewVisibility(R.id.glance_headphones, if (headphones != null) View.VISIBLE else View.GONE)
+            headphones?.let { views.setTextViewText(R.id.glance_headphones_text, it.label()) }
             views.setViewVisibility(R.id.glance_event, if (content.eventText != null) View.VISIBLE else View.GONE)
             content.eventText?.let { views.setTextViewText(R.id.glance_event, it) }
             applyTextColor(views, content)
@@ -122,15 +126,17 @@ class GlanceWidgetProvider : AppWidgetProvider() {
 
         private fun applyTextColor(views: RemoteViews, content: WidgetContent) {
             val primary = listOf(R.id.glance_greeting)
-            val secondary = listOf(R.id.glance_date, R.id.glance_weather_temp, R.id.glance_event)
+            val secondary = listOf(R.id.glance_date, R.id.glance_weather_temp, R.id.glance_headphones_text, R.id.glance_event)
             when {
                 content.textColor == "material" && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
                     primary.forEach { views.setColorStateList(it, "setTextColor", android.R.color.system_accent1_100) }
                     secondary.forEach { views.setColorStateList(it, "setTextColor", android.R.color.system_accent2_50) }
+                    views.setColorStateList(R.id.glance_headphones_icon, "setImageTintList", android.R.color.system_accent2_50)
                 }
                 content.textColor == "accent" -> {
                     val color = Color.parseColor(content.accentHex)
                     (primary + secondary).forEach { views.setTextColor(it, color) }
+                    views.setInt(R.id.glance_headphones_icon, "setColorFilter", color)
                 }
             }
         }
