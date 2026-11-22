@@ -103,6 +103,12 @@ OpenWeatherMap); place search sends the typed text to Open-Meteo; "Use my locati
 Android's geocoder for the place name. Camera images (QR challenge) and calendar events never leave
 the device. Full policy: PRIVACY_POLICY.md.
 
+## What's new in 1.9.1
+
+<en-US>
+• My Day now shows your Bluetooth headset as soon as it connects, with its full name
+</en-US>
+
 ## What's new in 1.9.0
 
 <en-US>

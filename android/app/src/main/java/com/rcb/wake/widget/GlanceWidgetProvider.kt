@@ -144,7 +144,7 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, if (rotate) R.layout.widget_glance else R.layout.widget_glance_static)
 
             // Page 1: greeting (optional), date with year, weather.
-            views.setTextViewText(R.id.glance_next_title, c.getString(if (soon) R.string.glance_soon else R.string.glance_coming_up))
+            views.setViewVisibility(R.id.glance_next_title, if (soon) View.VISIBLE else View.GONE)
             views.setTextViewText(R.id.glance_greeting, c.getString(greetingFor(LocalDateTime.now().hour).res))
             views.setViewVisibility(R.id.glance_greeting, if (settings.widgetShowGreeting) View.VISIBLE else View.GONE)
             // Without the greeting, the date becomes the headline.

@@ -4,6 +4,14 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.9.1] — 2026-11-22
+
+### Fixed
+- My Day now jumps to the earphones page when a Bluetooth headset connects (it checks again a
+  few seconds later, once the headset is ready for audio).
+- Earphone names are no longer cut off on small widgets: they have their own full-width line,
+  and the "Coming up" label was removed (the "Soon" title stays).
+
 ## [1.9.0] — 2026-11-22
 
 ### Added
