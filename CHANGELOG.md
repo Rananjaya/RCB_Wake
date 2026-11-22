@@ -22,12 +22,14 @@ All notable changes to RCB Wake are documented here. The format follows
 - Optional OpenWeatherMap weather with the user's own API key, and a selectable weather refresh
   interval (15 min, 30 min, 1 h, 3 h).
 - Widget text colour: white, Material You (Android 12+) or the app accent.
+- "Next alarm" status-bar notification while an alarm is set.
 - Midnight Purple and Pink Dream themes, accent colours.
 - English, Sinhala, Tamil, German, Russian, Spanish, French, Portuguese, Hindi, Chinese
   (Simplified) and Japanese.
 - Bundled original alarm tones and weather icons.
 
 ### Fixed
+- A ringing alarm no longer goes silent, or stops vibrating, when another app's notification arrives.
 - Timer and Pomodoro countdowns no longer jump back a second or more when started.
 - Widget layout and clock size on launchers that do not report exact widget sizes (Xiaomi HyperOS).
 

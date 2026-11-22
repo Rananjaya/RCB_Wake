@@ -8,6 +8,7 @@ import com.rcb.wake.alarm.AlarmController
 import com.rcb.wake.timer.PomodoroController
 import com.rcb.wake.sleep.SleepReminder
 import com.rcb.wake.timer.TimerController
+import com.rcb.wake.notification.WakeNotifications
 import com.rcb.wake.widget.ClockWidgetProvider
 
 /**
@@ -29,6 +30,7 @@ class SystemEventReceiver : BroadcastReceiver() {
                 // RemoteViews that reference stale drawables.
                 ClockWidgetProvider.updateAll(context)
                 ClockWidgetProvider.scheduleWeatherRefresh(context)
+                WakeNotifications.updateNextAlarm(context, AlarmController(context).nextAlarm())
                 SleepReminder.reschedule(context)
             } finally {
                 pending.finish()

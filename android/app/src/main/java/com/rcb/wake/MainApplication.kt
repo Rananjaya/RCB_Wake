@@ -11,8 +11,10 @@ import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
+import com.rcb.wake.alarm.AlarmController
 import com.rcb.wake.module.EngineEvents
 import com.rcb.wake.module.RcbWakePackage
+import com.rcb.wake.notification.WakeNotifications
 import com.rcb.wake.sleep.SleepReminder
 import com.rcb.wake.widget.ClockWidgetProvider
 
@@ -33,6 +35,7 @@ class MainApplication : Application(), ReactApplication {
             if (type == EngineEvents.ALARMS_CHANGED || type == EngineEvents.SETTINGS_CHANGED) {
                 ClockWidgetProvider.updateAll(this)
                 SleepReminder.reschedule(this)
+                WakeNotifications.updateNextAlarm(this, AlarmController(this).nextAlarm())
             }
         }
         // The alarm engine is Direct Boot aware, so this process can start before the user unlocks.

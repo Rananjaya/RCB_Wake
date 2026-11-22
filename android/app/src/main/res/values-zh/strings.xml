@@ -49,4 +49,5 @@
     <string name="event_all_day">全天</string>
     <string name="event_now">现在</string>
     <string name="event_tomorrow">明天 %1$s</string>
+    <string name="channel_next_alarm">下一个闹钟</string>
 </resources>

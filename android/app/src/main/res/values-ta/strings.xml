@@ -49,4 +49,5 @@
     <string name="event_all_day">நாள் முழுவதும்</string>
     <string name="event_now">இப்போது</string>
     <string name="event_tomorrow">நாளை %1$s</string>
+    <string name="channel_next_alarm">அடுத்த அலாரம்</string>
 </resources>

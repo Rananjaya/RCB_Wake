@@ -92,7 +92,15 @@ stops.
   deleted, or a `content://` URI that is unreadable before first unlock, still rings.
 - `onError` during playback switches to the bundled default.
 - Gradual volume: quadratic ramp from 5% to 100% over 30 s.
-- Transient audio focus; pauses while another app (e.g. a call) holds focus and resumes on regain.
+- Requests audio focus but keeps ringing when another app's sound (such as a notification) takes
+  it; pauses only during a phone call and resumes when the call ends (polled, in case the
+  focus-gain callback never arrives).
+- Vibration is started one pattern cycle at a time, so a notification vibration that replaces it
+  (older Android versions) only interrupts one cycle.
+- While an alarm is set, an ongoing silent notification on the `next_alarm` channel (low
+  importance) shows the next alarm and keeps an alarm icon in the status bar. It is hidden while
+  that alarm is snoozed (the snooze notification shows it) and can be turned off in the system
+  notification settings.
 - If no sound can be opened at all, vibration is forced on.
 
 ## Timers and Pomodoro

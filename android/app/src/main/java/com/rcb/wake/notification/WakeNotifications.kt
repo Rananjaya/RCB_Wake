@@ -30,9 +30,11 @@ object WakeNotifications {
     const val CHANNEL_TIMER_DONE = "timer_done"
     const val CHANNEL_POMODORO = "pomodoro"
     const val CHANNEL_SLEEP = "sleep_reminder"
+    const val CHANNEL_NEXT_ALARM = "next_alarm"
 
     const val RINGING_NOTIFICATION_ID = 1
     private const val TAG_SNOOZE = "snooze"
+    private const val TAG_NEXT_ALARM = "next_alarm"
     private const val TAG_MISSED = "missed"
     private const val TAG_TIMER = "timer"
     private const val TAG_TIMER_DONE = "timer_done"
@@ -75,6 +77,12 @@ object WakeNotifications {
                 )
                 enableVibration(true)
                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            },
+        )
+        // Low importance: silent, but its icon stays in the status bar like the system clock's.
+        nm.createNotificationChannel(
+            NotificationChannel(CHANNEL_NEXT_ALARM, c.getString(R.string.channel_next_alarm), NotificationManager.IMPORTANCE_LOW).apply {
+                setShowBadge(false)
             },
         )
         nm.createNotificationChannel(
@@ -167,6 +175,43 @@ object WakeNotifications {
             .addAction(Notification.Action.Builder(null, c.getString(R.string.action_cancel_snooze), cancel).build())
             .build()
         manager(context).notify(TAG_SNOOZE, alarm.id.toInt(), n)
+    }
+
+    /**
+     * Ongoing, silent "next alarm" notification so an alarm icon shows in the status bar while an
+     * alarm is set (some launchers/OEM status bars hide the system alarm-clock icon). Hidden while
+     * the next alarm is snoozed, because the snooze notification already shows it.
+     */
+    fun updateNextAlarm(context: Context, next: Alarm?) {
+        val at = next?.nextTriggerAt
+        if (next == null || at == null || next.snoozedUntil != null) {
+            manager(context).cancel(TAG_NEXT_ALARM, 0)
+            return
+        }
+        // May run at boot before the app has created its channels.
+        if (manager(context).getNotificationChannel(CHANNEL_NEXT_ALARM) == null) ensureChannels(context)
+        val c = Localized.context(context)
+        val zone = java.time.ZoneId.systemDefault()
+        val today = java.time.LocalDate.now(zone)
+        val day = java.time.Instant.ofEpochMilli(at).atZone(zone).toLocalDate()
+        val time = formatTime(context, at)
+        val `when` = when (day) {
+            today -> time
+            today.plusDays(1) -> c.getString(R.string.event_tomorrow, time)
+            else -> java.text.SimpleDateFormat("EEE", java.util.Locale.getDefault()).format(Date(at)) + " " + time
+        }
+        val n = Notification.Builder(context, CHANNEL_NEXT_ALARM)
+            .setSmallIcon(R.drawable.ic_stat_alarm)
+            .setContentTitle(c.getString(R.string.widget_alarm, `when`))
+            .setContentText(next.label.ifBlank { c.getString(R.string.alarm_default_label) })
+            .setOngoing(true)
+            .setShowWhen(false)
+            .setOnlyAlertOnce(true)
+            .setCategory(Notification.CATEGORY_STATUS)
+            .setVisibility(Notification.VISIBILITY_PUBLIC)
+            .setContentIntent(openAppIntent(context, 299))
+            .build()
+        manager(context).notify(TAG_NEXT_ALARM, 0, n)
     }
 
     fun cancelSnoozed(context: Context, alarmId: Long) = manager(context).cancel(TAG_SNOOZE, alarmId.toInt())

@@ -45,4 +45,5 @@
     <string name="event_all_day">Ganztägig</string>
     <string name="event_now">Jetzt</string>
     <string name="event_tomorrow">Morgen %1$s</string>
+    <string name="channel_next_alarm">Nächster Wecker</string>
 </resources>

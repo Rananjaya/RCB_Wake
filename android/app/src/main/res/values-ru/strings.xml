@@ -45,4 +45,5 @@
     <string name="event_all_day">Весь день</string>
     <string name="event_now">Сейчас</string>
     <string name="event_tomorrow">Завтра %1$s</string>
+    <string name="channel_next_alarm">Следующий будильник</string>
 </resources>
