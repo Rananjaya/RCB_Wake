@@ -131,7 +131,8 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             soon: Boolean,
         ): RemoteViews {
             // A separate still layout, because a running flipper keeps its old interval.
-            val rotate = hasNext && settings.widgetRotatePages && !soon
+            // Automatic switching follows the setting, also while something is soon.
+            val rotate = hasNext && settings.widgetRotatePages
             val views = RemoteViews(context.packageName, if (rotate) R.layout.widget_glance else R.layout.widget_glance_static)
 
             // Page 1: greeting (optional), date with year, weather.
