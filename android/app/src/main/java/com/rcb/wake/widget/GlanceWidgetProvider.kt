@@ -94,6 +94,7 @@ class GlanceWidgetProvider : AppWidgetProvider() {
         private const val ACTION_NEXT_PAGE = "com.rcb.wake.action.GLANCE_NEXT_PAGE"
         private const val ROTATE_MILLIS = 6_000
         private fun pageKey(id: Int) = "glance_page_$id"
+        private fun soonKey(id: Int) = "glance_soon_$id"
 
         private fun render(context: Context, manager: AppWidgetManager, ids: IntArray) {
             val content = WidgetContent.load(context)
@@ -105,13 +106,14 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             val state = AppStorage.state(context)
             val now = System.currentTimeMillis()
             // An event or alarm within SOON_MILLIS takes over: show "Coming up" and stop rotating.
-            val soon = soonUntil(content, now) != null
+            val soonEnd = soonUntil(content, now)
+            val soon = soonEnd != null
             for (id in ids) {
-                val page = when {
-                    soon -> 1
-                    hasNext -> state.getInt(pageKey(id), 0).coerceIn(0, 1)
-                    else -> 0
+                // When something becomes soon, jump to "Soon" once; after that, taps still switch.
+                if (soon && state.getLong(soonKey(id), 0L) != soonEnd) {
+                    state.edit().putLong(soonKey(id), soonEnd!!).putInt(pageKey(id), 1).apply()
                 }
+                val page = if (hasNext) state.getInt(pageKey(id), 0).coerceIn(0, 1) else 0
                 manager.updateAppWidget(id, build(context, c, content, settings, headphones, hasNext, page, id, soon))
             }
             scheduleNextRender(context, content, now)
