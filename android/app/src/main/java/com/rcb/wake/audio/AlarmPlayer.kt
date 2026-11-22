@@ -15,7 +15,9 @@ import android.util.Log
  *
  * - Falls back through [AlarmSounds.candidates] if a sound cannot be opened (e.g. a deleted
  *   custom file, or a content URI that is unreadable before the device is unlocked).
- * - Requests transient audio focus and pauses while another app (such as a phone call) holds it.
+ * - Requests audio focus but keeps ringing through other apps' sounds (notification sounds briefly
+ *   take focus and would otherwise silence the alarm). It pauses only during a phone call and
+ *   resumes when the call ends, even if the focus-gain callback never arrives.
  * - Optionally ramps volume up over [RAMP_MILLIS].
  *
  * Must be used from the main thread. [stop] is idempotent and always releases everything.
@@ -42,14 +44,38 @@ class AlarmPlayer(context: Context) {
         when (change) {
             AudioManager.AUDIOFOCUS_LOSS,
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT,
-            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> player?.let {
-                if (it.isPlaying) it.pause()
-                pausedForFocus = true
-            }
-            AudioManager.AUDIOFOCUS_GAIN -> player?.let {
-                if (pausedForFocus) it.start()
-                pausedForFocus = false
-            }
+            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> if (inCall()) pauseForCall()
+            AudioManager.AUDIOFOCUS_GAIN -> resumeAfterCall()
+        }
+    }
+
+    private fun inCall() = audioManager.mode in setOf(
+        AudioManager.MODE_IN_CALL,
+        AudioManager.MODE_IN_COMMUNICATION,
+        AudioManager.MODE_RINGTONE,
+    )
+
+    private fun pauseForCall() {
+        val p = player ?: return
+        if (p.isPlaying) p.pause()
+        pausedForFocus = true
+        handler.removeCallbacks(callWatch)
+        handler.postDelayed(callWatch, CALL_POLL_MILLIS)
+    }
+
+    private fun resumeAfterCall() {
+        if (!pausedForFocus) return
+        pausedForFocus = false
+        handler.removeCallbacks(callWatch)
+        player?.let { if (!it.isPlaying) it.start() }
+        requestFocus()
+    }
+
+    /** Some devices never send AUDIOFOCUS_GAIN after a call; resume when the call has ended. */
+    private val callWatch = object : Runnable {
+        override fun run() {
+            if (!pausedForFocus) return
+            if (inCall()) handler.postDelayed(this, CALL_POLL_MILLIS) else resumeAfterCall()
         }
     }
 
@@ -114,6 +140,7 @@ class AlarmPlayer(context: Context) {
     }
 
     private fun requestFocus() {
+        focusRequest?.let { audioManager.abandonAudioFocusRequest(it) }
         val request = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
             .setAudioAttributes(attributes)
             .setOnAudioFocusChangeListener(focusListener, handler)
@@ -137,6 +164,7 @@ class AlarmPlayer(context: Context) {
     }
 
     fun stop() {
+        handler.removeCallbacks(callWatch)
         releasePlayer()
         abandonFocus()
         pausedForFocus = false
@@ -147,5 +175,6 @@ class AlarmPlayer(context: Context) {
         const val RAMP_MILLIS = 30_000L
         const val RAMP_STEP_MILLIS = 500L
         const val MIN_VOLUME = 0.05f
+        const val CALL_POLL_MILLIS = 2_000L
     }
 }
