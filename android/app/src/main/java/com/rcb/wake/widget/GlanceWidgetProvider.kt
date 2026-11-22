@@ -149,11 +149,15 @@ class GlanceWidgetProvider : AppWidgetProvider() {
                 )
             }
 
-            // Page 2: next event, next alarm, earphones.
-            views.setViewVisibility(R.id.glance_event, if (content.eventText != null) View.VISIBLE else View.GONE)
+            // Page 2: next event, next alarm, earphones. While something is soon, only the soon event/alarm.
+            val now = System.currentTimeMillis()
+            val showEvent = content.eventText != null && (!soon || eventSoon(content, now))
+            val showAlarm = content.alarmText != null && (!soon || alarmSoon(content, now))
+            views.setViewVisibility(R.id.glance_event, if (showEvent) View.VISIBLE else View.GONE)
             content.eventText?.let { views.setTextViewText(R.id.glance_event, it) }
-            views.setViewVisibility(R.id.glance_alarm, if (content.alarmText != null) View.VISIBLE else View.GONE)
+            views.setViewVisibility(R.id.glance_alarm, if (showAlarm) View.VISIBLE else View.GONE)
             content.alarmText?.let { views.setTextViewText(R.id.glance_alarm, it) }
+            // Earphones stay visible, also while something is soon.
             views.setViewVisibility(R.id.glance_headphones, if (headphones != null) View.VISIBLE else View.GONE)
             headphones?.let { views.setTextViewText(R.id.glance_headphones_text, it.label()) }
 
@@ -182,11 +186,19 @@ class GlanceWidgetProvider : AppWidgetProvider() {
         /** Shown "soon" from SOON_MILLIS before the event or alarm until it starts (events: until they end). */
         private const val SOON_MILLIS = 10 * 60_000L
 
+        /** The event is soon: from SOON_MILLIS before it starts until it ends (timed events only). */
+        fun eventSoon(content: WidgetContent, now: Long): Boolean =
+            content.event?.let { !it.allDay && it.begin - SOON_MILLIS <= now && now < it.end } == true
+
+        /** The alarm is soon: from SOON_MILLIS before it rings until it rings. */
+        fun alarmSoon(content: WidgetContent, now: Long): Boolean =
+            content.alarmAt?.let { it - SOON_MILLIS <= now && now < it } == true
+
         /** If something is soon, when that state ends; otherwise null. */
         fun soonUntil(content: WidgetContent, now: Long): Long? {
             val ends = mutableListOf<Long>()
-            content.event?.takeIf { !it.allDay && it.begin - SOON_MILLIS <= now && now < it.end }?.let { ends += it.end }
-            content.alarmAt?.takeIf { it - SOON_MILLIS <= now && now < it }?.let { ends += it }
+            if (eventSoon(content, now)) ends += content.event!!.end
+            if (alarmSoon(content, now)) ends += content.alarmAt!!
             return ends.maxOrNull()
         }
 

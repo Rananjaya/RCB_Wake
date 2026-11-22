@@ -37,4 +37,19 @@ class GlanceWidgetTest {
         assertEquals(now + 5 * min, GlanceWidgetProvider.soonUntil(content(alarmAt = now + 5 * min), now))
         assertEquals(null, GlanceWidgetProvider.soonUntil(content(alarmAt = now + 20 * min), now))
     }
+
+    @Test fun `only what is soon counts as soon`() {
+        val now = 1_000_000_000L
+        val min = 60_000L
+        val soonEvent = CalendarEvent("Standup", now + 5 * min, now + 20 * min, allDay = false)
+        val laterEvent = CalendarEvent("Lunch", now + 60 * min, now + 90 * min, allDay = false)
+        val alarmSoon = content(event = laterEvent, alarmAt = now + 3 * min)
+        assertEquals(true, GlanceWidgetProvider.alarmSoon(alarmSoon, now))
+        assertEquals(false, GlanceWidgetProvider.eventSoon(alarmSoon, now))
+        val eventSoon = content(event = soonEvent, alarmAt = now + 120 * min)
+        assertEquals(true, GlanceWidgetProvider.eventSoon(eventSoon, now))
+        assertEquals(false, GlanceWidgetProvider.alarmSoon(eventSoon, now))
+        val both = content(event = soonEvent, alarmAt = now + 3 * min)
+        assertEquals(true, GlanceWidgetProvider.eventSoon(both, now) && GlanceWidgetProvider.alarmSoon(both, now))
+    }
 }

@@ -4,6 +4,12 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.7.1] — 2026-11-22
+
+### Changed
+- My Day "Soon" page shows only what is soon: the alarm, the event, or both. Connected earphones
+  stay visible.
+
 ## [1.7.0] — 2026-11-22
 
 ### Added

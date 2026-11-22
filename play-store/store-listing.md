@@ -103,6 +103,12 @@ OpenWeatherMap); place search sends the typed text to Open-Meteo; "Use my locati
 Android's geocoder for the place name. Camera images (QR challenge) and calendar events never leave
 the device. Full policy: PRIVACY_POLICY.md.
 
+## What's new in 1.7.1
+
+<en-US>
+• My Day "Soon" now shows only what's coming up next: your alarm, your event, or both
+</en-US>
+
 ## What's new in 1.7.0
 
 <en-US>
