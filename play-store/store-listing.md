@@ -103,6 +103,12 @@ OpenWeatherMap); place search sends the typed text to Open-Meteo; "Use my locati
 Android's geocoder for the place name. Camera images (QR challenge) and calendar events never leave
 the device. Full policy: PRIVACY_POLICY.md.
 
+## What's new in 1.8.3
+
+<en-US>
+• My Day pages now change when you tap (automatic switching can be turned on in Settings)
+</en-US>
+
 ## What's new in 1.8.2
 
 <en-US>

@@ -44,7 +44,7 @@ data class WakeSettings(
     /** How long before; one of [SettingsStore.REMINDER_LEADS]. */
     val reminderLeadMinutes: Int = 10,
     /** Rotate the My Day widget pages automatically. */
-    val widgetRotatePages: Boolean = true,
+    val widgetRotatePages: Boolean = false,
     /** Show connected earphones (name, Bluetooth battery) on the My Day widget. */
     val widgetShowHeadphones: Boolean = false,
     /** How often the widget weather is refreshed; one of [SettingsStore.WEATHER_REFRESH_MINUTES]. */
@@ -116,7 +116,7 @@ object SettingsStore {
             widgetShowPlace = p.getBoolean("widgetShowPlace", true),
             widgetShowHeadphones = p.getBoolean("widgetShowHeadphones", false),
             widgetShowGreeting = p.getBoolean("widgetShowGreeting", true),
-            widgetRotatePages = p.getBoolean("widgetRotatePages", true),
+            widgetRotatePages = p.getBoolean("widgetRotatePages", false),
             remindersEnabled = p.getBoolean("remindersEnabled", true),
             reminderLeadMinutes = p.getInt("reminderLeadMinutes", 10),
             weatherProvider = p.getString("weatherProvider", PROVIDER_OPEN_METEO)!!,

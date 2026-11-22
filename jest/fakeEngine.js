@@ -40,7 +40,7 @@ const defaults = {
   widgetShowPlace: true,
   widgetShowHeadphones: false,
   widgetShowGreeting: true,
-  widgetRotatePages: true,
+  widgetRotatePages: false,
   remindersEnabled: true,
   reminderLeadMinutes: 10,
   weatherProvider: 'openmeteo',

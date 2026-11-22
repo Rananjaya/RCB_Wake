@@ -4,6 +4,12 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.8.3] — 2026-11-22
+
+### Changed
+- Automatic switching of My Day pages is now off by default; tap to switch, or turn it on in
+  Settings → Home-screen widget.
+
 ## [1.8.2] — 2026-11-22
 
 ### Changed

@@ -704,7 +704,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 widgetShowPlace = !settings.hasKey("widgetShowPlace") || settings.getBoolean("widgetShowPlace"),
                 widgetShowHeadphones = settings.hasKey("widgetShowHeadphones") && settings.getBoolean("widgetShowHeadphones"),
                 widgetShowGreeting = !settings.hasKey("widgetShowGreeting") || settings.getBoolean("widgetShowGreeting"),
-                widgetRotatePages = !settings.hasKey("widgetRotatePages") || settings.getBoolean("widgetRotatePages"),
+                widgetRotatePages = settings.hasKey("widgetRotatePages") && settings.getBoolean("widgetRotatePages"),
                 remindersEnabled = !settings.hasKey("remindersEnabled") || settings.getBoolean("remindersEnabled"),
                 reminderLeadMinutes = if (settings.hasKey("reminderLeadMinutes")) settings.getDouble("reminderLeadMinutes").toInt() else 10,
                 weatherProvider = settings.getString("weatherProvider") ?: SettingsStore.PROVIDER_OPEN_METEO,
