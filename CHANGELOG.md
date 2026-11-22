@@ -4,6 +4,13 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.9.2] — 2026-11-22
+
+### Fixed
+- Xiaomi / Redmi (HyperOS) no longer shows "RCB Wake encountered an error … control Near-Field
+  Communication". The app checked whether NFC was on although the NFC challenge is on hold; all
+  NFC calls are now skipped unless the NFC permission is present.
+
 ## [1.9.1] — 2026-11-22
 
 ### Fixed

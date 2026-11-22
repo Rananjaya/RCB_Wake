@@ -24,9 +24,18 @@ object NfcTags {
     private const val KEY_SALT = "nfc_salt"
     const val MAX_TAGS = 5
 
-    fun isSupported(context: Context) = context.packageManager.hasSystemFeature(PackageManager.FEATURE_NFC)
+    /**
+     * The NFC challenge is on hold and the NFC permission is not declared. Without it, even asking
+     * whether NFC is on makes some systems (Xiaomi HyperOS) show an error, so every NFC call is
+     * skipped unless the permission is present.
+     */
+    private fun permitted(context: Context) =
+        context.checkSelfPermission(android.Manifest.permission.NFC) == PackageManager.PERMISSION_GRANTED
 
-    fun isEnabled(context: Context) = NfcAdapter.getDefaultAdapter(context)?.isEnabled == true
+    fun isSupported(context: Context) =
+        permitted(context) && context.packageManager.hasSystemFeature(PackageManager.FEATURE_NFC)
+
+    fun isEnabled(context: Context) = permitted(context) && NfcAdapter.getDefaultAdapter(context)?.isEnabled == true
 
     /** Pure hashing so tests can check it: hex(sha256(salt + ":" + hex(uid))). */
     fun hash(uid: ByteArray, salt: String): String {
@@ -74,6 +83,7 @@ object NfcTags {
 
     /** Reads tags in reader mode on [activity] until [disable] is called. Callback runs on a binder thread. */
     fun enableReader(activity: Activity, onTag: (Tag) -> Unit): Boolean {
+        if (!permitted(activity)) return false
         val adapter = NfcAdapter.getDefaultAdapter(activity) ?: return false
         if (!adapter.isEnabled) return false
         val flags = NfcAdapter.FLAG_READER_NFC_A or NfcAdapter.FLAG_READER_NFC_B or NfcAdapter.FLAG_READER_NFC_F or
@@ -83,6 +93,7 @@ object NfcTags {
     }
 
     fun disableReader(activity: Activity) {
+        if (!permitted(activity)) return
         runCatching { NfcAdapter.getDefaultAdapter(activity)?.disableReaderMode(activity) }
     }
 }

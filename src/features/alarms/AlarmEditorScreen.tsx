@@ -72,8 +72,10 @@ export function AlarmEditorScreen({ navigation, route }: Props) {
   // null = device has no NFC (option hidden); otherwise the number of registered tags.
   const [nfcTagCount, setNfcTagCount] = useState<number | null>(null);
   useEffect(() => {
+    // NFC is on hold: do not even query it (Xiaomi HyperOS reports that as a permission error).
+    if (!FEATURES.nfcChallenge) return;
     engine.getNfcStatus().then(async status => {
-      if (FEATURES.nfcChallenge && status.supported) {
+      if (status.supported) {
         setNfcTagCount((await engine.getNfcTags()).length);
       }
     });

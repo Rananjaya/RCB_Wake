@@ -29,7 +29,8 @@ export function NfcTagSettings() {
   }, []);
 
   useEffect(() => {
-    reload();
+    // NFC is on hold: do not query it (Xiaomi HyperOS reports that as a permission error).
+    if (FEATURES.nfcChallenge) reload();
   }, [reload]);
 
   if (!FEATURES.nfcChallenge || !status?.supported) return null;
