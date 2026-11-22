@@ -103,6 +103,7 @@ export const si: Strings = {
   soundAscend: 'නැගීම',
   soundBeacon: 'සංඥා නාදය',
   soundSiren: 'සයිරනය',
+  soundSiren2: 'සයිරනය 2',
   alarmSetIn: 'එලාම් එක දැන් සිට {duration} කට සකසා ඇත',
   alarmSetInexact: 'සුරැකිණි, නමුත් නිවැරදි එලාම් අක්‍රිය නිසා ප්‍රමාද විය හැක',
   alarmScheduleFailed:

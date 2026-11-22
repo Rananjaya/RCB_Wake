@@ -103,6 +103,7 @@ export const ta: Strings = {
   soundAscend: 'ஏற்றம்',
   soundBeacon: 'சமிக்ஞை',
   soundSiren: 'சைரன்',
+  soundSiren2: 'சைரன் 2',
   alarmSetIn: 'இப்போதிலிருந்து {duration} இல் அலாரம் அமைக்கப்பட்டது',
   alarmSetInexact:
     'சேமிக்கப்பட்டது, ஆனால் துல்லிய அலாரங்கள் முடக்கப்பட்டதால் தாமதமாகலாம்',

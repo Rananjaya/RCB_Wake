@@ -96,6 +96,7 @@ export const ja: Translation = {
   soundAscend: '上昇',
   soundBeacon: 'ビーコン',
   soundSiren: 'サイレン',
+  soundSiren2: 'サイレン 2',
   alarmSetIn: '{duration}後にアラームが鳴ります',
   alarmSetInexact:
     '保存しましたが、正確なアラームがオフのため遅れて鳴る可能性があります',

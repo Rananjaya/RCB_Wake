@@ -13,6 +13,7 @@ const BUILT_IN_NAME_KEYS: Record<string, StringKey> = {
   'builtin:ascend': 'soundAscend',
   'builtin:beacon': 'soundBeacon',
   'builtin:siren': 'soundSiren',
+  'builtin:siren2': 'soundSiren2',
   'system:default': 'systemDefaultSound',
 };
 

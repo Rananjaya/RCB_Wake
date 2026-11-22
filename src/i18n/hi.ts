@@ -96,6 +96,7 @@ export const hi: Translation = {
   soundAscend: 'आरोहण',
   soundBeacon: 'संकेत',
   soundSiren: 'सायरन',
+  soundSiren2: 'सायरन 2',
   alarmSetIn: 'अलार्म अब से {duration} बाद के लिए सेट',
   alarmSetInexact: 'सहेजा गया, पर सटीक अलार्म बंद होने से देर से बज सकता है',
   alarmScheduleFailed:

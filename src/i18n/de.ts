@@ -97,6 +97,7 @@ export const de: Translation = {
   soundAscend: 'Aufstieg',
   soundBeacon: 'Signal',
   soundSiren: 'Sirene',
+  soundSiren2: 'Sirene 2',
   alarmSetIn: 'Wecker klingelt in {duration}',
   alarmSetInexact:
     'Gespeichert, kann aber später klingeln, weil exakte Wecker aus sind',

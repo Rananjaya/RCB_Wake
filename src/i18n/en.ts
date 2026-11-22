@@ -101,6 +101,7 @@ export const en = {
   soundAscend: 'Ascend',
   soundBeacon: 'Beacon',
   soundSiren: 'Siren',
+  soundSiren2: 'Siren 2',
   alarmSetIn: 'Alarm set for {duration} from now',
   alarmSetInexact: 'Saved, but it may ring late because exact alarms are off',
   alarmScheduleFailed:

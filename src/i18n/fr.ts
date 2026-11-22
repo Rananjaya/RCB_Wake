@@ -97,6 +97,7 @@ export const fr: Translation = {
   soundAscend: 'Ascension',
   soundBeacon: 'Balise',
   soundSiren: 'Sirène',
+  soundSiren2: 'Sirène 2',
   alarmSetIn: 'Alarme réglée dans {duration}',
   alarmSetInexact:
     'Enregistrée, mais elle peut sonner en retard car les alarmes exactes sont désactivées',

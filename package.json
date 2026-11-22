@@ -1,6 +1,6 @@
 {
   "name": "rcb-wake",
-  "version": "1.9.2",
+  "version": "1.10.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",

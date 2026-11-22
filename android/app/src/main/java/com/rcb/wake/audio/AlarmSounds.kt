@@ -29,6 +29,7 @@ object AlarmSounds {
         BuiltIn("ascend", "Ascend", R.raw.tone_ascend),
         BuiltIn("beacon", "Beacon", R.raw.tone_beacon),
         BuiltIn("siren", "Siren", R.raw.tone_siren),
+        BuiltIn("siren2", "Siren 2", R.raw.tone_siren2),
     )
 
     const val DEFAULT_URI = "builtin:dawn"

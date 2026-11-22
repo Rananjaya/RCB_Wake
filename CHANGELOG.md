@@ -4,6 +4,12 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.10.0] — 2026-11-22
+
+### Added
+- "Siren 2" alarm sound: a WWII-style air-raid warning — a continuous rising and falling
+  two-tone wail. Synthesised by `scripts/generate-tones.py`; no recording or third-party audio.
+
 ## [1.9.2] — 2026-11-22
 
 ### Fixed

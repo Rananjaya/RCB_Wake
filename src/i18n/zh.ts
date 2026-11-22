@@ -94,6 +94,7 @@ export const zh: Translation = {
   soundAscend: '上升',
   soundBeacon: '信标',
   soundSiren: '警报',
+  soundSiren2: '警报 2',
   alarmSetIn: '闹钟将在 {duration}后响起',
   alarmSetInexact: '已保存，但精确闹钟已关闭，可能会延迟响铃',
   alarmScheduleFailed: '已保存，但 Android 拒绝设定。请检查闹钟权限。',

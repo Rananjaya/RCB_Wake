@@ -97,6 +97,7 @@ export const ru: Translation = {
   soundAscend: 'Подъём',
   soundBeacon: 'Сигнал',
   soundSiren: 'Сирена',
+  soundSiren2: 'Сирена 2',
   alarmSetIn: 'Будильник сработает через {duration}',
   alarmSetInexact:
     'Сохранено, но может сработать позже: точные будильники выключены',

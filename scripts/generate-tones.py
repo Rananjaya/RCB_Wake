@@ -153,3 +153,20 @@ for i in range(n):
     ramp = min(1.0, i / (0.05 * RATE), (n - i) / (0.05 * RATE))
     siren.append(0.5 * flutter * ramp * s / 1.5)
 write("tone_siren", siren)
+
+# Siren 2: a British WWII-style air-raid warning — a continuous rise-and-fall wail (4 s waves that
+# never drop to the bottom), sounded as a two-rotor minor-third chord with a buzzy, square-ish
+# timbre. Synthesised here; not a recording.
+n = int(RATE * 8.0)
+siren2, p1, p2 = [], 0.0, 0.0
+for i in range(n):
+    t = i / RATE
+    f = 425 + 105 * math.sin(2 * math.pi * t / 4.0 - math.pi / 2)  # 320 Hz .. 530 Hz, loops cleanly
+    p1 += 2 * math.pi * f / RATE
+    p2 += 2 * math.pi * f * 1.19 / RATE  # second rotor a minor third above
+    rotor = lambda p: math.sin(p) + math.sin(3 * p) / 3 + math.sin(5 * p) / 5 + math.sin(7 * p) / 7
+    flutter = 1 + 0.06 * math.sin(2 * math.pi * 31 * t)
+    s = (rotor(p1) + 0.8 * rotor(p2)) / 2.6
+    ramp = min(1.0, i / (0.03 * RATE), (n - i) / (0.03 * RATE))
+    siren2.append(0.55 * flutter * ramp * s)
+write("tone_siren2", siren2)
