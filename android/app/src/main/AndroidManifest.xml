@@ -163,6 +163,15 @@
             </intent-filter>
         </activity-alias>
 
+        <!-- Invisible: tells a single tap (next page) from a double tap (open app) on My Day. -->
+        <activity
+            android:name=".widget.WidgetTapActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity
             android:name=".activity.QrScanActivity"
             android:excludeFromRecents="true"

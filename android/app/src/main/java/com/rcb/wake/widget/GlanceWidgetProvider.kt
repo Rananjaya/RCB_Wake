@@ -90,14 +90,10 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
 
-        private fun scheduleGreeting(context: Context) {
-            val zone = ZoneId.systemDefault()
-            val at = nextBoundary(LocalDateTime.now(zone)).atZone(zone).toInstant().toEpochMilli()
-            // RTC (not _WAKEUP): never wakes the device; a change due while asleep shows on wake.
-            context.getSystemService(AlarmManager::class.java).set(AlarmManager.RTC, at, greetingIntent(context))
-        }
 
         private const val ACTION_NEXT_PAGE = "com.rcb.wake.action.GLANCE_NEXT_PAGE"
+        private const val ROTATE_MILLIS = 6_000
+        private const val DAY_MILLIS = 86_400_000
         private fun pageKey(id: Int) = "glance_page_$id"
 
         private fun render(context: Context, manager: AppWidgetManager, ids: IntArray) {
@@ -108,11 +104,18 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             val headphones = if (settings.widgetShowHeadphones) Headphones.current(context) else null
             val hasNext = content.eventText != null || content.alarmText != null || headphones != null
             val state = AppStorage.state(context)
+            val now = System.currentTimeMillis()
+            // An event or alarm within SOON_MILLIS takes over: show "Coming up" and stop rotating.
+            val soon = soonUntil(content, now) != null
             for (id in ids) {
-                val page = if (hasNext) state.getInt(pageKey(id), 0).coerceIn(0, 1) else 0
-                manager.updateAppWidget(id, build(context, c, content, settings, headphones, hasNext, page, id))
+                val page = when {
+                    soon -> 1
+                    hasNext -> state.getInt(pageKey(id), 0).coerceIn(0, 1)
+                    else -> 0
+                }
+                manager.updateAppWidget(id, build(context, c, content, settings, headphones, hasNext, page, id, soon))
             }
-            scheduleGreeting(context)
+            scheduleNextRender(context, content, now)
         }
 
         private fun build(
@@ -124,10 +127,12 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             hasNext: Boolean,
             page: Int,
             id: Int,
+            soon: Boolean,
         ): RemoteViews {
             val views = RemoteViews(context.packageName, R.layout.widget_glance)
 
             // Page 1: greeting (optional), date with year, weather.
+            views.setTextViewText(R.id.glance_next_title, c.getString(if (soon) R.string.glance_soon else R.string.glance_coming_up))
             views.setTextViewText(R.id.glance_greeting, c.getString(greetingFor(LocalDateTime.now().hour).res))
             views.setViewVisibility(R.id.glance_greeting, if (settings.widgetShowGreeting) View.VISIBLE else View.GONE)
             // Without the greeting, the date becomes the headline.
@@ -152,36 +157,56 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             headphones?.let { views.setTextViewText(R.id.glance_headphones_text, it.label()) }
 
             views.setDisplayedChild(R.id.glance_pages, page)
-            views.setViewVisibility(R.id.glance_dots, if (hasNext) View.VISIBLE else View.GONE)
-            views.setInt(R.id.glance_dot_1, "setImageAlpha", if (page == 0) 255 else 90)
-            views.setInt(R.id.glance_dot_2, "setImageAlpha", if (page == 1) 255 else 90)
+            listOf(R.id.glance_dots_1, R.id.glance_dots_2).forEach {
+                views.setViewVisibility(it, if (hasNext) View.VISIBLE else View.GONE)
+            }
+            // Pages rotate on their own (autoStart in the layout). Only the interval is settable from
+            // a widget, so "off" — or nothing on page 2 — uses an interval of a day.
+            val rotate = hasNext && settings.widgetRotatePages && !soon
+            views.setInt(R.id.glance_pages, "setFlipInterval", if (rotate) ROTATE_MILLIS else DAY_MILLIS)
             applyTextColor(views, content)
 
-            // Tap: next page when there is a second page, otherwise open the app.
-            val tap = if (hasNext) {
-                PendingIntent.getBroadcast(
-                    context,
-                    id,
-                    Intent(context, GlanceWidgetProvider::class.java)
-                        .setAction(ACTION_NEXT_PAGE)
-                        .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id),
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-                )
-            } else {
-                PendingIntent.getActivity(
-                    context,
-                    903,
-                    Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-                )
-            }
+            // Every tap goes to WidgetTapActivity, which tells a single tap (next page) from a
+            // double tap (open the app). Widget clicks may start activities; broadcasts may not.
+            val tap = PendingIntent.getActivity(
+                context,
+                id,
+                Intent(context, WidgetTapActivity::class.java)
+                    .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
+                    .putExtra(WidgetTapActivity.EXTRA_HAS_PAGES, hasNext)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
             views.setOnClickPendingIntent(R.id.glance_root, tap)
             return views
         }
 
-        private fun nextPage(context: Context, id: Int) {
+        /** Shown "soon" from SOON_MILLIS before the event or alarm until it starts (events: until they end). */
+        private const val SOON_MILLIS = 10 * 60_000L
+
+        /** If something is soon, when that state ends; otherwise null. */
+        fun soonUntil(content: WidgetContent, now: Long): Long? {
+            val ends = mutableListOf<Long>()
+            content.event?.takeIf { !it.allDay && it.begin - SOON_MILLIS <= now && now < it.end }?.let { ends += it.end }
+            content.alarmAt?.takeIf { it - SOON_MILLIS <= now && now < it }?.let { ends += it }
+            return ends.maxOrNull()
+        }
+
+        /** Next moment the widget must change by itself: a greeting boundary, or a "soon" start or end. */
+        private fun scheduleNextRender(context: Context, content: WidgetContent, now: Long) {
+            val zone = ZoneId.systemDefault()
+            val times = mutableListOf(nextBoundary(LocalDateTime.now(zone)).atZone(zone).toInstant().toEpochMilli())
+            soonUntil(content, now)?.let { times += it + 1_000 }
+            content.event?.takeIf { !it.allDay }?.let { times += it.begin - SOON_MILLIS }
+            content.alarmAt?.let { times += it - SOON_MILLIS }
+            val at = times.filter { it > now }.minOrNull() ?: return
+            // RTC (not _WAKEUP): never wakes the device; a change due while asleep shows on wake.
+            context.getSystemService(AlarmManager::class.java).set(AlarmManager.RTC, at, greetingIntent(context))
+        }
+
+        fun nextPage(context: Context, id: Int, step: Int = 1) {
             val state = AppStorage.state(context)
-            state.edit().putInt(pageKey(id), (state.getInt(pageKey(id), 0) + 1) % 2).apply()
+            state.edit().putInt(pageKey(id), (state.getInt(pageKey(id), 0) + step + 2) % 2).apply()
             render(context, AppWidgetManager.getInstance(context), intArrayOf(id))
         }
 

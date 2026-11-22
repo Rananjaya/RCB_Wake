@@ -4,6 +4,17 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.0] — 2026-11-22
+
+### Added
+- My Day pages switch automatically every few seconds (can be turned off).
+- Within 10 minutes of a calendar event or an alarm, My Day shows "Soon" with it and stops
+  switching until it has started (events: until they end).
+- Double-tap My Day to open the app; a single tap still switches the page.
+
+### Fixed
+- The page dots no longer disappear when the event line is shown; they now sit on the right.
+
 ## [1.5.0] — 2026-11-22
 
 ### Changed

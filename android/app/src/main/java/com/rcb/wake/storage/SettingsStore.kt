@@ -39,6 +39,8 @@ data class WakeSettings(
     val widgetShowPlace: Boolean = true,
     /** Show the time-of-day greeting on the My Day widget. */
     val widgetShowGreeting: Boolean = true,
+    /** Rotate the My Day widget pages automatically. */
+    val widgetRotatePages: Boolean = true,
     /** Show connected earphones (name, Bluetooth battery) on the My Day widget. */
     val widgetShowHeadphones: Boolean = false,
     /** How often the widget weather is refreshed; one of [SettingsStore.WEATHER_REFRESH_MINUTES]. */
@@ -108,6 +110,7 @@ object SettingsStore {
             widgetShowPlace = p.getBoolean("widgetShowPlace", true),
             widgetShowHeadphones = p.getBoolean("widgetShowHeadphones", false),
             widgetShowGreeting = p.getBoolean("widgetShowGreeting", true),
+            widgetRotatePages = p.getBoolean("widgetRotatePages", true),
             weatherProvider = p.getString("weatherProvider", PROVIDER_OPEN_METEO)!!,
             openWeatherMapApiKey = p.getString("openWeatherMapApiKey", "")!!,
             systemIs24Hour = DateFormat.is24HourFormat(context),
@@ -160,6 +163,7 @@ object SettingsStore {
             .putBoolean("widgetShowPlace", s.widgetShowPlace)
             .putBoolean("widgetShowHeadphones", s.widgetShowHeadphones)
             .putBoolean("widgetShowGreeting", s.widgetShowGreeting)
+            .putBoolean("widgetRotatePages", s.widgetRotatePages)
             .putString("weatherProvider", s.weatherProvider)
             .putString("openWeatherMapApiKey", s.openWeatherMapApiKey.trim())
             .commit()

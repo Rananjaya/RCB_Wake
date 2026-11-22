@@ -85,8 +85,11 @@ A second widget (`GlanceWidgetProvider`) with two pages in a `ViewFlipper`:
    the date with year (large when the greeting is off), and the weather icon, temperature and place.
 2. "Coming up": the next calendar event, the next alarm and connected earphones (optional).
 
-Tapping the widget switches page (the page is remembered per widget); page dots show the current
-page. Launchers use horizontal swipes to change home-screen pages and widgets cannot receive them,
+Pages switch automatically every 6 seconds (Settings → Switch My Day pages automatically) and on a
+tap; a double tap opens the app (taps go through the invisible `WidgetTapActivity`, which measures
+the time between them). Each page carries its own vertical page dots on the right. From 10 minutes
+before a timed calendar event or an alarm until it starts (events: until they end), the widget
+shows "Soon" on page 2 and stops switching. Launchers use horizontal swipes to change home-screen pages and widgets cannot receive them,
 so a tap is used instead of a swipe. If page 2 has nothing to show, the widget has one page and a
 tap opens the app. The greeting is refreshed at each boundary by an inexact `RTC` alarm.
 

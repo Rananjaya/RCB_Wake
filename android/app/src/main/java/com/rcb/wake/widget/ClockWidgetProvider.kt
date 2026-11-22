@@ -295,6 +295,8 @@ data class WidgetContent(
     /** `system`, `12` or `24` from settings. */
     val timeFormat: String,
     val alarmText: String?,
+    /** When the next alarm rings (epoch millis), or null. */
+    val alarmAt: Long? = null,
     val weather: WeatherSnapshot?,
     val temperatureText: String,
     val weatherDescription: String,
@@ -346,6 +348,7 @@ data class WidgetContent(
                 is24Hour = settings.is24Hour,
                 timeFormat = settings.timeFormat,
                 alarmText = alarmText,
+                alarmAt = next?.nextTriggerAt,
                 weather = weather,
                 temperatureText = weather?.let { WeatherCodes.formatTemperature(it.temperatureCelsius, settings.temperatureUnit) }.orEmpty(),
                 weatherDescription = description,

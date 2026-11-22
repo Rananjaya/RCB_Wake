@@ -85,6 +85,15 @@ export function WidgetSettings() {
         />
         <Divider />
         <ToggleRow
+          label={t('widgetRotatePages')}
+          hint={t('widgetRotatePagesHint')}
+          value={settings.widgetRotatePages}
+          onValueChange={v =>
+            update({ widgetRotatePages: v }).catch(() => undefined)
+          }
+        />
+        <Divider />
+        <ToggleRow
           label={t('widgetShowGreeting')}
           hint={t('widgetShowGreetingHint')}
           value={settings.widgetShowGreeting}

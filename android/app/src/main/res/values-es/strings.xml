@@ -63,4 +63,5 @@
     <string name="headphones_wired">Auriculares con cable</string>
     <string name="headphones_bluetooth">Auriculares Bluetooth</string>
     <string name="glance_coming_up">Próximamente</string>
+    <string name="glance_soon">En breve</string>
 </resources>

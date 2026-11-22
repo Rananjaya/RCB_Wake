@@ -40,6 +40,7 @@ const defaults = {
   widgetShowPlace: true,
   widgetShowHeadphones: false,
   widgetShowGreeting: true,
+  widgetRotatePages: true,
   weatherProvider: 'openmeteo',
   openWeatherMapApiKey: '',
 };

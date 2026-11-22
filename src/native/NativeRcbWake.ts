@@ -215,6 +215,8 @@ export type Settings = {
   widgetTextColor: string;
   /** City / village name next to the widget temperature. */
   widgetShowPlace: boolean;
+  /** My Day widget pages change automatically. */
+  widgetRotatePages: boolean;
   /** Time-of-day greeting on the My Day widget. */
   widgetShowGreeting: boolean;
   /** Connected earphones (name, Bluetooth battery) on the My Day widget. */

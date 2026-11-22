@@ -227,6 +227,9 @@ export const si: Strings = {
   widgetShowPlace: 'Show city or village',
   widgetShowPlaceHint:
     'Name of the weather location next to the temperature, on the wider widget sizes.',
+  widgetRotatePages: 'Switch My Day pages automatically',
+  widgetRotatePagesHint:
+    'Shows the date and weather, then what is coming up, every few seconds. You can also tap the widget to switch.',
   widgetShowGreeting: 'Show greeting',
   widgetShowGreetingHint:
     'Good morning, afternoon, evening or night on the My Day widget. When off, the date is shown large instead.',

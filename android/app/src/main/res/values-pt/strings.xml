@@ -67,4 +67,5 @@
     <string name="headphones_wired">Auscultadores com fio</string>
     <string name="headphones_bluetooth">Auscultadores Bluetooth</string>
     <string name="glance_coming_up">A seguir</string>
+    <string name="glance_soon">Em breve</string>
 </resources>

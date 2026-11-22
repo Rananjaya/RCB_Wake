@@ -102,6 +102,13 @@ OpenWeatherMap); place search sends the typed text to Open-Meteo; "Use my locati
 Android's geocoder for the place name. Camera images (QR challenge) and calendar events never leave
 the device. Full policy: PRIVACY_POLICY.md.
 
+## What's new in 1.6.0
+
+<en-US>
+• My Day widget switches pages by itself, and shows your event or alarm 10 minutes before it starts
+• Double-tap My Day to open the app; tap once to switch the page
+</en-US>
+
 ## What's new in 1.5.0
 
 <en-US>

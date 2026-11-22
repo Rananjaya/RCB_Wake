@@ -690,6 +690,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 widgetShowPlace = !settings.hasKey("widgetShowPlace") || settings.getBoolean("widgetShowPlace"),
                 widgetShowHeadphones = settings.hasKey("widgetShowHeadphones") && settings.getBoolean("widgetShowHeadphones"),
                 widgetShowGreeting = !settings.hasKey("widgetShowGreeting") || settings.getBoolean("widgetShowGreeting"),
+                widgetRotatePages = !settings.hasKey("widgetRotatePages") || settings.getBoolean("widgetRotatePages"),
                 weatherProvider = settings.getString("weatherProvider") ?: SettingsStore.PROVIDER_OPEN_METEO,
                 openWeatherMapApiKey = settings.getString("openWeatherMapApiKey").orEmpty().trim(),
             ),
@@ -729,6 +730,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putBoolean("widgetShowPlace", s.widgetShowPlace)
         putBoolean("widgetShowHeadphones", s.widgetShowHeadphones)
         putBoolean("widgetShowGreeting", s.widgetShowGreeting)
+        putBoolean("widgetRotatePages", s.widgetRotatePages)
         putString("weatherProvider", s.weatherProvider)
         putString("openWeatherMapApiKey", s.openWeatherMapApiKey)
     }
