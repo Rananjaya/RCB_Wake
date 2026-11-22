@@ -38,6 +38,7 @@ export function WeatherSettings() {
   const settings = useSettingsStore(s => s.settings);
   const update = useSettingsStore(s => s.update);
   const [weather, setWeather] = useState<WeatherInfo | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
   const [apiKey, setApiKey] = useState(settings.openWeatherMapApiKey);
   // Choosing OpenWeatherMap only opens the key field; it is saved together with a valid key.
   const [owmDraft, setOwmDraft] = useState(false);
@@ -222,8 +223,7 @@ export function WeatherSettings() {
                 <Button
                   label={t('owmSave')}
                   disabled={
-                    !keyValid ||
-                    apiKey.trim() === settings.openWeatherMapApiKey
+                    !keyValid || apiKey.trim() === settings.openWeatherMapApiKey
                   }
                   onPress={saveKey}
                 />
@@ -244,6 +244,45 @@ export function WeatherSettings() {
                 ? t('owmNoWeather')
                 : t('weatherNotYet')}
             </Text>
+            {weather && weather.latitude !== undefined && (
+              <Text
+                style={[styles.details, { color: theme.colors.textSecondary }]}
+              >
+                {[
+                  t('weatherSent', {
+                    lat: weather.latitude.toFixed(2),
+                    lon: weather.longitude.toFixed(2),
+                  }),
+                  weather.place
+                    ? t('weatherMatched', {
+                        provider: t('providerOpenWeatherMap'),
+                        place: weather.place,
+                      })
+                    : null,
+                  t('weatherUpdated', {
+                    time: new Date(weather.fetchedAt).toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    }),
+                  }),
+                ]
+                  .filter(Boolean)
+                  .join('\n')}
+              </Text>
+            )}
+            <Button
+              label={t('weatherRefreshNow')}
+              variant="secondary"
+              disabled={refreshing}
+              onPress={async () => {
+                setRefreshing(true);
+                try {
+                  setWeather((await engine.refreshWeather()) ?? weather);
+                } finally {
+                  setRefreshing(false);
+                }
+              }}
+            />
             <Text
               style={[
                 styles.attribution,
@@ -278,5 +317,6 @@ const styles = StyleSheet.create({
   hint: { fontSize: 13 },
   input: { borderRadius: 12, paddingHorizontal: spacing.lg, height: 48 },
   status: { fontSize: 14, paddingTop: spacing.sm },
+  details: { fontSize: 13, paddingBottom: spacing.sm },
   attribution: { fontSize: 12, paddingVertical: spacing.sm },
 });

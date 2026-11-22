@@ -34,6 +34,12 @@ startup. The position is read with the platform `LocationManager` (no Google Pla
 while the app is open, rounded to ~1 km before it is stored, and deleted when the option is turned
 off. RCB Wake does not request background or fine location.
 
+When the position changes, the place name shown with the weather (village or suburb, e.g.
+"Kosgama") is looked up with Android's built-in `Geocoder`. On devices with Google services the
+platform sends the coarse position to Google's geocoding service for this; only the resulting
+name is stored. On Android 12 and newer, approximate location is itself blurred by the system to
+about 2 km, so the name can be a neighbouring village.
+
 ### Optional calendar on the widget
 
 `READ_CALENDAR` is requested only when the user turns on Settings → Widget calendar. RCB Wake

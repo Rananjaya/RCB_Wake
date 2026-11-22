@@ -759,11 +759,14 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
     }
 
     private fun weatherMap(w: WeatherSnapshot) = Arguments.createMap().apply {
-        putString("city", if (w.city == WeatherRepository.LOCATION_KEY) "" else w.city)
+        putString("city", if (w.city == WeatherRepository.LOCATION_KEY) DeviceLocation.placeName(context).orEmpty() else w.city)
         putDouble("temperatureCelsius", w.temperatureCelsius)
         putString("condition", w.condition.name)
         putBoolean("isDay", w.isDay)
         putDouble("fetchedAt", w.fetchedAt.toDouble())
+        putDouble("latitude", w.latitude)
+        putDouble("longitude", w.longitude)
+        putString("place", w.place)
     }
 
     private fun checkKey(key: String) = require(key.matches(KEY_PATTERN)) { "Invalid key" }

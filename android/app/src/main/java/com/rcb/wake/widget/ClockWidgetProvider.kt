@@ -21,6 +21,7 @@ import com.rcb.wake.alarm.AlarmController
 import com.rcb.wake.notification.Localized
 import com.rcb.wake.storage.AppStorage
 import com.rcb.wake.storage.SettingsStore
+import com.rcb.wake.weather.DeviceLocation
 import com.rcb.wake.weather.WeatherCondition
 import com.rcb.wake.weather.WeatherCodes
 import com.rcb.wake.weather.WeatherRepository
@@ -224,7 +225,12 @@ class ClockWidgetProvider : AppWidgetProvider() {
                 if (weather != null) {
                     views.setImageViewResource(R.id.widget_weather_icon, weatherIcon(weather))
                     views.setContentDescription(R.id.widget_weather_icon, content.weatherDescription)
-                    views.setTextViewText(R.id.widget_weather_temp, content.temperatureText)
+                    // Roomier layouts also name the place, e.g. "31°C · Kosgama".
+                    val withPlace = layout == Layout.WIDE || layout == Layout.LARGE
+                    views.setTextViewText(
+                        R.id.widget_weather_temp,
+                        content.placeName?.takeIf { withPlace }?.let { "${content.temperatureText} · $it" } ?: content.temperatureText,
+                    )
                 }
             }
 
@@ -287,6 +293,8 @@ data class WidgetContent(
     val weatherDescription: String,
     val event: CalendarEvent?,
     val eventText: String?,
+    /** Village / city the weather is for; null when unknown. */
+    val placeName: String? = null,
     /** `white`, `material` or `accent`. */
     val textColor: String = "white",
     /** Bright accent for text on the wallpaper. */
@@ -333,6 +341,9 @@ data class WidgetContent(
                 event = event,
                 eventText = eventText,
                 textColor = settings.widgetTextColor,
+                placeName = weather?.let {
+                    if (it.city == WeatherRepository.LOCATION_KEY) DeviceLocation.placeName(context) else it.city
+                },
                 accentHex = SettingsStore.ACCENTS[settings.accentColor]?.darkPrimary
                     ?: if (settings.theme == SettingsStore.THEME_PINK) "#F49AC1" else "#A855F7",
             )

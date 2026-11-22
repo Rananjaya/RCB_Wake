@@ -23,6 +23,8 @@ All notable changes to RCB Wake are documented here. The format follows
   interval (15 min, 30 min, 1 h, 3 h).
 - Widget text colour: white, Material You (Android 12+) or the app accent.
 - "Next alarm" status-bar notification while an alarm is set.
+- Weather by location shows the village or suburb name, in Settings and on the wide and large widget;
+  Settings shows the exact coordinates sent to the weather provider and has a "Refresh now" button.
 - Midnight Purple and Pink Dream themes, accent colours.
 - English, Sinhala, Tamil, German, Russian, Spanish, French, Portuguese, Hindi, Chinese
   (Simplified) and Japanese.

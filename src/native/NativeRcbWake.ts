@@ -228,6 +228,11 @@ export type WeatherInfo = {
   condition: string;
   isDay: boolean;
   fetchedAt: number;
+  /** Rounded coordinates sent to the provider. */
+  latitude: number;
+  longitude: number;
+  /** Place the provider matched (OpenWeatherMap), else empty. */
+  place: string;
 };
 
 export type EngineEvent = {

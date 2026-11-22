@@ -56,6 +56,10 @@ function useEngineBootstrap() {
         alarms.refreshSession(),
       ]);
       await alarms.refreshStatus();
+      // Weather by location: refresh the position (and place name) on launch too.
+      if (useSettingsStore.getState().settings.weatherUseLocation) {
+        engine.updateLocation().catch(() => undefined);
+      }
     })().catch(() => {
       // The engine reports per-operation errors to the screens; startup continues with defaults.
     });

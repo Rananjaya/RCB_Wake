@@ -16,6 +16,11 @@ data class WeatherSnapshot(
     val isDay: Boolean,
     val fetchedAt: Long,
     val city: String,
+    /** Rounded coordinates that were sent to the provider. */
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
+    /** Place the provider matched the coordinates to (OpenWeatherMap station/city name), if any. */
+    val place: String = "",
 )
 
 /**
@@ -43,6 +48,9 @@ object WeatherRepository {
                 isDay = o.getBoolean("d"),
                 fetchedAt = o.getLong("at"),
                 city = o.getString("city"),
+                latitude = o.optDouble("lat", 0.0),
+                longitude = o.optDouble("lon", 0.0),
+                place = o.optString("place"),
             ) to o.optString("p", SettingsStore.PROVIDER_OPEN_METEO)
         }.getOrNull()
             // A reading from another place or provider is discarded so the widget never shows it.
@@ -76,9 +84,10 @@ object WeatherRepository {
         if (!settings.weatherEnabled) return null
         val (key, coordinates) = source(context) ?: return null
         return try {
+            val sent = Coordinates(round2(coordinates.latitude), round2(coordinates.longitude))
             val snapshot = when (settings.weatherProvider) {
-                SettingsStore.PROVIDER_OPEN_WEATHER_MAP -> fetchOpenWeatherMap(coordinates, settings.openWeatherMapApiKey, key)
-                else -> fetchOpenMeteo(coordinates, key)
+                SettingsStore.PROVIDER_OPEN_WEATHER_MAP -> fetchOpenWeatherMap(sent, settings.openWeatherMapApiKey, key)
+                else -> fetchOpenMeteo(sent, key)
             } ?: return null
             save(context, snapshot, settings.weatherProvider)
             snapshot
@@ -88,6 +97,8 @@ object WeatherRepository {
             null
         }
     }
+
+    private fun round2(v: Double) = Math.round(v * 100.0) / 100.0
 
     private fun fetchOpenMeteo(c: Coordinates, key: String): WeatherSnapshot? {
         val body = get(
@@ -105,6 +116,8 @@ object WeatherRepository {
             isDay = current.optInt("is_day", 1) == 1,
             fetchedAt = System.currentTimeMillis(),
             city = key,
+            latitude = c.latitude,
+            longitude = c.longitude,
         )
     }
 
@@ -128,6 +141,9 @@ object WeatherRepository {
             isDay = !weather.optString("icon").endsWith("n"),
             fetchedAt = System.currentTimeMillis(),
             city = key,
+            latitude = c.latitude,
+            longitude = c.longitude,
+            place = o.optString("name"),
         )
     }
 
@@ -156,6 +172,9 @@ object WeatherRepository {
             .put("at", s.fetchedAt)
             .put("city", s.city)
             .put("p", provider)
+            .put("lat", s.latitude)
+            .put("lon", s.longitude)
+            .put("place", s.place)
         AppStorage.state(context).edit().putString(KEY, o.toString()).apply()
     }
 }
