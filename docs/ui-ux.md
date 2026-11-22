@@ -79,11 +79,16 @@ changes live) or the app's accent colour.
 
 ### My Day widget
 
-A second, single-row widget (`GlanceWidgetProvider`): a greeting by time of day (morning 05–12,
-afternoon 12–17, evening 17–21, night 21–05), then the date, the weather icon with temperature
-and optional place on its own line, then the next calendar event and connected earphones. It shares the clock widget's data and settings
-(weather, text colour, place name). The greeting is refreshed at each boundary by an inexact
-`RTC` alarm that never wakes the device.
+A second widget (`GlanceWidgetProvider`) with two pages in a `ViewFlipper`:
+
+1. Optional greeting by time of day (morning 05–12, afternoon 12–17, evening 17–21, night 21–05),
+   the date with year (large when the greeting is off), and the weather icon, temperature and place.
+2. "Coming up": the next calendar event, the next alarm and connected earphones (optional).
+
+Tapping the widget switches page (the page is remembered per widget); page dots show the current
+page. Launchers use horizontal swipes to change home-screen pages and widgets cannot receive them,
+so a tap is used instead of a swipe. If page 2 has nothing to show, the widget has one page and a
+tap opens the app. The greeting is refreshed at each boundary by an inexact `RTC` alarm.
 
 ## Localisation
 

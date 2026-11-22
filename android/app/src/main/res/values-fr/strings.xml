@@ -62,4 +62,5 @@
     <string name="greeting_night">Bonne nuit</string>
     <string name="headphones_wired">Écouteurs filaires</string>
     <string name="headphones_bluetooth">Écouteurs Bluetooth</string>
+    <string name="glance_coming_up">À venir</string>
 </resources>

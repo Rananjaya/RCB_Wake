@@ -15,6 +15,7 @@ import android.widget.RemoteViews
 import com.rcb.wake.MainActivity
 import com.rcb.wake.R
 import com.rcb.wake.notification.Localized
+import com.rcb.wake.storage.AppStorage
 import com.rcb.wake.storage.SettingsStore
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -32,7 +33,14 @@ class GlanceWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == ACTION_GREETING) updateAll(context) else super.onReceive(context, intent)
+        when (intent.action) {
+            ACTION_GREETING -> updateAll(context)
+            ACTION_NEXT_PAGE -> {
+                val id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+                if (id != AppWidgetManager.INVALID_APPWIDGET_ID) nextPage(context, id)
+            }
+            else -> super.onReceive(context, intent)
+        }
     }
 
     override fun onDisabled(context: Context) {
@@ -89,18 +97,41 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             context.getSystemService(AlarmManager::class.java).set(AlarmManager.RTC, at, greetingIntent(context))
         }
 
+        private const val ACTION_NEXT_PAGE = "com.rcb.wake.action.GLANCE_NEXT_PAGE"
+        private fun pageKey(id: Int) = "glance_page_$id"
+
         private fun render(context: Context, manager: AppWidgetManager, ids: IntArray) {
             val content = WidgetContent.load(context)
             CalendarEvents.scheduleRefresh(context, content.event)
-            val c = Localized.context(context)
-            val views = RemoteViews(context.packageName, R.layout.widget_glance)
             val settings = SettingsStore.load(context)
-            val hour = LocalDateTime.now().hour
-            views.setTextViewText(R.id.glance_greeting, c.getString(greetingFor(hour).res))
-            // Without the greeting, the date becomes the headline, as on a Pixel "At a Glance".
-            views.setViewVisibility(R.id.glance_greeting, if (settings.widgetShowGreeting) View.VISIBLE else View.GONE)
-            views.setTextViewTextSize(R.id.glance_date, TypedValue.COMPLEX_UNIT_SP, if (settings.widgetShowGreeting) 16f else 24f)
+            val c = Localized.context(context)
+            val headphones = if (settings.widgetShowHeadphones) Headphones.current(context) else null
+            val hasNext = content.eventText != null || content.alarmText != null || headphones != null
+            val state = AppStorage.state(context)
+            for (id in ids) {
+                val page = if (hasNext) state.getInt(pageKey(id), 0).coerceIn(0, 1) else 0
+                manager.updateAppWidget(id, build(context, c, content, settings, headphones, hasNext, page, id))
+            }
+            scheduleGreeting(context)
+        }
 
+        private fun build(
+            context: Context,
+            c: Context,
+            content: WidgetContent,
+            settings: com.rcb.wake.storage.WakeSettings,
+            headphones: HeadphonesInfo?,
+            hasNext: Boolean,
+            page: Int,
+            id: Int,
+        ): RemoteViews {
+            val views = RemoteViews(context.packageName, R.layout.widget_glance)
+
+            // Page 1: greeting (optional), date with year, weather.
+            views.setTextViewText(R.id.glance_greeting, c.getString(greetingFor(LocalDateTime.now().hour).res))
+            views.setViewVisibility(R.id.glance_greeting, if (settings.widgetShowGreeting) View.VISIBLE else View.GONE)
+            // Without the greeting, the date becomes the headline.
+            views.setTextViewTextSize(R.id.glance_date, TypedValue.COMPLEX_UNIT_SP, if (settings.widgetShowGreeting) 16f else 24f)
             val weather = content.weather
             views.setViewVisibility(R.id.glance_weather, if (weather != null) View.VISIBLE else View.GONE)
             if (weather != null) {
@@ -111,36 +142,62 @@ class GlanceWidgetProvider : AppWidgetProvider() {
                     content.placeName?.let { "${content.temperatureText} · $it" } ?: content.temperatureText,
                 )
             }
-            val headphones = if (settings.widgetShowHeadphones) Headphones.current(context) else null
-            views.setViewVisibility(R.id.glance_headphones, if (headphones != null) View.VISIBLE else View.GONE)
-            headphones?.let { views.setTextViewText(R.id.glance_headphones_text, it.label()) }
+
+            // Page 2: next event, next alarm, earphones.
             views.setViewVisibility(R.id.glance_event, if (content.eventText != null) View.VISIBLE else View.GONE)
             content.eventText?.let { views.setTextViewText(R.id.glance_event, it) }
+            views.setViewVisibility(R.id.glance_alarm, if (content.alarmText != null) View.VISIBLE else View.GONE)
+            content.alarmText?.let { views.setTextViewText(R.id.glance_alarm, it) }
+            views.setViewVisibility(R.id.glance_headphones, if (headphones != null) View.VISIBLE else View.GONE)
+            headphones?.let { views.setTextViewText(R.id.glance_headphones_text, it.label()) }
+
+            views.setDisplayedChild(R.id.glance_pages, page)
+            views.setViewVisibility(R.id.glance_dots, if (hasNext) View.VISIBLE else View.GONE)
+            views.setInt(R.id.glance_dot_1, "setImageAlpha", if (page == 0) 255 else 90)
+            views.setInt(R.id.glance_dot_2, "setImageAlpha", if (page == 1) 255 else 90)
             applyTextColor(views, content)
 
-            val open = PendingIntent.getActivity(
-                context,
-                903,
-                Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-            )
-            views.setOnClickPendingIntent(R.id.glance_root, open)
-            for (id in ids) manager.updateAppWidget(id, views)
-            scheduleGreeting(context)
+            // Tap: next page when there is a second page, otherwise open the app.
+            val tap = if (hasNext) {
+                PendingIntent.getBroadcast(
+                    context,
+                    id,
+                    Intent(context, GlanceWidgetProvider::class.java)
+                        .setAction(ACTION_NEXT_PAGE)
+                        .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id),
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
+            } else {
+                PendingIntent.getActivity(
+                    context,
+                    903,
+                    Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
+            }
+            views.setOnClickPendingIntent(R.id.glance_root, tap)
+            return views
+        }
+
+        private fun nextPage(context: Context, id: Int) {
+            val state = AppStorage.state(context)
+            state.edit().putInt(pageKey(id), (state.getInt(pageKey(id), 0) + 1) % 2).apply()
+            render(context, AppWidgetManager.getInstance(context), intArrayOf(id))
         }
 
         private fun applyTextColor(views: RemoteViews, content: WidgetContent) {
             val primary = listOf(R.id.glance_greeting)
-            val secondary = listOf(R.id.glance_date, R.id.glance_weather_temp, R.id.glance_headphones_text, R.id.glance_event)
+            val primary2 = listOf(R.id.glance_next_title)
+            val secondary = listOf(R.id.glance_date, R.id.glance_weather_temp, R.id.glance_headphones_text, R.id.glance_event, R.id.glance_alarm)
             when {
                 content.textColor == "material" && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-                    primary.forEach { views.setColorStateList(it, "setTextColor", android.R.color.system_accent1_100) }
+                    (primary + primary2).forEach { views.setColorStateList(it, "setTextColor", android.R.color.system_accent1_100) }
                     secondary.forEach { views.setColorStateList(it, "setTextColor", android.R.color.system_accent2_50) }
                     views.setColorStateList(R.id.glance_headphones_icon, "setImageTintList", android.R.color.system_accent2_50)
                 }
                 content.textColor == "accent" -> {
                     val color = Color.parseColor(content.accentHex)
-                    (primary + secondary).forEach { views.setTextColor(it, color) }
+                    (primary + primary2 + secondary).forEach { views.setTextColor(it, color) }
                     views.setInt(R.id.glance_headphones_icon, "setColorFilter", color)
                 }
             }

@@ -4,6 +4,14 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.5.0] — 2026-11-22
+
+### Changed
+- My Day widget now has two pages: page 1 shows the date with year and the weather (and the
+  greeting if enabled); tap the widget to see page 2 — next event, next alarm and connected
+  earphones. Page dots show the current page. (Home-screen widgets cannot receive swipes, so
+  pages are switched by tapping.)
+
 ## [1.4.1] — 2026-11-22
 
 ### Changed
