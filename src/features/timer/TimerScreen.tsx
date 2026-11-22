@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Pressable,
   ScrollView,
@@ -18,9 +18,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Icon } from '../../components/Icon';
 import { Toolbar } from '../../components/Toolbar';
 import { Button, Chip } from '../../components/ui';
+import { useElapsedNow } from '../../hooks/useElapsedNow';
 import { useT } from '../../i18n';
 import type { RootStackParamList } from '../../navigation/types';
-import { engine, type TimerRecord } from '../../services/engine';
+import type { TimerRecord } from '../../services/engine';
 import { useTimerStore } from '../../storage/timerStore';
 import { useTheme } from '../../theme/useTheme';
 import { radius, spacing } from '../../theme/themes';
@@ -35,17 +36,6 @@ import {
 } from './timerEntry';
 import { PomodoroPanel } from './PomodoroPanel';
 
-/** Re-renders periodically while any timer is running. Display only; completion is native. */
-function useElapsedTick(active: boolean): number {
-  const [now, setNow] = useState(() => engine.elapsedRealtime());
-  useEffect(() => {
-    if (!active) return;
-    const id = setInterval(() => setNow(engine.elapsedRealtime()), 250);
-    return () => clearInterval(id);
-  }, [active]);
-  return active ? now : engine.elapsedRealtime();
-}
-
 export function TimerScreen() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -56,7 +46,7 @@ export function TimerScreen() {
   const [entryOpen, setEntryOpen] = useState(false);
   const [mode, setMode] = useState<'timers' | 'pomodoro'>('timers');
   const showEntry = entryOpen || timers.length === 0;
-  const nowElapsed = useElapsedTick(timers.some(x => x.status === 'RUNNING'));
+  const nowElapsed = useElapsedNow(timers.some(x => x.status === 'RUNNING'));
 
   return (
     <SafeAreaView

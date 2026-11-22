@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { Button, Card, Divider, ToggleRow } from '../../components/ui';
+import { useElapsedNow } from '../../hooks/useElapsedNow';
 import { useT, type StringKey } from '../../i18n';
-import { engine, type PomodoroConfig } from '../../services/engine';
+import type { PomodoroConfig } from '../../services/engine';
 import { usePomodoroStore } from '../../storage/pomodoroStore';
 import { useTheme } from '../../theme/useTheme';
 import { spacing } from '../../theme/themes';
@@ -25,7 +26,6 @@ export function PomodoroPanel() {
   const t = useT();
   const { state, load, start, pause, skip, reset, saveConfig } =
     usePomodoroStore();
-  const [now, setNow] = useState(() => engine.elapsedRealtime());
   const [editing, setEditing] = useState(false);
 
   useEffect(() => {
@@ -33,18 +33,11 @@ export function PomodoroPanel() {
   }, [load]);
 
   const running = state?.status === 'RUNNING';
-  useEffect(() => {
-    if (!running) return;
-    const id = setInterval(() => setNow(engine.elapsedRealtime()), 250);
-    return () => clearInterval(id);
-  }, [running]);
+  const now = useElapsedNow(running);
 
   if (!state) return null;
   const c = state.config;
-  const remaining = displayRemaining(
-    state,
-    running ? now : engine.elapsedRealtime(),
-  );
+  const remaining = displayRemaining(state, now);
   const phaseMinutes =
     state.phase === 'FOCUS'
       ? c.focusMinutes
