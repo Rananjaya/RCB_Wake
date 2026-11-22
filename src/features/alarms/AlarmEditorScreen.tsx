@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
+  PermissionsAndroid,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -258,7 +259,61 @@ export function AlarmEditorScreen({ navigation, route }: Props) {
           />
           {draft.challengeEnabled && (
             <>
-              {nfcTagCount !== null && (
+              <Text
+                style={[styles.subLabel, { color: theme.colors.textSecondary }]}
+              >
+                {t('challengeType')}
+              </Text>
+              <View style={styles.wrap}>
+                <Chip
+                  label={t('challengeMath')}
+                  selected={draft.challengeType === 'math'}
+                  onPress={() => update({ challengeType: 'math' })}
+                />
+                <Chip
+                  label={t('challengeQr')}
+                  selected={draft.challengeType === 'qr'}
+                  onPress={async () => {
+                    // Ask for the camera now, not when the alarm is ringing.
+                    const result = await PermissionsAndroid.request(
+                      PermissionsAndroid.PERMISSIONS.CAMERA,
+                    );
+                    if (result === PermissionsAndroid.RESULTS.GRANTED) {
+                      update({ challengeType: 'qr' });
+                    }
+                  }}
+                />
+                {nfcTagCount !== null && (
+                  <Chip
+                    label={t('challengeNfc')}
+                    selected={draft.challengeType === 'nfc'}
+                    onPress={() =>
+                      nfcTagCount > 0 && update({ challengeType: 'nfc' })
+                    }
+                  />
+                )}
+              </View>
+              {nfcTagCount === 0 && (
+                <Text
+                  style={[
+                    styles.subLabel,
+                    { color: theme.colors.textSecondary },
+                  ]}
+                >
+                  {t('challengeNfcNeedsTag')}
+                </Text>
+              )}
+              {draft.challengeType === 'qr' && (
+                <Text
+                  style={[
+                    styles.subLabel,
+                    { color: theme.colors.textSecondary },
+                  ]}
+                >
+                  {t('challengeQrHint')}
+                </Text>
+              )}
+              {draft.challengeType === 'math' && (
                 <>
                   <Text
                     style={[
@@ -266,57 +321,26 @@ export function AlarmEditorScreen({ navigation, route }: Props) {
                       { color: theme.colors.textSecondary },
                     ]}
                   >
-                    {t('challengeType')}
+                    {t('difficulty')}
                   </Text>
                   <View style={styles.wrap}>
-                    <Chip
-                      label={t('challengeMath')}
-                      selected={draft.challengeType !== 'nfc'}
-                      onPress={() => update({ challengeType: 'math' })}
-                    />
-                    {nfcTagCount !== null && (
+                    {DIFFICULTIES.map(d => (
                       <Chip
-                        label={t('challengeNfc')}
-                        selected={draft.challengeType === 'nfc'}
-                        onPress={() =>
-                          nfcTagCount > 0 && update({ challengeType: 'nfc' })
-                        }
+                        key={d.value}
+                        label={t(d.key)}
+                        selected={draft.challengeDifficulty === d.value}
+                        onPress={() => update({ challengeDifficulty: d.value })}
                       />
-                    )}
+                    ))}
                   </View>
-                  {nfcTagCount === 0 && (
-                    <Text
-                      style={[
-                        styles.subLabel,
-                        { color: theme.colors.textSecondary },
-                      ]}
-                    >
-                      {t('challengeNfcNeedsTag')}
-                    </Text>
-                  )}
+                  <QuestionStepper
+                    value={draft.challengeQuestionCount}
+                    onChange={n =>
+                      update({ challengeQuestionCount: clampQuestions(n) })
+                    }
+                  />
                 </>
               )}
-              <Text
-                style={[styles.subLabel, { color: theme.colors.textSecondary }]}
-              >
-                {t('difficulty')}
-              </Text>
-              <View style={styles.wrap}>
-                {DIFFICULTIES.map(d => (
-                  <Chip
-                    key={d.value}
-                    label={t(d.key)}
-                    selected={draft.challengeDifficulty === d.value}
-                    onPress={() => update({ challengeDifficulty: d.value })}
-                  />
-                ))}
-              </View>
-              <QuestionStepper
-                value={draft.challengeQuestionCount}
-                onChange={n =>
-                  update({ challengeQuestionCount: clampQuestions(n) })
-                }
-              />
             </>
           )}
         </Card>

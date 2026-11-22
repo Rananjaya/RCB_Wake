@@ -51,4 +51,8 @@
     <string name="event_now">Now</string>
     <string name="event_tomorrow">Tomorrow %1$s</string>
     <string name="channel_next_alarm">Next alarm</string>
+    <string name="ringing_qr_info">Scan any QR code to stop the alarm</string>
+    <string name="action_scan_qr">Scan QR code</string>
+    <string name="qr_scan_prompt">Point the camera at any QR code</string>
+    <string name="qr_camera_denied">Camera permission is needed for the QR challenge</string>
 </resources>

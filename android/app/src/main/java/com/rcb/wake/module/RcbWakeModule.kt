@@ -415,6 +415,12 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         UiThreadUtil.runOnUiThread { NfcTags.disableReader(activity) }
     }
 
+    override fun openQrScanner() {
+        val intent = Intent(context, com.rcb.wake.activity.QrScanActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        (context.currentActivity ?: context).startActivity(intent)
+    }
+
     override fun openNfcSettings() {
         startSettings(Intent(Settings.ACTION_NFC_SETTINGS))
     }

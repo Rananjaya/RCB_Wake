@@ -46,4 +46,8 @@
     <string name="event_now">Ahora</string>
     <string name="event_tomorrow">Mañana %1$s</string>
     <string name="channel_next_alarm">Próxima alarma</string>
+    <string name="ringing_qr_info">Escanea cualquier código QR para detener la alarma</string>
+    <string name="action_scan_qr">Escanear código QR</string>
+    <string name="qr_scan_prompt">Apunta la cámara a cualquier código QR</string>
+    <string name="qr_camera_denied">Se necesita la cámara para el reto QR</string>
 </resources>

@@ -50,4 +50,8 @@
     <string name="event_now">现在</string>
     <string name="event_tomorrow">明天 %1$s</string>
     <string name="channel_next_alarm">下一个闹钟</string>
+    <string name="ringing_qr_info">扫描任意二维码以关闭闹钟</string>
+    <string name="action_scan_qr">扫描二维码</string>
+    <string name="qr_scan_prompt">将相机对准任意二维码</string>
+    <string name="qr_camera_denied">二维码挑战需要相机权限</string>
 </resources>

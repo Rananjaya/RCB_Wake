@@ -50,4 +50,8 @@
     <string name="event_now">இப்போது</string>
     <string name="event_tomorrow">நாளை %1$s</string>
     <string name="channel_next_alarm">அடுத்த அலாரம்</string>
+    <string name="ringing_qr_info">அலாரத்தை நிறுத்த ஏதேனும் QR குறியீட்டை ஸ்கேன் செய்யவும்</string>
+    <string name="action_scan_qr">QR குறியீட்டை ஸ்கேன் செய்</string>
+    <string name="qr_scan_prompt">கேமராவை ஏதேனும் QR குறியீட்டை நோக்கி காட்டவும்</string>
+    <string name="qr_camera_denied">QR சவாலுக்கு கேமரா அனுமதி தேவை</string>
 </resources>

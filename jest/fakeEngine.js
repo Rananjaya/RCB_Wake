@@ -276,6 +276,7 @@ const engine = {
   listenForDismissTag: () => {},
   stopNfcListening: () => {},
   openNfcSettings: () => {},
+  openQrScanner: () => {},
   getWeather: async () => null,
   updateLocation: async () => false,
   refreshWeather: async () => null,

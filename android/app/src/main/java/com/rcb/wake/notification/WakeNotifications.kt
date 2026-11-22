@@ -148,8 +148,9 @@ object WakeNotifications {
         if (session.challengeRequired && session.challengeType == com.rcb.wake.alarm.ChallengeType.NFC) {
             builder.addAction(Notification.Action.Builder(null, c.getString(R.string.action_scan_tag), fullScreen).build())
         } else if (session.challengeRequired) {
+            val label = if (session.challengeType == com.rcb.wake.alarm.ChallengeType.QR) R.string.action_scan_qr else R.string.action_solve
             builder.addAction(
-                Notification.Action.Builder(null, c.getString(R.string.action_solve), openAppIntent(context, 102, challenge = true)).build(),
+                Notification.Action.Builder(null, c.getString(label), openAppIntent(context, 102, challenge = true)).build(),
             )
         } else {
             val dismiss = PendingIntent.getService(context, 103, RingingService.dismissIntent(context, RingingService.METHOD_NORMAL), immutable())

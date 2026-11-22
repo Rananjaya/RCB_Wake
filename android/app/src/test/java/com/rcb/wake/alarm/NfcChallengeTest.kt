@@ -27,10 +27,21 @@ class NfcChallengeTest {
         assertEquals(ChallengeType.MATH, session.challengeType)
     }
 
+    @Test fun `qr outranks math and nfc outranks qr`() {
+        val math = AlarmSession.start(sampleAlarm(id = 1, challengeEnabled = true), 0)
+        val qr = math.withAlarm(sampleAlarm(id = 2, challengeEnabled = true, challengeType = ChallengeType.QR))
+        assertEquals(ChallengeType.QR, qr.challengeType)
+        val nfc = qr.withAlarm(sampleAlarm(id = 3, challengeEnabled = true, challengeType = ChallengeType.NFC))
+        assertEquals(ChallengeType.NFC, nfc.challengeType)
+        // A QR alarm with its challenge switched off does not change the session.
+        val off = math.withAlarm(sampleAlarm(id = 4, challengeEnabled = false, challengeType = ChallengeType.QR))
+        assertEquals(ChallengeType.MATH, off.challengeType)
+    }
+
     @Test(expected = InvalidAlarmException::class)
     fun `unknown challenge type is rejected`() {
         AlarmValidator.validate(
-            AlarmInput(null, 7, 0, true, 0, "", "builtin:dawn", "Dawn", true, true, 10, true, "easy", 3, challengeType = "qr"),
+            AlarmInput(null, 7, 0, true, 0, "", "builtin:dawn", "Dawn", true, true, 10, true, "easy", 3, challengeType = "barcode"),
         )
     }
 }

@@ -50,4 +50,8 @@
     <string name="event_now">अभी</string>
     <string name="event_tomorrow">कल %1$s</string>
     <string name="channel_next_alarm">अगला अलार्म</string>
+    <string name="ringing_qr_info">अलार्म रोकने के लिए कोई भी QR कोड स्कैन करें</string>
+    <string name="action_scan_qr">QR कोड स्कैन करें</string>
+    <string name="qr_scan_prompt">कैमरा किसी भी QR कोड की ओर करें</string>
+    <string name="qr_camera_denied">QR चुनौती के लिए कैमरा अनुमति चाहिए</string>
 </resources>

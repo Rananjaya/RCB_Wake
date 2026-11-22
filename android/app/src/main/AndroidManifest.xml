@@ -24,6 +24,10 @@
     <!-- Used only for the opt-in widget weather (Open-Meteo). Off by default; when weather is
          disabled the app makes no network requests. -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Optional QR wake-up challenge only; requested when the user picks it. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
     <!-- Optional "use my location" for widget weather; coarse only, requested at runtime when the
          user turns it on. No background location. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -155,6 +159,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
+
+        <activity
+            android:name=".activity.QrScanActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:showWhenLocked="true"
+            android:theme="@android:style/Theme.Material.NoActionBar"
+            android:turnScreenOn="true" />
 
         <activity
             android:name=".activity.RingingActivity"

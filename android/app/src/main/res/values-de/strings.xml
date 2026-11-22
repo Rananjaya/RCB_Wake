@@ -46,4 +46,8 @@
     <string name="event_now">Jetzt</string>
     <string name="event_tomorrow">Morgen %1$s</string>
     <string name="channel_next_alarm">Nächster Wecker</string>
+    <string name="ringing_qr_info">Scanne einen beliebigen QR-Code, um den Wecker zu stoppen</string>
+    <string name="action_scan_qr">QR-Code scannen</string>
+    <string name="qr_scan_prompt">Richte die Kamera auf einen QR-Code</string>
+    <string name="qr_camera_denied">Für die QR-Aufgabe wird die Kamera benötigt</string>
 </resources>

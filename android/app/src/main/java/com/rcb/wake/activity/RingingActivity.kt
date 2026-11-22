@@ -137,6 +137,10 @@ class RingingActivity : Activity() {
                 if (NfcTags.isEnabled(this)) R.string.ringing_nfc_info else R.string.ringing_nfc_off,
             )
             dismiss.text = getString(if (NfcTags.isEnabled(this)) R.string.action_scan_tag else R.string.action_nfc_settings)
+        } else if (session.challengeRequired && session.challengeType == ChallengeType.QR) {
+            challenge.visibility = View.VISIBLE
+            challenge.text = getString(R.string.ringing_qr_info)
+            dismiss.text = getString(R.string.action_scan_qr)
         } else if (session.challengeRequired) {
             val difficulty = when (session.challengeDifficulty) {
                 "hard" -> getString(R.string.difficulty_hard)

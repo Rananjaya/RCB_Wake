@@ -50,4 +50,8 @@
     <string name="event_now">今</string>
     <string name="event_tomorrow">明日 %1$s</string>
     <string name="channel_next_alarm">次のアラーム</string>
+    <string name="ringing_qr_info">任意のQRコードをスキャンしてアラームを止めます</string>
+    <string name="action_scan_qr">QRコードをスキャン</string>
+    <string name="qr_scan_prompt">カメラをQRコードに向けてください</string>
+    <string name="qr_camera_denied">QRチャレンジにはカメラの許可が必要です</string>
 </resources>

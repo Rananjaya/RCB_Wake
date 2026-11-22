@@ -46,4 +46,8 @@
     <string name="event_now">Сейчас</string>
     <string name="event_tomorrow">Завтра %1$s</string>
     <string name="channel_next_alarm">Следующий будильник</string>
+    <string name="ringing_qr_info">Отсканируйте любой QR-код, чтобы остановить будильник</string>
+    <string name="action_scan_qr">Сканировать QR-код</string>
+    <string name="qr_scan_prompt">Наведите камеру на любой QR-код</string>
+    <string name="qr_camera_denied">Для QR-задания нужно разрешение камеры</string>
 </resources>

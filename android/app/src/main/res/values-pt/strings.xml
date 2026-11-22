@@ -50,4 +50,8 @@
     <string name="event_now">Agora</string>
     <string name="event_tomorrow">Amanhã %1$s</string>
     <string name="channel_next_alarm">Próximo alarme</string>
+    <string name="ringing_qr_info">Leia qualquer código QR para parar o alarme</string>
+    <string name="action_scan_qr">Ler código QR</string>
+    <string name="qr_scan_prompt">Aponte a câmara para um código QR</string>
+    <string name="qr_camera_denied">É necessária a câmara para o desafio QR</string>
 </resources>

@@ -288,6 +288,8 @@ export interface Spec extends TurboModule {
   listenForDismissTag(): void;
   stopNfcListening(): void;
   openNfcSettings(): void;
+  /** Opens the native QR scanner; scanning any QR code dismisses the ringing session. */
+  openQrScanner(): void;
 
   // Sounds and pickers
   getBuiltInSounds(): Promise<Sound[]>;

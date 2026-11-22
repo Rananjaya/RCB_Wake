@@ -1,5 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Pressable, StyleSheet, Text, Vibration, View } from 'react-native';
+import {
+  PermissionsAndroid,
+  Pressable,
+  StyleSheet,
+  Text,
+  Vibration,
+  View,
+} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -30,6 +37,7 @@ const EMERGENCY_HOLD_MILLIS = 3000;
 export function ChallengeScreen() {
   const session = useAlarmStore(s => s.session);
   if (session?.challengeType === 'nfc') return <NfcChallenge />;
+  if (session?.challengeType === 'qr') return <QrChallenge />;
   return <MathChallenge />;
 }
 
@@ -71,6 +79,55 @@ function NfcChallenge() {
             style={styles.nfcButton}
           />
         )}
+      </View>
+      <ChallengeFooter />
+    </SafeAreaView>
+  );
+}
+
+/** Scanning any QR code dismisses the alarm; the scanner itself is a native screen. */
+function QrChallenge() {
+  const theme = useTheme();
+  const t = useT();
+  const [denied, setDenied] = useState(false);
+  const scan = async () => {
+    const result = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+    );
+    if (result !== PermissionsAndroid.RESULTS.GRANTED) {
+      setDenied(true);
+      return;
+    }
+    setDenied(false);
+    engine.openQrScanner();
+  };
+  return (
+    <SafeAreaView
+      style={[styles.screen, { backgroundColor: theme.colors.background }]}
+    >
+      <View style={styles.questionBox}>
+        <Text
+          style={[styles.title, styles.center, { color: theme.colors.text }]}
+          accessibilityRole="header"
+        >
+          {t('qrChallengeTitle')}
+        </Text>
+        <Text
+          style={[
+            styles.label,
+            styles.center,
+            { color: theme.colors.textSecondary },
+          ]}
+        >
+          {denied ? t('qrCameraDenied') : t('qrChallengeBody')}
+        </Text>
+        <Button
+          testID="qr-scan"
+          label={t('qrScanButton')}
+          icon="search"
+          onPress={scan}
+          style={styles.nfcButton}
+        />
       </View>
       <ChallengeFooter />
     </SafeAreaView>

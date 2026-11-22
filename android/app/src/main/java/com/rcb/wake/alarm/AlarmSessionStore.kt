@@ -17,7 +17,7 @@ data class AlarmSession(
     val challengeRequired: Boolean,
     val challengeDifficulty: String,
     val challengeQuestionCount: Int,
-    /** `nfc` if any alarm in the session needs an NFC tag, otherwise `math`. */
+    /** Strongest challenge among the ringing alarms: `nfc`, then `qr`, otherwise `math`. */
     val challengeType: String = ChallengeType.MATH,
 ) {
     fun withAlarm(alarm: Alarm): AlarmSession {
@@ -29,11 +29,9 @@ data class AlarmSession(
             else -> harder(challengeDifficulty, alarm.challengeDifficulty)
         }
         val count = if (alarm.challengeEnabled) maxOf(challengeQuestionCount, alarm.challengeQuestionCount) else challengeQuestionCount
-        val type = if (challengeType == ChallengeType.NFC || (alarm.challengeEnabled && alarm.challengeType == ChallengeType.NFC)) {
-            ChallengeType.NFC
-        } else {
-            ChallengeType.MATH
-        }
+        // When alarms ring together, the strongest challenge wins: NFC, then QR, then math.
+        val types = listOfNotNull(challengeType.takeIf { challengeRequired }, alarm.challengeType.takeIf { alarm.challengeEnabled })
+        val type = listOf(ChallengeType.NFC, ChallengeType.QR).firstOrNull { it in types } ?: ChallengeType.MATH
         return copy(
             alarmIds = alarmIds + alarm.id,
             challengeRequired = required,
