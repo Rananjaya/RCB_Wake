@@ -10,7 +10,7 @@
     android:paddingVertical="12dp">
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
         <TextClock
@@ -18,15 +18,11 @@
         android:format12Hour="h:mm"
         android:format24Hour="HH:mm"
             style="@style/WidgetText.Time"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="22sp"
-        android:autoSizeMaxTextSize="72sp"
-        android:autoSizeStepGranularity="1sp"
-        android:gravity="start|center_vertical"
-        android:maxLines="1" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textSize="52sp" />
         <TextView
             android:id="@+id/widget_alarm"
             style="@style/WidgetText.Small"

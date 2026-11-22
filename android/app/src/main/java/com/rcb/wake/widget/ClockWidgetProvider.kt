@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.SizeF
+import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
 import com.rcb.wake.MainActivity
@@ -148,32 +149,63 @@ class ClockWidgetProvider : AppWidgetProvider() {
                 // themselves. Others (Xiaomi HyperOS, many third-party launchers) leave the sizes out,
                 // and the size map then falls back to the smallest entry, so pick from min/max instead.
                 val views = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !sizes.isNullOrEmpty()) {
-                    RemoteViews(
-                        mapOf(
-                            SizeF(100f, 100f) to build(context, Layout.SMALL, content),
-                            SizeF(250f, 50f) to build(context, Layout.BAR, content),
-                            SizeF(170f, 110f) to build(context, Layout.MEDIUM, content),
-                            SizeF(250f, 110f) to build(context, Layout.WIDE, content),
-                            SizeF(250f, 200f) to build(context, Layout.LARGE, content),
-                        ),
-                    )
+                    RemoteViews(SIZE_MAP.associate { (w, h, layout) -> SizeF(w, h) to build(context, layout, content, w, h) })
                 } else {
                     // Portrait uses min width and max height; take the smaller pair so nothing clips.
                     val w = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 250)
                     val h = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 110)
-                    build(context, layoutFor(w, h), content)
+                    build(context, layoutFor(w, h), content, w.toFloat(), h.toFloat())
                 }
                 manager.updateAppWidget(id, views)
             }
         }
 
-        private fun build(context: Context, layout: Layout, content: WidgetContent): RemoteViews {
+        /**
+         * Size-map entries (minimum dp size → layout). The launcher shows the largest entry that
+         * fits, so several entries per layout let the clock grow as the widget is enlarged.
+         */
+        private val SIZE_MAP = listOf(
+            Triple(100f, 100f, Layout.SMALL),
+            Triple(130f, 150f, Layout.SMALL),
+            Triple(250f, 50f, Layout.BAR),
+            Triple(320f, 70f, Layout.BAR),
+            Triple(170f, 110f, Layout.MEDIUM),
+            Triple(210f, 150f, Layout.MEDIUM),
+            Triple(250f, 110f, Layout.WIDE),
+            Triple(300f, 140f, Layout.WIDE),
+            Triple(360f, 170f, Layout.WIDE),
+            Triple(250f, 200f, Layout.LARGE),
+            Triple(300f, 250f, Layout.LARGE),
+            Triple(350f, 300f, Layout.LARGE),
+        )
+
+        /**
+         * Clock text size in dp that fits a widget of [w]×[h] dp next to the layout's other rows.
+         * Computed rather than auto-sized so the clock wraps its text and the date stays right
+         * under it. "10:58" is about 2.7 em wide; a line without font padding is about 1.2 em.
+         */
+        fun clockSizeDp(layout: Layout, w: Float, h: Float): Float {
+            val (max, min, size) = when (layout) {
+                Layout.SMALL -> Triple(48f, 16f, minOf((w - 16f) / 1.2f, (h - 16f - 40f) / 2f / 1.2f))
+                Layout.BAR -> Triple(34f, 14f, minOf((w - 36f - 80f) / 2.7f, (h - 8f) / 1.25f))
+                Layout.MEDIUM -> Triple(64f, 22f, minOf((w - 24f) / 2.7f, (h - 24f - 80f) / 1.2f))
+                Layout.WIDE -> Triple(72f, 24f, minOf((w - 40f - 130f) / 2.7f, (h - 24f - 22f) / 1.2f))
+                Layout.LARGE -> Triple(96f, 28f, minOf((w - 32f) / 2.7f, (h - 32f - 90f) / 1.2f))
+            }
+            return size.coerceIn(min, max)
+        }
+
+        private fun build(context: Context, layout: Layout, content: WidgetContent, w: Float, h: Float): RemoteViews {
             val views = RemoteViews(context.packageName, layout.resId)
+            val clock = clockSizeDp(layout, w, h)
             if (layout.splitClock) {
                 views.setTimeFormat(R.id.widget_hour, content.pattern("hh", "HH"))
                 views.setTimeFormat(R.id.widget_minute, "mm" to "mm")
+                views.setTextViewTextSize(R.id.widget_hour, TypedValue.COMPLEX_UNIT_DIP, clock)
+                views.setTextViewTextSize(R.id.widget_minute, TypedValue.COMPLEX_UNIT_DIP, clock)
             } else {
                 views.setTimeFormat(R.id.widget_time, content.pattern("h:mm", "HH:mm"))
+                views.setTextViewTextSize(R.id.widget_time, TypedValue.COMPLEX_UNIT_DIP, clock)
             }
             if (layout.date) {
                 views.setTimeFormat(R.id.widget_date, (if (layout == Layout.SMALL) "EEE d" else "MMM, EEEE d").let { it to it })

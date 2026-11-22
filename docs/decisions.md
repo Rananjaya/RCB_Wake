@@ -82,4 +82,4 @@ inexact, non-waking alarm, because the widget `updatePeriodMillis` cannot go bel
 On Android 12+ the widget sends a size map, and the launcher picks the layout. Launchers that do
 not report `OPTION_APPWIDGET_SIZES` (seen on Xiaomi HyperOS) fall back to the smallest entry, so
 the provider then chooses one layout from the reported min width and height instead. The clock
-text auto-sizes so it fits any cell size.
+size is computed from the widget size (XML auto-size was rejected: it needs a fixed-height view, which left a gap between the time and the date).

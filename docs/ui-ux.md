@@ -71,7 +71,7 @@ Layouts by size: **bar** (time + weather), **small** (stacked hour/minute + date
 weather, next alarm). Weather icons are original 3D-style artwork (gradient sun, translucent cloud,
 moon, rain, snow, storm, fog, showers).
 
-The clock text auto-sizes to the cell. On Android 12+ the launcher picks the layout from a size
+The clock size is computed from the widget size (several size-map entries per layout), so it grows with the widget while the date stays directly under it. On Android 12+ the launcher picks the layout from a size
 map; launchers that do not report exact sizes (Xiaomi HyperOS, many third-party launchers) get one
 layout chosen from the reported minimum width and height. Text colour (Settings → Home-screen
 widget) is white, Material You (wallpaper `system_accent` tones, Android 12+, follows wallpaper
