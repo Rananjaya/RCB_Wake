@@ -4,7 +4,16 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
-## [1.0.0] — Unreleased
+## [1.0.1] — 2026-11-22
+
+### Fixed
+- The alarm challenge screen no longer stays open, and the app no longer shows over the lock
+  screen, after an alarm has ended.
+
+### Changed
+- Math and QR code are now two separate wake-up challenges; choose one per alarm.
+
+## [1.0.0] — 2026-11-22
 
 ### Added
 - Native Kotlin alarm engine: exact `setAlarmClock` scheduling, weekday and one-time alarms,
