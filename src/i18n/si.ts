@@ -76,8 +76,9 @@ export const si: Strings = {
   gradualVolumeHint: 'සෙමින් ආරම්භ වී තත්පර 30ක් තුළ වැඩි වේ',
   snooze: 'නිදි කරන්න',
   snoozeMinutes: 'විනාඩි {m}',
-  challenge: 'ගණිත අභියෝගය',
-  challengeHint: 'එලාම් එක නැවැත්වීමට පෙර ප්‍රශ්න විසඳන්න',
+  challenge: 'අවදි වීමේ අභියෝගය',
+  challengeHint:
+    'එලාම් නැවැත්වීමට පෙර ගණිත ප්‍රශ්න විසඳන්න හෝ QR කේතයක් ස්කෑන් කරන්න',
   difficulty: 'අපහසුතාව',
   difficultyEasy: 'පහසු',
   difficultyMedium: 'මධ්‍යම',

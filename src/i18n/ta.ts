@@ -76,8 +76,9 @@ export const ta: Strings = {
   gradualVolumeHint: 'மெதுவாகத் தொடங்கி 30 விநாடிகளில் அதிகரிக்கும்',
   snooze: 'உறக்கநிலை',
   snoozeMinutes: '{m} நிமி',
-  challenge: 'கணிதச் சவால்',
-  challengeHint: 'அலாரத்தை நிறுத்தும் முன் கேள்விகளைத் தீர்க்கவும்',
+  challenge: 'எழுப்பும் சவால்',
+  challengeHint:
+    'அலாரத்தை நிறுத்தும் முன் கணக்குகளைத் தீர்க்கவும் அல்லது QR குறியீட்டை ஸ்கேன் செய்யவும்',
   difficulty: 'கடினம்',
   difficultyEasy: 'எளிது',
   difficultyMedium: 'நடுத்தரம்',

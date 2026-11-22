@@ -70,8 +70,9 @@ export const de: Translation = {
   gradualVolumeHint: 'Beginnt leise und wird in 30 Sekunden lauter',
   snooze: 'Schlummern',
   snoozeMinutes: '{m} Min.',
-  challenge: 'Mathe-Aufgabe',
-  challengeHint: 'Löse Aufgaben, bevor du den Wecker ausschalten kannst',
+  challenge: 'Weck-Aufgabe',
+  challengeHint:
+    'Löse Rechenaufgaben oder scanne einen QR-Code, bevor der Wecker beendet werden kann',
   difficulty: 'Schwierigkeit',
   difficultyEasy: 'Leicht',
   difficultyMedium: 'Mittel',
