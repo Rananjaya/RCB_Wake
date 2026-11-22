@@ -12,10 +12,15 @@
         android:format12Hour="h:mm"
         android:format24Hour="HH:mm"
         style="@style/WidgetText.Time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:textSize="40sp" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="20sp"
+        android:autoSizeMaxTextSize="64sp"
+        android:autoSizeStepGranularity="1sp"
+        android:gravity="center"
+        android:maxLines="1" />
     <TextClock
         android:id="@+id/widget_date"
         android:format12Hour="MMM, EEEE d"
