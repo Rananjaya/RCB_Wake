@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Generates RCB Wake's weather icons as Android vector drawables.
+"""Generates RCB Wake's weather icons as Android vector drawables (with gradients).
 
-All geometry is drawn here from simple primitives (scalloped sun, union-of-circles cloud,
-crescent moon, drops, flakes, bolt), so the icons are original work under the project licence.
+Original artwork drawn here from simple geometry — a scalloped sun, a two-lobe cloud, a crescent
+moon, teardrops, asterisk snowflakes and a lightning bolt — in a soft, colourful, flat-gradient
+style. No third-party icon is copied or traced.
 
 Usage:
     python3 scripts/generate-weather-icons.py [preview.svg]
@@ -17,13 +18,24 @@ PREVIEW = sys.argv[1] if len(sys.argv) > 1 else None
 OUT = "android/app/src/main/res/drawable"
 VIEW = 48
 
+# Palette
+SUN = ("#F9D45C", "#EDA23C")          # top -> bottom
+MOON = ("#A9C8FF", "#3566E0")         # top-right -> bottom-left
+CLOUD_LIGHT = ("#FFFFFF", "#E3E4EA")  # cloud in front of the sun or moon
+CLOUD_GREY = ("#F1F1F3", "#B5B6BC")   # rain / snow cloud
+DROP = ("#4D8BF5", "#1F4FC9")
+BOLT = ("#FBD24B", "#F08A24")
+SNOW = "#7A7B80"
+FOG = "#9C9DA3"
+
 
 def f(v):
     return f"{v:.2f}".rstrip("0").rstrip(".")
 
 
+# ---------------------------------------------------------------- geometry
+
 def circle(cx, cy, r):
-    # Clockwise, matching rounded_rect, so overlapping subpaths union under non-zero filling.
     return f"M{f(cx - r)},{f(cy)}a{f(r)},{f(r)} 0 1,1 {f(2 * r)},0a{f(r)},{f(r)} 0 1,1 {f(-2 * r)},0z"
 
 
@@ -35,7 +47,7 @@ def rounded_rect(x, y, w, h, r):
     )
 
 
-def scalloped(cx, cy, radius, bumps=12, depth=0.09, steps=192):
+def scalloped(cx, cy, radius, bumps=12, depth=0.055, steps=240):
     pts = []
     for i in range(steps):
         t = 2 * math.pi * i / steps
@@ -45,21 +57,22 @@ def scalloped(cx, cy, radius, bumps=12, depth=0.09, steps=192):
 
 
 def cloud(x, y, w):
-    """A cloud as one path of overlapping subpaths; non-zero filling unions them seamlessly."""
+    """Flat-bottomed cloud: a small left lobe and a large dome on the right.
+    Bounding box: x..x+w horizontally, y..y+0.6w vertically."""
     s = w / 40
-    return " ".join(
-        [
-            rounded_rect(x, y + 10 * s, 40 * s, 14 * s, 7 * s),
-            circle(x + 12 * s, y + 12 * s, 8 * s),
-            circle(x + 24 * s, y + 8 * s, 10.5 * s),
-            circle(x + 33 * s, y + 15 * s, 7 * s),
-        ]
-    )
+    return " ".join([
+        rounded_rect(x, y + 12 * s, 40 * s, 12 * s, 6 * s),
+        circle(x + 11 * s, y + 15 * s, 8 * s),
+        circle(x + 25 * s, y + 12 * s, 12 * s),
+    ])
+
+
+def cloud_box(x, y, w):
+    return (x, y, x + w, y + 0.6 * w)
 
 
 def crescent(cx, cy, r):
-    """Outer circle minus an offset inner circle, traced along their intersection points."""
-    ox, oy, r2 = cx + 0.42 * r, cy - 0.36 * r, 0.82 * r
+    ox, oy, r2 = cx + 0.48 * r, cy - 0.34 * r, 0.84 * r
     d = math.hypot(ox - cx, oy - cy)
     a = (r * r - r2 * r2 + d * d) / (2 * d)
     h = math.sqrt(r * r - a * a)
@@ -67,128 +80,218 @@ def crescent(cx, cy, r):
     p1 = (mx + h * (oy - cy) / d, my - h * (ox - cx) / d)
     p2 = (mx - h * (oy - cy) / d, my + h * (ox - cx) / d)
     return (
-        f"M{f(p1[0])},{f(p1[1])}A{f(r)},{f(r)} 0 1,1 {f(p2[0])},{f(p2[1])}"
-        f"A{f(r2)},{f(r2)} 0 0,0 {f(p1[0])},{f(p1[1])}z"
+        f"M{f(p1[0])},{f(p1[1])}A{f(r)},{f(r)} 0 1,0 {f(p2[0])},{f(p2[1])}"
+        f"A{f(r2)},{f(r2)} 0 0,1 {f(p1[0])},{f(p1[1])}z"
     )
 
 
-def drops(xs, y):
-    return " ".join(f"M{f(x + 1.6)},{f(y)}l-2.6,6" for x in xs)
+def drop(cx, cy, r):
+    """Teardrop with its point up; (cx, cy) is the centre of the round part."""
+    d = 1.75 * r
+    b = math.acos(r / d)
+    tx, ty = r * math.sin(b), -r * math.cos(b)
+    return (
+        f"M{f(cx)},{f(cy - d)}L{f(cx + tx)},{f(cy + ty)}"
+        f"A{f(r)},{f(r)} 0 1,1 {f(cx - tx)},{f(cy + ty)}z"
+    )
 
 
-def flake(cx, cy, r):
+def asterisk(cx, cy, r):
     parts = []
-    for k in range(3):
-        a = math.radians(90 + 60 * k)
+    for deg in (90, 30, 150):
+        a = math.radians(deg)
         dx, dy = r * math.cos(a), r * math.sin(a)
         parts.append(f"M{f(cx - dx)},{f(cy - dy)}L{f(cx + dx)},{f(cy + dy)}")
-    return " ".join(parts)
+    return "".join(parts)
 
 
-def bolt(x, y):
-    return f"M{f(x + 6)},{f(y)}L{f(x)},{f(y + 10)}h5l-3,9 9,-12h-5l3,-7z"
+def bolt(x, y, w, h):
+    pts = [(0.62, 0.0), (0.08, 0.56), (0.44, 0.56), (0.26, 1.0), (0.94, 0.38), (0.56, 0.38), (0.80, 0.0)]
+    return "M" + "L".join(f"{f(x + px * w)},{f(y + py * h)}" for px, py in pts) + "z"
 
 
-def fog_lines(y):
-    return f"M8,{f(y)}h24M14,{f(y + 5)}h26M10,{f(y + 10)}h18"
+def waves(x, y, w, rows, gap):
+    parts = []
+    seg = w / 4
+    for i in range(rows):
+        yy = y + i * gap
+        xs = x + (seg / 2 if i % 2 else 0)
+        n = 4 if i % 2 == 0 else 3
+        d = f"M{f(xs)},{f(yy)}"
+        for k in range(n):
+            up = -1.4 if k % 2 == 0 else 1.4
+            d += f"q{f(seg / 2)},{f(up)} {f(seg)},0"
+        parts.append(d)
+    return "".join(parts)
 
 
-GRADIENTS = {
-    "sun": ("#FFE082", "#FFB300", (10, 8, 28, 28)),
-    "moon": ("#F3EEFF", "#C4B5F4", (12, 6, 30, 28)),
-    "cloud": ("#FAFAFC", "#B9BEC8", (8, 14, 44, 40)),
-    "cloud_dark": ("#D5DAE2", "#8F97A6", (8, 14, 44, 40)),
-    "bolt": ("#FFE57F", "#FF9800", (20, 30, 34, 48)),
-}
+# ---------------------------------------------------------------- shapes (fill/gradient/stroke)
 
-# Each element: (kind, path, paint, extra)
-#   kind "fill": paint is gradient key or colour; extra = alpha
-#   kind "stroke": paint is colour; extra = width
-SUN = ("fill", scalloped(17, 17, 9.5), "sun", 1)
-SUN_SMALL = ("fill", scalloped(16, 15, 8.5), "sun", 1)
-MOON = ("fill", crescent(18, 17, 10), "moon", 1)
-MOON_SMALL = ("fill", crescent(16, 15, 8.5), "moon", 1)
-CLOUD_FRONT = ("fill", cloud(6, 14, 38), "cloud", 0.94)
-CLOUD_LOW = ("fill", cloud(5, 12, 38), "cloud", 0.94)
-RAIN = ("stroke", drops([15, 23, 31], 39), "#7CC4FA", 2.6)
-SNOW = ("stroke", flake(16, 41, 3.6) + " " + flake(28, 43, 3.6), "#E8EEF6", 2)
+def grad(colors, x1, y1, x2, y2):
+    return {"grad": (colors, x1, y1, x2, y2)}
+
+
+def sun_shape(cx, cy, r):
+    return {"d": scalloped(cx, cy, r), **grad(SUN, cx, cy - r, cx, cy + r)}
+
+
+def moon_shape(cx, cy, r):
+    return {"d": crescent(cx, cy, r), **grad(MOON, cx + r, cy - r, cx - r, cy + r)}
+
+
+def cloud_shape(x, y, w, colors, alpha=1.0):
+    x1, y1, x2, y2 = cloud_box(x, y, w)
+    return {"d": cloud(x, y, w), **grad(colors, x1, y1, x1 + 0.2 * w, y2), "alpha": alpha}
+
+
+def drops_shape(points, r=2.7):
+    return {"d": " ".join(drop(x, y, r) for x, y in points), **grad(DROP, 0, points[0][1] - 4, 0, points[-1][1] + 3)}
+
+
+def snow_shape(points, r=3.4):
+    return {"d": "".join(asterisk(x, y, r) for x, y in points), "stroke": SNOW, "width": 1.6}
+
+
+def bolt_shape(x, y, w, h):
+    return {"d": bolt(x, y, w, h), **grad(BOLT, x, y, x, y + h)}
+
+
+def fog_shape():
+    return {"d": waves(7, 15, 34, 4, 6.5), "stroke": FOG, "width": 2.6}
+
+
+# Layouts on a 48-unit canvas.
+def celestial(night, cx, cy, r):
+    return moon_shape(cx, cy, r) if night else sun_shape(cx, cy, r)
+
+
+def big_body(night):
+    return [moon_shape(25, 24, 17)] if night else [sun_shape(24, 24, 17)]
+
+
+def mostly_clear(night):
+    return [celestial(night, 21, 21, 15), cloud_shape(23, 27, 22, CLOUD_LIGHT, 0.97)]
+
+
+def partly(night):
+    return [celestial(night, 18, 18, 13), cloud_shape(12, 20, 33, CLOUD_LIGHT, 0.95)]
+
+
+def peek_cloud(night):
+    """Small sun or moon peeking out from behind a grey rain cloud."""
+    return [celestial(night, 15, 14, 9), cloud_shape(8, 9, 36, CLOUD_GREY)]
+
+
+GENERAL_CLOUD = cloud_shape(6, 6, 36, CLOUD_GREY)
+RAIN = [(17, 29), (31, 29), (24, 38)]
+HEAVY = [(12, 29), (24, 29), (36, 29), (18, 38), (30, 38)]
 
 ICONS = {
-    "ic_wx_clear_day": [("fill", scalloped(24, 24, 15), "sun", 1)],
-    "ic_wx_clear_night": [("fill", crescent(24, 24, 15), "moon", 1)],
-    "ic_wx_partly_day": [SUN, CLOUD_FRONT],
-    "ic_wx_partly_night": [MOON, CLOUD_FRONT],
-    "ic_wx_cloudy": [("fill", cloud(14, 8, 30), "cloud_dark", 0.9), CLOUD_FRONT],
-    "ic_wx_fog": [CLOUD_LOW, ("stroke", fog_lines(37), "#D8DEE8", 2.6)],
-    "ic_wx_rain": [CLOUD_LOW, RAIN],
-    "ic_wx_snow": [CLOUD_LOW, SNOW],
-    "ic_wx_thunder": [("fill", cloud(5, 8, 38), "cloud_dark", 0.96), ("fill", bolt(22, 28), "bolt", 1)],
-    "ic_wx_showers_day": [SUN_SMALL, CLOUD_LOW, RAIN],
-    "ic_wx_showers_night": [MOON_SMALL, CLOUD_LOW, RAIN],
-    "ic_wx_snow_showers_day": [SUN_SMALL, CLOUD_LOW, SNOW],
-    "ic_wx_snow_showers_night": [MOON_SMALL, CLOUD_LOW, SNOW],
+    "clear_day": big_body(False),
+    "clear_night": big_body(True),
+    "mostly_clear_day": mostly_clear(False),
+    "mostly_clear_night": mostly_clear(True),
+    "partly_day": partly(False),
+    "partly_night": partly(True),
+    "cloudy": [cloud_shape(4, 12, 40, CLOUD_GREY)],
+    "fog": [fog_shape()],
+    "drizzle": [GENERAL_CLOUD, drops_shape([(24, 36)])],
+    "rain": [GENERAL_CLOUD, drops_shape(RAIN)],
+    "heavy_rain": [GENERAL_CLOUD, drops_shape(HEAVY, 2.5)],
+    "showers_day": peek_cloud(False) + [drops_shape([(18, 31), (32, 31), (25, 40)])],
+    "showers_night": peek_cloud(True) + [drops_shape([(18, 31), (32, 31), (25, 40)])],
+    "snow": [GENERAL_CLOUD, snow_shape([(16, 34), (31, 32), (24, 42)])],
+    "snow_showers_day": peek_cloud(False) + [snow_shape([(18, 35), (33, 33), (26, 42)])],
+    "snow_showers_night": peek_cloud(True) + [snow_shape([(18, 35), (33, 33), (26, 42)])],
+    "sleet": [GENERAL_CLOUD, drops_shape([(17, 34)]), snow_shape([(31, 35)])],
+    "thunder": [GENERAL_CLOUD, drops_shape([(11, 33), (16, 41)]), bolt_shape(21, 24, 15, 22)],
+    "thunder_day": peek_cloud(False) + [drops_shape([(13, 35), (18, 43)]), bolt_shape(23, 26, 14, 20)],
+    "thunder_night": peek_cloud(True) + [drops_shape([(13, 35), (18, 43)]), bolt_shape(23, 26, 14, 20)],
 }
 
 
-def android_element(kind, d, paint, extra):
-    if kind == "stroke":
+# ---------------------------------------------------------------- output
+
+def xml_path(s):
+    a = s.get("alpha", 1.0)
+    alpha = f' android:fillAlpha="{f(a)}"' if a < 1 else ""
+    if "stroke" in s:
         return (
-            f'    <path android:pathData="{d}" android:strokeColor="{paint}" '
-            f'android:strokeWidth="{extra}" android:strokeLineCap="round" />\n'
+            f'    <path android:pathData="{s["d"]}" android:strokeColor="{s["stroke"]}" '
+            f'android:strokeWidth="{f(s["width"])}" android:strokeLineCap="round" android:strokeLineJoin="round" />\n'
         )
-    alpha = f' android:fillAlpha="{extra}"' if extra != 1 else ""
-    if paint.startswith("#"):
-        return f'    <path android:pathData="{d}" android:fillColor="{paint}"{alpha} />\n'
-    start, end, (x1, y1, x2, y2) = GRADIENTS[paint]
+    colors, x1, y1, x2, y2 = s["grad"]
     return (
-        f'    <path android:pathData="{d}"{alpha}>\n'
+        f'    <path android:pathData="{s["d"]}"{alpha}>\n'
         f'        <aapt:attr name="android:fillColor">\n'
-        f'            <gradient android:type="linear" android:startX="{x1}" android:startY="{y1}" '
-        f'android:endX="{x2}" android:endY="{y2}" android:startColor="{start}" android:endColor="{end}" />\n'
+        f'            <gradient android:type="linear" android:startX="{f(x1)}" android:startY="{f(y1)}" '
+        f'android:endX="{f(x2)}" android:endY="{f(y2)}">\n'
+        f'                <item android:offset="0" android:color="{colors[0]}" />\n'
+        f'                <item android:offset="1" android:color="{colors[1]}" />\n'
+        f"            </gradient>\n"
         f"        </aapt:attr>\n"
         f"    </path>\n"
     )
 
 
-def svg_element(kind, d, paint, extra, uid):
-    if kind == "stroke":
-        return f'<path d="{d}" fill="none" stroke="{paint}" stroke-width="{extra}" stroke-linecap="round"/>'
-    if paint.startswith("#"):
-        return f'<path d="{d}" fill="{paint}" fill-opacity="{extra}"/>'
-    start, end, (x1, y1, x2, y2) = GRADIENTS[paint]
-    return (
-        f'<defs><linearGradient id="{uid}" gradientUnits="userSpaceOnUse" x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}">'
-        f'<stop offset="0" stop-color="{start}"/><stop offset="1" stop-color="{end}"/></linearGradient></defs>'
-        f'<path d="{d}" fill="url(#{uid})" fill-opacity="{extra}"/>'
+def write_xml(name, shapes):
+    body = "".join(xml_path(s) for s in shapes)
+    xml = (
+        '<?xml version="1.0" encoding="utf-8"?>\n'
+        "<!-- Generated by scripts/generate-weather-icons.py. Original RCB Wake artwork. -->\n"
+        '<vector xmlns:android="http://schemas.android.com/apk/res/android"\n'
+        '    xmlns:aapt="http://schemas.android.com/aapt"\n'
+        f'    android:width="{VIEW}dp" android:height="{VIEW}dp" '
+        f'android:viewportWidth="{VIEW}" android:viewportHeight="{VIEW}">\n'
+        f"{body}</vector>\n"
     )
+    with open(os.path.join(OUT, f"ic_wx_{name}.xml"), "w") as fh:
+        fh.write(xml)
 
 
-cells = []
-for i, (name, elements) in enumerate(ICONS.items()):
-    body = "".join(android_element(*e) for e in elements)
-    with open(os.path.join(OUT, f"{name}.xml"), "w") as out:
-        out.write(
-            '<?xml version="1.0" encoding="utf-8"?>\n'
-            "<!-- Generated by scripts/generate-weather-icons.py. Original artwork, project licence. -->\n"
-            '<vector xmlns:android="http://schemas.android.com/apk/res/android"\n'
-            '    xmlns:aapt="http://schemas.android.com/aapt"\n'
-            '    android:width="24dp"\n    android:height="24dp"\n'
-            f'    android:viewportWidth="{VIEW}"\n    android:viewportHeight="{VIEW}">\n{body}</vector>\n'
+def svg_group(shapes, prefix):
+    defs, body = [], []
+    for i, s in enumerate(shapes):
+        if "stroke" in s:
+            body.append(
+                f'<path d="{s["d"]}" fill="none" stroke="{s["stroke"]}" stroke-width="{f(s["width"])}" '
+                f'stroke-linecap="round" stroke-linejoin="round"/>'
+            )
+            continue
+        colors, x1, y1, x2, y2 = s["grad"]
+        gid = f"{prefix}{i}"
+        defs.append(
+            f'<linearGradient id="{gid}" gradientUnits="userSpaceOnUse" x1="{f(x1)}" y1="{f(y1)}" '
+            f'x2="{f(x2)}" y2="{f(y2)}"><stop offset="0" stop-color="{colors[0]}"/>'
+            f'<stop offset="1" stop-color="{colors[1]}"/></linearGradient>'
         )
+        body.append(f'<path d="{s["d"]}" fill="url(#{gid})" fill-opacity="{f(s.get("alpha", 1.0))}"/>')
+    return "".join(defs), "".join(body)
+
+
+def write_preview(path):
+    cols, cell = 5, 120
+    rows = math.ceil(len(ICONS) / cols)
+    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{cols * cell}" height="{rows * (cell + 20)}">',
+           f'<rect width="100%" height="100%" fill="#10131A"/>']
+    for i, (name, shapes) in enumerate(ICONS.items()):
+        x, y = (i % cols) * cell, (i // cols) * (cell + 20)
+        defs, body = svg_group(shapes, f"g{i}_")
+        out.append(f"<defs>{defs}</defs>")
+        out.append(f'<g transform="translate({x + 12},{y + 8}) scale(2)">{body}</g>')
+        out.append(f'<text x="{x + cell / 2}" y="{y + cell + 10}" fill="#AAA" font-size="11" '
+                   f'font-family="sans-serif" text-anchor="middle">{name}</text>')
+    out.append("</svg>")
+    with open(path, "w") as fh:
+        fh.write("".join(out))
+
+
+if __name__ == "__main__":
+    for old in os.listdir(OUT):
+        if old.startswith("ic_wx_") and old.endswith(".xml"):
+            os.remove(os.path.join(OUT, old))
+    for name, shapes in ICONS.items():
+        write_xml(name, shapes)
     if PREVIEW:
-        inner = "".join(svg_element(*e, uid=f"g{i}_{j}") for j, e in enumerate(elements))
-        col, row = i % 5, i // 5
-        cells.append(
-            f'<g transform="translate({col * 120 + 10},{row * 130 + 10})">'
-            f'<rect width="110" height="110" rx="10" fill="#1d2440"/>'
-            f'<g transform="translate(7,5) scale(2)">{inner}</g>'
-            f'<text x="55" y="122" font-size="8" fill="#ccc" text-anchor="middle" font-family="sans-serif">{name[6:]}</text></g>'
-        )
-
-if PREVIEW:
-    with open(PREVIEW, "w") as out:
-        out.write(
-            f'<svg xmlns="http://www.w3.org/2000/svg" width="610" height="400" viewBox="0 0 610 400">'
-            f'<rect width="100%" height="100%" fill="#10142a"/>{"".join(cells)}</svg>'
-        )
-print(f"wrote {len(ICONS)} icons")
+        write_preview(PREVIEW)
+    print(f"Wrote {len(ICONS)} icons to {OUT}")

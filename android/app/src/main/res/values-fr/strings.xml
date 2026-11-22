@@ -50,4 +50,8 @@
     <string name="action_scan_qr">Scanner un code QR</string>
     <string name="qr_scan_prompt">Visez un code QR avec la caméra</string>
     <string name="qr_camera_denied">La caméra est nécessaire pour le défi QR</string>
+    <string name="wx_mostly_clear">Plutôt dégagé</string>
+    <string name="wx_drizzle">Bruine</string>
+    <string name="wx_heavy_rain">Forte pluie</string>
+    <string name="wx_sleet">Neige fondue</string>
 </resources>

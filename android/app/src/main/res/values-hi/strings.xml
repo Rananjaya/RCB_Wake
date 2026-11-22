@@ -54,4 +54,8 @@
     <string name="action_scan_qr">QR कोड स्कैन करें</string>
     <string name="qr_scan_prompt">कैमरा किसी भी QR कोड की ओर करें</string>
     <string name="qr_camera_denied">QR चुनौती के लिए कैमरा अनुमति चाहिए</string>
+    <string name="wx_mostly_clear">ज़्यादातर साफ़</string>
+    <string name="wx_drizzle">बूंदाबांदी</string>
+    <string name="wx_heavy_rain">भारी बारिश</string>
+    <string name="wx_sleet">बर्फ़ मिश्रित बारिश</string>
 </resources>

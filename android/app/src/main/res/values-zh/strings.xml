@@ -54,4 +54,8 @@
     <string name="action_scan_qr">扫描二维码</string>
     <string name="qr_scan_prompt">将相机对准任意二维码</string>
     <string name="qr_camera_denied">二维码挑战需要相机权限</string>
+    <string name="wx_mostly_clear">大部晴朗</string>
+    <string name="wx_drizzle">毛毛雨</string>
+    <string name="wx_heavy_rain">大雨</string>
+    <string name="wx_sleet">雨夹雪</string>
 </resources>

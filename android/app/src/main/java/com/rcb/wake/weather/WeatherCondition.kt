@@ -1,17 +1,23 @@
 package com.rcb.wake.weather
 
 /** Coarse weather categories mapped from WMO weather interpretation codes (as used by Open-Meteo). */
-enum class WeatherCondition { CLEAR, PARTLY_CLOUDY, CLOUDY, FOG, DRIZZLE, RAIN, SHOWERS, SNOW, SNOW_SHOWERS, THUNDERSTORM }
+enum class WeatherCondition {
+    CLEAR, MOSTLY_CLEAR, PARTLY_CLOUDY, CLOUDY, FOG, DRIZZLE, RAIN, HEAVY_RAIN, SHOWERS, SLEET, SNOW, SNOW_SHOWERS, THUNDERSTORM,
+}
 
 object WeatherCodes {
     fun condition(wmoCode: Int): WeatherCondition = when (wmoCode) {
         0 -> WeatherCondition.CLEAR
-        1, 2 -> WeatherCondition.PARTLY_CLOUDY
+        1 -> WeatherCondition.MOSTLY_CLEAR
+        2 -> WeatherCondition.PARTLY_CLOUDY
         3 -> WeatherCondition.CLOUDY
         45, 48 -> WeatherCondition.FOG
-        in 51..57 -> WeatherCondition.DRIZZLE
-        in 61..67 -> WeatherCondition.RAIN
-        in 80..82 -> WeatherCondition.SHOWERS
+        56, 57, 66, 67 -> WeatherCondition.SLEET  // freezing drizzle / freezing rain
+        in 51..55 -> WeatherCondition.DRIZZLE
+        65 -> WeatherCondition.HEAVY_RAIN
+        in 61..64 -> WeatherCondition.RAIN
+        82 -> WeatherCondition.HEAVY_RAIN
+        80, 81 -> WeatherCondition.SHOWERS
         in 71..77 -> WeatherCondition.SNOW
         85, 86 -> WeatherCondition.SNOW_SHOWERS
         in 95..99 -> WeatherCondition.THUNDERSTORM
@@ -22,13 +28,16 @@ object WeatherCodes {
     fun openWeatherCondition(id: Int): WeatherCondition = when (id) {
         in 200..299 -> WeatherCondition.THUNDERSTORM
         in 300..399 -> WeatherCondition.DRIZZLE
+        511, in 611..616 -> WeatherCondition.SLEET
         in 520..531 -> WeatherCondition.SHOWERS
-        in 500..519 -> WeatherCondition.RAIN
+        in 502..504 -> WeatherCondition.HEAVY_RAIN
+        in 500..510 -> WeatherCondition.RAIN
         in 620..622 -> WeatherCondition.SNOW_SHOWERS
         in 600..699 -> WeatherCondition.SNOW
         in 700..799 -> WeatherCondition.FOG
         800 -> WeatherCondition.CLEAR
-        801, 802 -> WeatherCondition.PARTLY_CLOUDY
+        801 -> WeatherCondition.MOSTLY_CLEAR
+        802 -> WeatherCondition.PARTLY_CLOUDY
         else -> WeatherCondition.CLOUDY
     }
 

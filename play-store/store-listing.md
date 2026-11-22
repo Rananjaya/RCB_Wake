@@ -100,6 +100,13 @@ OpenWeatherMap); place search sends the typed text to Open-Meteo; "Use my locati
 Android's geocoder for the place name. Camera images (QR challenge) and calendar events never leave
 the device. Full policy: PRIVACY_POLICY.md.
 
+## What's new in 1.1.0
+
+<en-US>
+• New colourful weather icons on the widget, with day and night versions
+• More weather conditions: mostly clear, drizzle, heavy rain and sleet
+</en-US>
+
 ## What's new in 1.0.1
 
 <en-US>

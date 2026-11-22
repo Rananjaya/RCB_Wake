@@ -226,7 +226,7 @@ export type WeatherInfo = {
   /** Empty when the reading is for the device location. */
   city: string;
   temperatureCelsius: number;
-  /** `CLEAR` | `PARTLY_CLOUDY` | `CLOUDY` | `FOG` | `DRIZZLE` | `RAIN` | `SHOWERS` | `SNOW` | `SNOW_SHOWERS` | `THUNDERSTORM` */
+  /** `CLEAR` | `MOSTLY_CLEAR` | `PARTLY_CLOUDY` | `CLOUDY` | `FOG` | `DRIZZLE` | `RAIN` | `HEAVY_RAIN` | `SHOWERS` | `SLEET` | `SNOW` | `SNOW_SHOWERS` | `THUNDERSTORM` */
   condition: string;
   isDay: boolean;
   fetchedAt: number;

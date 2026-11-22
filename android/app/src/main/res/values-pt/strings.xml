@@ -54,4 +54,8 @@
     <string name="action_scan_qr">Ler código QR</string>
     <string name="qr_scan_prompt">Aponte a câmara para um código QR</string>
     <string name="qr_camera_denied">É necessária a câmara para o desafio QR</string>
+    <string name="wx_mostly_clear">Maioritariamente limpo</string>
+    <string name="wx_drizzle">Chuvisco</string>
+    <string name="wx_heavy_rain">Chuva forte</string>
+    <string name="wx_sleet">Água-neve</string>
 </resources>

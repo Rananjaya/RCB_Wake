@@ -54,4 +54,8 @@
     <string name="action_scan_qr">QR குறியீட்டை ஸ்கேன் செய்</string>
     <string name="qr_scan_prompt">கேமராவை ஏதேனும் QR குறியீட்டை நோக்கி காட்டவும்</string>
     <string name="qr_camera_denied">QR சவாலுக்கு கேமரா அனுமதி தேவை</string>
+    <string name="wx_mostly_clear">பெரும்பாலும் தெளிவு</string>
+    <string name="wx_drizzle">தூறல்</string>
+    <string name="wx_heavy_rain">கனமழை</string>
+    <string name="wx_sleet">பனிக்கலப்பு மழை</string>
 </resources>

@@ -50,4 +50,8 @@
     <string name="action_scan_qr">Escanear código QR</string>
     <string name="qr_scan_prompt">Apunta la cámara a cualquier código QR</string>
     <string name="qr_camera_denied">Se necesita la cámara para el reto QR</string>
+    <string name="wx_mostly_clear">Mayormente despejado</string>
+    <string name="wx_drizzle">Llovizna</string>
+    <string name="wx_heavy_rain">Lluvia intensa</string>
+    <string name="wx_sleet">Aguanieve</string>
 </resources>

@@ -55,4 +55,8 @@
     <string name="action_scan_qr">Scan QR code</string>
     <string name="qr_scan_prompt">Point the camera at any QR code</string>
     <string name="qr_camera_denied">Camera permission is needed for the QR challenge</string>
+    <string name="wx_mostly_clear">Mostly clear</string>
+    <string name="wx_drizzle">Drizzle</string>
+    <string name="wx_heavy_rain">Heavy rain</string>
+    <string name="wx_sleet">Sleet</string>
 </resources>

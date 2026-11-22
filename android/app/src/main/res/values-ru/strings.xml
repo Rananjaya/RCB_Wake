@@ -50,4 +50,8 @@
     <string name="action_scan_qr">Сканировать QR-код</string>
     <string name="qr_scan_prompt">Наведите камеру на любой QR-код</string>
     <string name="qr_camera_denied">Для QR-задания нужно разрешение камеры</string>
+    <string name="wx_mostly_clear">Преимущественно ясно</string>
+    <string name="wx_drizzle">Морось</string>
+    <string name="wx_heavy_rain">Сильный дождь</string>
+    <string name="wx_sleet">Мокрый снег</string>
 </resources>

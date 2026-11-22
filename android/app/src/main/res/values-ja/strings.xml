@@ -54,4 +54,8 @@
     <string name="action_scan_qr">QRコードをスキャン</string>
     <string name="qr_scan_prompt">カメラをQRコードに向けてください</string>
     <string name="qr_camera_denied">QRチャレンジにはカメラの許可が必要です</string>
+    <string name="wx_mostly_clear">おおむね晴れ</string>
+    <string name="wx_drizzle">霧雨</string>
+    <string name="wx_heavy_rain">大雨</string>
+    <string name="wx_sleet">みぞれ</string>
 </resources>

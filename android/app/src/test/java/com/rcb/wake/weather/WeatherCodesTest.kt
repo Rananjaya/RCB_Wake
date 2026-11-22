@@ -10,6 +10,9 @@ class WeatherCodesTest {
         assertEquals(WeatherCondition.CLOUDY, WeatherCodes.condition(3))
         assertEquals(WeatherCondition.FOG, WeatherCodes.condition(45))
         assertEquals(WeatherCondition.DRIZZLE, WeatherCodes.condition(53))
+        assertEquals(WeatherCondition.MOSTLY_CLEAR, WeatherCodes.condition(1))
+        assertEquals(WeatherCondition.HEAVY_RAIN, WeatherCodes.condition(65))
+        assertEquals(WeatherCondition.SLEET, WeatherCodes.condition(67))
         assertEquals(WeatherCondition.RAIN, WeatherCodes.condition(63))
         assertEquals(WeatherCondition.SHOWERS, WeatherCodes.condition(81))
         assertEquals(WeatherCondition.SNOW_SHOWERS, WeatherCodes.condition(85))
@@ -35,6 +38,9 @@ class WeatherCodesTest {
         assertEquals(WeatherCondition.FOG, WeatherCodes.openWeatherCondition(741))
         assertEquals(WeatherCondition.CLEAR, WeatherCodes.openWeatherCondition(800))
         assertEquals(WeatherCondition.PARTLY_CLOUDY, WeatherCodes.openWeatherCondition(802))
+        assertEquals(WeatherCondition.MOSTLY_CLEAR, WeatherCodes.openWeatherCondition(801))
+        assertEquals(WeatherCondition.HEAVY_RAIN, WeatherCodes.openWeatherCondition(502))
+        assertEquals(WeatherCondition.SLEET, WeatherCodes.openWeatherCondition(611))
         assertEquals(WeatherCondition.CLOUDY, WeatherCodes.openWeatherCondition(804))
     }
 }

@@ -4,6 +4,16 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-11-22
+
+### Changed
+- New colourful weather icons for the widget (original artwork): scalloped sun, soft layered
+  clouds, blue moon, teardrop rain, snowflakes and a gold lightning bolt, with day and night
+  versions.
+
+### Added
+- Weather conditions mostly clear, drizzle, heavy rain and sleet, and a day/night thunderstorm icon.
+
 ## [1.0.1] — 2026-11-22
 
 ### Fixed

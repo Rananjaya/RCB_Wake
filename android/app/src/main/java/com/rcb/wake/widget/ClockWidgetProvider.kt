@@ -270,14 +270,18 @@ class ClockWidgetProvider : AppWidgetProvider() {
 
         fun weatherIcon(w: WeatherSnapshot): Int = when (w.condition) {
             WeatherCondition.CLEAR -> if (w.isDay) R.drawable.ic_wx_clear_day else R.drawable.ic_wx_clear_night
+            WeatherCondition.MOSTLY_CLEAR -> if (w.isDay) R.drawable.ic_wx_mostly_clear_day else R.drawable.ic_wx_mostly_clear_night
             WeatherCondition.PARTLY_CLOUDY -> if (w.isDay) R.drawable.ic_wx_partly_day else R.drawable.ic_wx_partly_night
             WeatherCondition.CLOUDY -> R.drawable.ic_wx_cloudy
             WeatherCondition.FOG -> R.drawable.ic_wx_fog
-            WeatherCondition.DRIZZLE, WeatherCondition.RAIN -> R.drawable.ic_wx_rain
+            WeatherCondition.DRIZZLE -> R.drawable.ic_wx_drizzle
+            WeatherCondition.RAIN -> R.drawable.ic_wx_rain
+            WeatherCondition.HEAVY_RAIN -> R.drawable.ic_wx_heavy_rain
             WeatherCondition.SHOWERS -> if (w.isDay) R.drawable.ic_wx_showers_day else R.drawable.ic_wx_showers_night
+            WeatherCondition.SLEET -> R.drawable.ic_wx_sleet
             WeatherCondition.SNOW -> R.drawable.ic_wx_snow
             WeatherCondition.SNOW_SHOWERS -> if (w.isDay) R.drawable.ic_wx_snow_showers_day else R.drawable.ic_wx_snow_showers_night
-            WeatherCondition.THUNDERSTORM -> R.drawable.ic_wx_thunder
+            WeatherCondition.THUNDERSTORM -> if (w.isDay) R.drawable.ic_wx_thunder_day else R.drawable.ic_wx_thunder_night
         }
     }
 }
@@ -319,11 +323,15 @@ data class WidgetContent(
             val weather = WeatherRepository.cached(context)
             val description = when (weather?.condition) {
                 WeatherCondition.CLEAR -> R.string.wx_clear
+                WeatherCondition.MOSTLY_CLEAR -> R.string.wx_mostly_clear
                 WeatherCondition.PARTLY_CLOUDY -> R.string.wx_partly_cloudy
                 WeatherCondition.CLOUDY -> R.string.wx_cloudy
                 WeatherCondition.FOG -> R.string.wx_fog
-                WeatherCondition.DRIZZLE, WeatherCondition.RAIN -> R.string.wx_rain
+                WeatherCondition.DRIZZLE -> R.string.wx_drizzle
+                WeatherCondition.RAIN -> R.string.wx_rain
+                WeatherCondition.HEAVY_RAIN -> R.string.wx_heavy_rain
                 WeatherCondition.SHOWERS -> R.string.wx_showers
+                WeatherCondition.SLEET -> R.string.wx_sleet
                 WeatherCondition.SNOW -> R.string.wx_snow
                 WeatherCondition.SNOW_SHOWERS -> R.string.wx_snow_showers
                 WeatherCondition.THUNDERSTORM -> R.string.wx_thunder
