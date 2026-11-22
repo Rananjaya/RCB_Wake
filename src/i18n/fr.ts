@@ -159,8 +159,6 @@ export const fr: Translation = {
   version: 'Version {v}',
   aboutBody:
     'RCB Wake est un réveil, minuteur, chronomètre et horloge mondiale gratuit pour Android. Les alarmes sont programmées par Android lui-même : elles sonnent même lorsque l’application est fermée.',
-  privacyBody:
-    'RCB Wake fonctionne hors ligne. Aucun compte, aucune analyse, aucune publicité, aucun suivi. Vos alarmes, minuteurs, villes et paramètres restent sur cet appareil et sont exclus des sauvegardes dans le cloud. Les sons personnalisés sont lus sur votre appareil avec votre autorisation et ne sont jamais copiés ni envoyés. La seule utilisation du réseau est la météo facultative du widget : si vous l’activez, les coordonnées de la ville choisie ou, si vous l’autorisez, votre position approximative (arrondie à environ 1 km) sont envoyées à Open-Meteo (open-meteo.com) environ toutes les 30 minutes. La position n’est lue que lorsque l’application est ouverte. Rien d’autre ne quitte votre appareil.',
   license: 'Licence',
   licenseBody:
     'Le code de RCB Wake est disponible sous la PolyForm Noncommercial License 1.0.0 : vous pouvez l’utiliser, l’étudier et le modifier à des fins non commerciales. Toute utilisation commerciale nécessite l’autorisation écrite de l’auteur. Les bibliothèques tierces conservent leurs propres licences ; voir THIRD_PARTY_NOTICES dans le dépôt.',
@@ -186,4 +184,12 @@ export const fr: Translation = {
   tut5Title: 'À votre image',
   tut5Body:
     'Choisissez dans les Paramètres le thème, la couleur, la langue et un rappel du coucher.\nAutorisez les notifications pour que l’écran d’alarme s’affiche.',
+  challengeQr: 'Code QR',
+  challengeQrHint:
+    'Scannez n’importe quel code QR pour arrêter l’alarme — par exemple sur un produit dans une autre pièce. La caméra sert uniquement à lire le code ; rien n’est enregistré ni envoyé.',
+  qrChallengeTitle: 'Scanner un code QR',
+  qrChallengeBody: 'Scannez n’importe quel code QR pour arrêter l’alarme.',
+  qrScanButton: 'Scanner un code QR',
+  qrCameraDenied:
+    'L’autorisation de la caméra est nécessaire pour scanner. Autorisez-la dans les paramètres système ou utilisez l’arrêt d’urgence.',
 };

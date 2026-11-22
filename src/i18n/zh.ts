@@ -102,6 +102,13 @@ export const zh: Translation = {
   challengeType: '关闭方式',
   challengeMath: '数学',
   challengeNfc: 'NFC 标签',
+  challengeQr: '二维码',
+  challengeQrHint:
+    '扫描任意二维码即可关闭闹钟，例如另一个房间里商品上的二维码。相机仅用于读取二维码，不会保存或发送任何内容。',
+  qrChallengeTitle: '扫描二维码',
+  qrChallengeBody: '扫描任意二维码以关闭闹钟。',
+  qrScanButton: '扫描二维码',
+  qrCameraDenied: '扫描需要相机权限。请在系统设置中允许，或使用紧急关闭。',
   challengeNfcNeedsTag: '请先在设置中登记 NFC 标签',
   nfcChallengeTitle: '扫描你的 NFC 标签',
   nfcChallengeBody: '走到标签所在处，把手机背面贴近标签。',
@@ -162,8 +169,6 @@ export const zh: Translation = {
   version: '版本 {v}',
   aboutBody:
     'RCB Wake 是一款免费的 Android 闹钟、计时器、秒表和世界时钟。闹钟由 Android 系统本身安排，即使应用已关闭也会响铃。',
-  privacyBody:
-    'RCB Wake 可离线使用。没有账户、分析、广告或跟踪。你的闹钟、计时器、城市和设置都保存在本设备上，不会进入云端备份。自定义铃声在你允许后从设备读取，绝不会被复制或上传。唯一的联网用途是可选的小部件天气：开启后，所选城市的坐标——或在你允许时你的大致位置（精确到约 1 公里）——大约每 30 分钟发送给 Open-Meteo（open-meteo.com）。位置只会在应用打开时读取。除此之外，没有任何数据离开你的设备。',
   license: '许可',
   licenseBody:
     'RCB Wake 的源代码以 PolyForm Noncommercial License 1.0.0 提供：你可以出于非商业目的使用、研究和修改它。商业用途需要作者的书面许可。第三方库保留各自的许可；请参阅代码仓库中的 THIRD_PARTY_NOTICES。',

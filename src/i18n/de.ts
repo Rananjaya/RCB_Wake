@@ -159,8 +159,6 @@ export const de: Translation = {
   version: 'Version {v}',
   aboutBody:
     'RCB Wake ist ein kostenloser Wecker mit Timer, Stoppuhr und Weltuhr für Android. Wecker werden von Android selbst geplant und klingeln auch, wenn die App geschlossen ist.',
-  privacyBody:
-    'RCB Wake funktioniert offline. Es gibt keine Konten, keine Analysen, keine Werbung und kein Tracking. Deine Wecker, Timer, Städte und Einstellungen bleiben auf diesem Gerät und sind von Cloud-Backups ausgeschlossen. Eigene Wecktöne werden mit deiner Erlaubnis vom Gerät gelesen und nie kopiert oder hochgeladen. Die einzige Netzwerknutzung ist das optionale Widget-Wetter: Wenn du es einschaltest, werden die Koordinaten der gewählten Stadt oder – falls erlaubt – dein ungefährer Standort (auf etwa 1 km gerundet) etwa alle 30 Minuten an Open-Meteo (open-meteo.com) gesendet. Der Standort wird nur gelesen, während die App geöffnet ist. Sonst verlässt nichts dein Gerät.',
   license: 'Lizenz',
   licenseBody:
     'RCB Wake ist quelloffen verfügbar unter der PolyForm Noncommercial License 1.0.0: Du darfst die App für nichtkommerzielle Zwecke nutzen, untersuchen und ändern. Kommerzielle Nutzung erfordert die schriftliche Erlaubnis des Autors. Bibliotheken Dritter behalten ihre eigenen Lizenzen; siehe THIRD_PARTY_NOTICES im Quell-Repository.',
@@ -186,4 +184,12 @@ export const de: Translation = {
   tut5Title: 'Mach es zu deinem',
   tut5Body:
     'Wähle in den Einstellungen Design, Farbe, Sprache und eine Schlafenszeit-Erinnerung.\nErlaube Benachrichtigungen, damit der Weckbildschirm erscheinen kann.',
+  challengeQr: 'QR-Code',
+  challengeQrHint:
+    'Scanne einen beliebigen QR-Code, um den Wecker zu stoppen – z. B. auf einem Produkt in einem anderen Raum. Die Kamera liest nur den Code; nichts wird gespeichert oder gesendet.',
+  qrChallengeTitle: 'QR-Code scannen',
+  qrChallengeBody: 'Scanne einen beliebigen QR-Code, um den Wecker zu stoppen.',
+  qrScanButton: 'QR-Code scannen',
+  qrCameraDenied:
+    'Zum Scannen wird die Kameraberechtigung benötigt. Erlaube sie in den Systemeinstellungen oder nutze das Notfall-Beenden.',
 };

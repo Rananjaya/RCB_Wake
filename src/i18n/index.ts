@@ -74,6 +74,11 @@ export const FALLBACK_KEYS: StringKey[] = [
   'privacyPointPermissions',
   'privacyPointLicense',
   'showTutorial',
+  'privacyBody',
+  'privacyPolicy',
+  'readPrivacyPolicy',
+  'openSourceLicenses',
+  'openSourceIntro',
 
   'widgetCalendar',
   'widgetCalendarToggle',

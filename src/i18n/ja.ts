@@ -106,6 +106,14 @@ export const ja: Translation = {
   challengeType: '止め方',
   challengeMath: '計算',
   challengeNfc: 'NFC タグ',
+  challengeQr: 'QRコード',
+  challengeQrHint:
+    '任意のQRコードをスキャンするとアラームが止まります（例：別の部屋にある商品のコード）。カメラはコードの読み取りにのみ使用され、何も保存・送信されません。',
+  qrChallengeTitle: 'QRコードをスキャン',
+  qrChallengeBody: '任意のQRコードをスキャンしてアラームを止めます。',
+  qrScanButton: 'QRコードをスキャン',
+  qrCameraDenied:
+    'スキャンにはカメラの許可が必要です。システム設定で許可するか、緊急停止を使ってください。',
   challengeNfcNeedsTag: '先に設定で NFC タグを登録してください',
   nfcChallengeTitle: 'NFC タグをスキャン',
   nfcChallengeBody:
@@ -167,8 +175,6 @@ export const ja: Translation = {
   version: 'バージョン {v}',
   aboutBody:
     'RCB Wake は Android 向けの無料のアラーム、タイマー、ストップウォッチ、世界時計です。アラームは Android 自体がスケジュールするため、アプリを閉じていても鳴ります。',
-  privacyBody:
-    'RCB Wake はオフラインで動作します。アカウント、分析、広告、トラッキングはありません。アラーム、タイマー、都市、設定はこの端末内に保存され、クラウドバックアップの対象外です。カスタムサウンドは許可を得て端末から読み込まれ、コピーやアップロードは一切されません。ネットワークを使うのは任意のウィジェット天気だけです。オンにすると、選んだ都市の座標、または許可した場合はおおよその現在地（約 1 km に丸めたもの）が約 30 分ごとに Open-Meteo（open-meteo.com）へ送信されます。位置情報はアプリを開いている間だけ読み取られます。それ以外のデータが端末の外に出ることはありません。',
   license: 'ライセンス',
   licenseBody:
     'RCB Wake のソースコードは PolyForm Noncommercial License 1.0.0 のもとで公開されています。非商用目的であれば使用・研究・改変できます。商用利用には作者の書面による許可が必要です。サードパーティのライブラリにはそれぞれのライセンスが適用されます。リポジトリの THIRD_PARTY_NOTICES をご覧ください。',

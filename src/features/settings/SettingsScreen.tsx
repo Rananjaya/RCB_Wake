@@ -229,6 +229,11 @@ function SettingsContent({ navigation }: Props) {
           />
           <Divider />
           <NavRow
+            label={t('privacyPolicy')}
+            onPress={() => navigation.navigate('PrivacyPolicy')}
+          />
+          <Divider />
+          <NavRow
             label={t('showTutorial')}
             onPress={() => navigation.navigate('Tutorial')}
           />

@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Floral } from '../../components/Floral';
 import { Icon } from '../../components/Icon';
 import { Toolbar } from '../../components/Toolbar';
-import { Card, SectionTitle } from '../../components/ui';
+import { Card, NavRow, SectionTitle } from '../../components/ui';
 import { useT } from '../../i18n';
 import type { RootStackParamList } from '../../navigation/types';
 import { useAlarmStore } from '../../storage/alarmStore';
@@ -59,9 +59,21 @@ export function AboutScreen({ navigation }: Props) {
         <Card>
           <Text style={body}>{t('privacyBody')}</Text>
         </Card>
+        <Card style={styles.links}>
+          <NavRow
+            label={t('privacyPolicy')}
+            onPress={() => navigation.navigate('PrivacyPolicy')}
+          />
+        </Card>
         <SectionTitle>{t('license')}</SectionTitle>
         <Card>
           <Text style={body}>{t('licenseBody')}</Text>
+        </Card>
+        <Card style={styles.links}>
+          <NavRow
+            label={t('openSourceLicenses')}
+            onPress={() => navigation.navigate('Licenses')}
+          />
         </Card>
       </ScrollView>
     </SafeAreaView>
@@ -76,4 +88,5 @@ const styles = StyleSheet.create({
   tagline: { fontSize: 16 },
   version: { fontSize: 14 },
   body: { fontSize: 15, lineHeight: 22 },
+  links: { marginTop: spacing.sm, paddingVertical: spacing.xs },
 });

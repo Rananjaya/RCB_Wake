@@ -107,6 +107,14 @@ export const pt: Translation = {
   challengeType: 'Desligar com',
   challengeMath: 'Matemática',
   challengeNfc: 'Etiqueta NFC',
+  challengeQr: 'Código QR',
+  challengeQrHint:
+    'Leia qualquer código QR para parar o alarme — por exemplo, num produto noutra divisão. A câmara só lê o código; nada é guardado nem enviado.',
+  qrChallengeTitle: 'Ler código QR',
+  qrChallengeBody: 'Leia qualquer código QR para parar o alarme.',
+  qrScanButton: 'Ler código QR',
+  qrCameraDenied:
+    'É necessária a permissão da câmara para ler. Permita-a nas definições do sistema ou use o desligar de emergência.',
   challengeNfcNeedsTag: 'Primeiro registre uma etiqueta NFC nas Configurações',
   nfcChallengeTitle: 'Leia sua etiqueta NFC',
   nfcChallengeBody:
@@ -168,8 +176,6 @@ export const pt: Translation = {
   version: 'Versão {v}',
   aboutBody:
     'RCB Wake é um despertador, timer, cronômetro e relógio mundial gratuito para Android. Os alarmes são programados pelo próprio Android, por isso tocam mesmo com o app fechado.',
-  privacyBody:
-    'O RCB Wake funciona offline. Não há contas, análises, anúncios nem rastreamento. Seus alarmes, timers, cidades e configurações ficam neste aparelho e são excluídos do backup na nuvem. Sons personalizados são lidos do aparelho com sua permissão e nunca são copiados nem enviados. O único uso da rede é a previsão do tempo opcional do widget: se você ativá-la, as coordenadas da cidade escolhida ou, se permitir, sua localização aproximada (arredondada para cerca de 1 km) são enviadas ao Open-Meteo (open-meteo.com) a cada 30 minutos, aproximadamente. A localização só é lida com o app aberto. Nada mais sai do seu aparelho.',
   license: 'Licença',
   licenseBody:
     'O código do RCB Wake está disponível sob a PolyForm Noncommercial License 1.0.0: você pode usá-lo, estudá-lo e modificá-lo para fins não comerciais. O uso comercial exige permissão por escrito do autor. Bibliotecas de terceiros mantêm suas próprias licenças; veja THIRD_PARTY_NOTICES no repositório.',

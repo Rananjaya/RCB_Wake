@@ -1,5 +1,13 @@
-import React, { useEffect } from 'react';
-import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  BackHandler,
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Floral } from '../../components/Floral';
 import { Icon } from '../../components/Icon';
@@ -7,6 +15,7 @@ import { Button } from '../../components/ui';
 import { LanguageOverride, useT, type StringKey } from '../../i18n';
 import { useTheme } from '../../theme/useTheme';
 import { spacing } from '../../theme/themes';
+import { PolicyContent } from '../legal/PolicyContent';
 import { PRIVACY_AGREEMENT_VERSION } from './onboarding';
 
 export const PRIVACY_POINTS: StringKey[] = [
@@ -51,6 +60,7 @@ export function PrivacyAgreementScreen({ onAgree }: { onAgree: () => void }) {
 function AgreementContent({ onAgree }: { onAgree: () => void }) {
   const theme = useTheme();
   const t = useT();
+  const [policyOpen, setPolicyOpen] = useState(false);
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
       BackHandler.exitApp();
@@ -84,6 +94,15 @@ function AgreementContent({ onAgree }: { onAgree: () => void }) {
           {t('agreementIntro')}
         </Text>
         <PrivacyPoints />
+        <Pressable
+          onPress={() => setPolicyOpen(true)}
+          accessibilityRole="link"
+          hitSlop={8}
+        >
+          <Text style={[styles.policyLink, { color: theme.colors.primary }]}>
+            {t('readPrivacyPolicy')}
+          </Text>
+        </Pressable>
         <Text style={[styles.version, { color: theme.colors.textSecondary }]}>
           {t('agreementVersion', { v: PRIVACY_AGREEMENT_VERSION })}
         </Text>
@@ -100,6 +119,28 @@ function AgreementContent({ onAgree }: { onAgree: () => void }) {
           onPress={() => BackHandler.exitApp()}
         />
       </View>
+      <Modal
+        visible={policyOpen}
+        animationType="slide"
+        onRequestClose={() => setPolicyOpen(false)}
+      >
+        <SafeAreaView
+          style={[styles.screen, { backgroundColor: theme.colors.background }]}
+        >
+          <ScrollView contentContainerStyle={styles.content}>
+            <Text
+              style={[styles.title, { color: theme.colors.text }]}
+              accessibilityRole="header"
+            >
+              {t('privacyPolicy')}
+            </Text>
+            <PolicyContent />
+          </ScrollView>
+          <View style={styles.buttons}>
+            <Button label={t('back')} onPress={() => setPolicyOpen(false)} />
+          </View>
+        </SafeAreaView>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -108,6 +149,7 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   content: { padding: spacing.xl, gap: spacing.md },
   title: { fontSize: 26, fontWeight: '700', marginTop: spacing.sm },
+  policyLink: { fontSize: 15, fontWeight: '600' },
   intro: { fontSize: 16, lineHeight: 23, marginBottom: spacing.sm },
   points: { gap: spacing.md },
   point: { flexDirection: 'row', gap: spacing.md },

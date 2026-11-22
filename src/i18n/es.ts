@@ -159,8 +159,6 @@ export const es: Translation = {
   version: 'Versión {v}',
   aboutBody:
     'RCB Wake es un despertador, temporizador, cronómetro y reloj mundial gratuito para Android. Las alarmas las programa el propio Android, así que suenan aunque la app esté cerrada.',
-  privacyBody:
-    'RCB Wake funciona sin conexión. No tiene cuentas, analíticas, anuncios ni seguimiento. Tus alarmas, temporizadores, ciudades y ajustes se quedan en este dispositivo y se excluyen de las copias en la nube. Los sonidos personalizados se leen de tu dispositivo con tu permiso y nunca se copian ni se suben. El único uso de la red es el tiempo opcional del widget: si lo activas, las coordenadas de la ciudad elegida o, si lo permites, tu ubicación aproximada (redondeada a unos 1 km) se envían a Open-Meteo (open-meteo.com) cada 30 minutos aproximadamente. La ubicación solo se lee con la app abierta. Nada más sale de tu dispositivo.',
   license: 'Licencia',
   licenseBody:
     'El código de RCB Wake está disponible bajo la PolyForm Noncommercial License 1.0.0: puedes usarlo, estudiarlo y modificarlo con fines no comerciales. El uso comercial requiere el permiso por escrito del autor. Las bibliotecas de terceros conservan sus propias licencias; consulta THIRD_PARTY_NOTICES en el repositorio.',
@@ -186,4 +184,12 @@ export const es: Translation = {
   tut5Title: 'Hazlo tuyo',
   tut5Body:
     'Elige en Ajustes el tema, el color, el idioma y un recordatorio para dormir.\nPermite las notificaciones para que aparezca la pantalla de alarma.',
+  challengeQr: 'Código QR',
+  challengeQrHint:
+    'Escanea cualquier código QR para detener la alarma, por ejemplo uno de un producto en otra habitación. La cámara solo lee el código; no se guarda ni se envía nada.',
+  qrChallengeTitle: 'Escanear código QR',
+  qrChallengeBody: 'Escanea cualquier código QR para detener la alarma.',
+  qrScanButton: 'Escanear código QR',
+  qrCameraDenied:
+    'Se necesita permiso de cámara para escanear. Permítelo en los ajustes del sistema o usa el apagado de emergencia.',
 };

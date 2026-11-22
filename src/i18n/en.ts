@@ -112,6 +112,14 @@ export const en = {
   challengeType: 'Dismiss with',
   challengeMath: 'Math',
   challengeNfc: 'NFC tag',
+  challengeQr: 'QR code',
+  challengeQrHint:
+    'Scan any QR code to stop the alarm — for example one on a product in another room. Your camera is used only to read the code; nothing is saved or sent.',
+  qrChallengeTitle: 'Scan a QR code',
+  qrChallengeBody: 'Scan any QR code to stop the alarm.',
+  qrScanButton: 'Scan a QR code',
+  qrCameraDenied:
+    'Camera permission is needed to scan. Allow it in system settings, or use emergency dismiss.',
   challengeNfcNeedsTag: 'Register an NFC tag in Settings first',
   nfcChallengeTitle: 'Scan your NFC tag',
   nfcChallengeBody:
@@ -201,7 +209,7 @@ export const en = {
   weatherRefreshNow: 'Refresh now',
   placeSearching: 'Searching…',
   placeSearchHint:
-    'Villages and suburbs are searched online at Open-Meteo; only what you type is sent.',
+    'Villages and suburbs are searched online at Open-Meteo (place data © GeoNames, CC BY 4.0); only what you type is sent.',
   weatherNotYet: 'Waiting for the first update…',
   weatherAttribution: 'Weather data by Open-Meteo.com (CC BY 4.0)',
   widgetSection: 'Home-screen widget',
@@ -279,12 +287,17 @@ export const en = {
   privacyPointBackup:
     'Your data is excluded from cloud backup and device transfer.',
   privacyPointOptional:
-    'Location and calendar are used only if you turn on weather by location or the widget calendar, and never leave your phone except rounded weather coordinates.',
+    'Location, calendar and camera are used only if you turn on weather by location, the widget calendar or the QR wake-up challenge. Camera images and calendar events never leave your phone.',
   privacyPointPermissions:
     'Permissions are asked only when a feature needs them, and you can change them any time in system settings.',
   privacyPointLicense:
     'RCB Wake is free for non-commercial use under the PolyForm Noncommercial License.',
   showTutorial: 'Show tutorial',
+  privacyPolicy: 'Privacy policy',
+  readPrivacyPolicy: 'Read the full privacy policy',
+  openSourceLicenses: 'Open-source licences',
+  openSourceIntro:
+    'RCB Wake is built with these open-source libraries. Tap one to read its licence.',
   appIcon: 'App icon',
   appIconHint: 'Your home screen may take a few seconds to show the new icon.',
   appearance: 'Appearance',
@@ -313,7 +326,7 @@ export const en = {
   aboutBody:
     'RCB Wake is a free alarm clock, timer, stopwatch and world clock for Android. Alarms are scheduled by Android itself, so they ring even when the app is closed.',
   privacyBody:
-    'RCB Wake works offline. It has no accounts, no analytics, no ads and no tracking. Your alarms, timers, cities and settings stay on this device and are excluded from cloud backup. Custom alarm sounds are read from your device with your permission and are never copied or uploaded. The only network use is the optional widget weather: if you turn it on, the chosen city’s coordinates, or your approximate location (rounded to about 1 km) if you allow it, are sent to Open-Meteo (open-meteo.com) about every 30 minutes. Location is only read while the app is open. Nothing else ever leaves your device.',
+    'RCB Wake has no accounts, ads, analytics or tracking. Your alarms, timers, cities and settings stay on this device and are excluded from cloud backup. Custom alarm sounds are read in place and never copied or uploaded. The internet is used only for optional features you turn on: widget weather (rounded coordinates to Open-Meteo, or to OpenWeatherMap with your own key) and place search (the text you type, to Open-Meteo). Location, calendar and camera are used only for the optional features that need them. Read the full privacy policy for details.',
   reliabilityNote:
     'If you force-stop RCB Wake from system settings, Android cancels its alarms until you open the app again.',
   license: 'License',

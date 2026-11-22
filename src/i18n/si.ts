@@ -114,6 +114,14 @@ export const si: Strings = {
   challengeType: 'නැවැත්වීමේ ක්‍රමය',
   challengeMath: 'ගණිතය',
   challengeNfc: 'NFC ටැගය',
+  challengeQr: 'QR කේතය',
+  challengeQrHint:
+    'එලාම් නැවැත්වීමට ඕනෑම QR කේතයක් ස්කෑන් කරන්න — උදා. වෙනත් කාමරයක ඇති භාණ්ඩයක. කැමරාව කේතය කියවීමට පමණක් භාවිත වේ; කිසිවක් සුරැකීම හෝ යැවීම නොකෙරේ.',
+  qrChallengeTitle: 'QR කේතයක් ස්කෑන් කරන්න',
+  qrChallengeBody: 'එලාම් නැවැත්වීමට ඕනෑම QR කේතයක් ස්කෑන් කරන්න.',
+  qrScanButton: 'QR කේතයක් ස්කෑන් කරන්න',
+  qrCameraDenied:
+    'ස්කෑන් කිරීමට කැමරා අවසරය අවශ්‍යයි. පද්ධති සැකසුම් තුළ එය ඉඩ දෙන්න, නැතහොත් හදිසි නැවැත්වීම භාවිත කරන්න.',
   challengeNfcNeedsTag: 'පළමුව සැකසුම් තුළ NFC ටැගයක් ලියාපදිංචි කරන්න',
   nfcChallengeTitle: 'ඔබේ NFC ටැගය ස්කෑන් කරන්න',
   nfcChallengeBody: 'ඔබේ ටැගය ඇති තැනට ගොස් දුරකථනයේ පිටුපස එයට ළං කරන්න.',
@@ -202,7 +210,7 @@ export const si: Strings = {
   weatherRefreshNow: 'Refresh now',
   placeSearching: 'Searching…',
   placeSearchHint:
-    'Villages and suburbs are searched online at Open-Meteo; only what you type is sent.',
+    'Villages and suburbs are searched online at Open-Meteo (place data © GeoNames, CC BY 4.0); only what you type is sent.',
   weatherNotYet: 'පළමු යාවත්කාලීනය බලාපොරොත්තුවෙන්…',
   weatherAttribution: 'කාලගුණ දත්ත Open-Meteo.com (CC BY 4.0) මගින්',
   widgetSection: 'Home-screen widget',
@@ -280,12 +288,17 @@ export const si: Strings = {
   privacyPointBackup:
     'Your data is excluded from cloud backup and device transfer.',
   privacyPointOptional:
-    'Location and calendar are used only if you turn on weather by location or the widget calendar, and never leave your phone except rounded weather coordinates.',
+    'Location, calendar and camera are used only if you turn on weather by location, the widget calendar or the QR wake-up challenge. Camera images and calendar events never leave your phone.',
   privacyPointPermissions:
     'Permissions are asked only when a feature needs them, and you can change them any time in system settings.',
   privacyPointLicense:
     'RCB Wake is free for non-commercial use under the PolyForm Noncommercial License.',
   showTutorial: 'Show tutorial',
+  privacyPolicy: 'Privacy policy',
+  readPrivacyPolicy: 'Read the full privacy policy',
+  openSourceLicenses: 'Open-source licences',
+  openSourceIntro:
+    'RCB Wake is built with these open-source libraries. Tap one to read its licence.',
   appIcon: 'App icon',
   appIconHint: 'Your home screen may take a few seconds to show the new icon.',
   appearance: 'පෙනුම',
@@ -314,7 +327,7 @@ export const si: Strings = {
   aboutBody:
     'RCB Wake යනු Android සඳහා නොමිලේ ලබා දෙන එලාම් ඔරලෝසුවක්, ටයිමරයක්, නැවතුම් ඔරලෝසුවක් සහ ලෝක ඔරලෝසුවකි. එලාම් Android මගින්ම සැලසුම් කරන බැවින් යෙදුම වසා ඇති විටත් ඒවා නාද වේ.',
   privacyBody:
-    'RCB Wake අන්තර්ජාලයෙන් තොරව ක්‍රියා කරයි. එයට ගිණුම්, විශ්ලේෂණ, දැන්වීම් හෝ ලුහුබැඳීම් නැත. ඔබේ එලාම්, ටයිමර්, නගර සහ සැකසුම් මෙම උපාංගයේම පවතින අතර වලාකුළු උපස්ථයෙන් බැහැර කෙරේ. අභිරුචි එලාම් ශබ්ද ඔබේ අවසරය ඇතිව කියවන අතර කිසි විටෙක පිටපත් හෝ උඩුගත නොකෙරේ. එකම ජාල භාවිතය විකල්ප විජට් කාලගුණයයි: ඔබ එය සක්‍රිය කළහොත්, තෝරාගත් නගරයේ ආසන්න ඛණ්ඩාංක විනාඩි 30කට වරක් පමණ Open-Meteo (open-meteo.com) වෙත යවනු ලැබේ. වෙනත් කිසිවක් ඔබේ උපාංගයෙන් පිට නොවේ.',
+    'RCB Wake has no accounts, ads, analytics or tracking. Your alarms, timers, cities and settings stay on this device and are excluded from cloud backup. Custom alarm sounds are read in place and never copied or uploaded. The internet is used only for optional features you turn on: widget weather (rounded coordinates to Open-Meteo, or to OpenWeatherMap with your own key) and place search (the text you type, to Open-Meteo). Location, calendar and camera are used only for the optional features that need them. Read the full privacy policy for details.',
   reliabilityNote:
     'ඔබ පද්ධති සැකසුම් මගින් RCB Wake බලෙන් නැවැත්වුවහොත්, ඔබ යෙදුම නැවත විවෘත කරන තුරු Android එහි එලාම් අවලංගු කරයි.',
   license: 'බලපත්‍රය',

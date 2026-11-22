@@ -115,6 +115,14 @@ export const ta: Strings = {
   challengeType: 'நிறுத்தும் முறை',
   challengeMath: 'கணிதம்',
   challengeNfc: 'NFC டேக்',
+  challengeQr: 'QR குறியீடு',
+  challengeQrHint:
+    'அலாரத்தை நிறுத்த ஏதேனும் QR குறியீட்டை ஸ்கேன் செய்யவும் — உதா. வேறு அறையில் உள்ள ஒரு பொருளில். கேமரா குறியீட்டைப் படிக்க மட்டுமே பயன்படும்; எதுவும் சேமிக்கப்படவோ அனுப்பப்படவோ இல்லை.',
+  qrChallengeTitle: 'QR குறியீட்டை ஸ்கேன் செய்',
+  qrChallengeBody: 'அலாரத்தை நிறுத்த ஏதேனும் QR குறியீட்டை ஸ்கேன் செய்யவும்.',
+  qrScanButton: 'QR குறியீட்டை ஸ்கேன் செய்',
+  qrCameraDenied:
+    'ஸ்கேன் செய்ய கேமரா அனுமதி தேவை. கணினி அமைப்புகளில் அனுமதிக்கவும், அல்லது அவசர நிறுத்தத்தைப் பயன்படுத்தவும்.',
   challengeNfcNeedsTag: 'முதலில் அமைப்புகளில் NFC டேக்கைப் பதிவுசெய்யவும்',
   nfcChallengeTitle: 'உங்கள் NFC டேக்கை ஸ்கேன் செய்யவும்',
   nfcChallengeBody:
@@ -204,7 +212,7 @@ export const ta: Strings = {
   weatherRefreshNow: 'Refresh now',
   placeSearching: 'Searching…',
   placeSearchHint:
-    'Villages and suburbs are searched online at Open-Meteo; only what you type is sent.',
+    'Villages and suburbs are searched online at Open-Meteo (place data © GeoNames, CC BY 4.0); only what you type is sent.',
   weatherNotYet: 'முதல் புதுப்பிப்புக்காகக் காத்திருக்கிறது…',
   weatherAttribution: 'வானிலைத் தரவு Open-Meteo.com (CC BY 4.0)',
   widgetSection: 'Home-screen widget',
@@ -282,12 +290,17 @@ export const ta: Strings = {
   privacyPointBackup:
     'Your data is excluded from cloud backup and device transfer.',
   privacyPointOptional:
-    'Location and calendar are used only if you turn on weather by location or the widget calendar, and never leave your phone except rounded weather coordinates.',
+    'Location, calendar and camera are used only if you turn on weather by location, the widget calendar or the QR wake-up challenge. Camera images and calendar events never leave your phone.',
   privacyPointPermissions:
     'Permissions are asked only when a feature needs them, and you can change them any time in system settings.',
   privacyPointLicense:
     'RCB Wake is free for non-commercial use under the PolyForm Noncommercial License.',
   showTutorial: 'Show tutorial',
+  privacyPolicy: 'Privacy policy',
+  readPrivacyPolicy: 'Read the full privacy policy',
+  openSourceLicenses: 'Open-source licences',
+  openSourceIntro:
+    'RCB Wake is built with these open-source libraries. Tap one to read its licence.',
   appIcon: 'App icon',
   appIconHint: 'Your home screen may take a few seconds to show the new icon.',
   appearance: 'தோற்றம்',
@@ -316,7 +329,7 @@ export const ta: Strings = {
   aboutBody:
     'RCB Wake என்பது Android க்கான இலவச அலாரம் கடிகாரம், டைமர், ஸ்டாப்வாட்ச் மற்றும் உலக கடிகாரம். அலாரங்களை Android தானே திட்டமிடுவதால், செயலி மூடப்பட்டிருந்தாலும் அவை ஒலிக்கும்.',
   privacyBody:
-    'RCB Wake இணையம் இல்லாமல் இயங்குகிறது. இதற்கு கணக்குகள், பகுப்பாய்வு, விளம்பரங்கள் அல்லது கண்காணிப்பு இல்லை. உங்கள் அலாரங்கள், டைமர்கள், நகரங்கள் மற்றும் அமைப்புகள் இந்தச் சாதனத்திலேயே இருக்கும், மேகக் காப்புப்பிரதியிலிருந்து விலக்கப்படும். தனிப்பயன் அலார ஒலிகள் உங்கள் அனுமதியுடன் படிக்கப்படுகின்றன, ஒருபோதும் நகலெடுக்கப்படுவதோ பதிவேற்றப்படுவதோ இல்லை. ஒரே நெட்வொர்க் பயன்பாடு விருப்பமான விட்ஜெட் வானிலை: அதை இயக்கினால், தேர்ந்தெடுத்த நகரத்தின் தோராயமான ஆயத்தொலைவுகள் சுமார் 30 நிமிடங்களுக்கு ஒருமுறை Open-Meteo (open-meteo.com) க்கு அனுப்பப்படும். வேறு எதுவும் உங்கள் சாதனத்தை விட்டு வெளியேறாது.',
+    'RCB Wake has no accounts, ads, analytics or tracking. Your alarms, timers, cities and settings stay on this device and are excluded from cloud backup. Custom alarm sounds are read in place and never copied or uploaded. The internet is used only for optional features you turn on: widget weather (rounded coordinates to Open-Meteo, or to OpenWeatherMap with your own key) and place search (the text you type, to Open-Meteo). Location, calendar and camera are used only for the optional features that need them. Read the full privacy policy for details.',
   reliabilityNote:
     'கணினி அமைப்புகளிலிருந்து RCB Wake ஐ கட்டாயமாக நிறுத்தினால், நீங்கள் செயலியை மீண்டும் திறக்கும் வரை Android அதன் அலாரங்களை ரத்து செய்யும்.',
   license: 'உரிமம்',

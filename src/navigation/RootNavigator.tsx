@@ -8,6 +8,8 @@ import { AlarmEditorScreen } from '../features/alarms/AlarmEditorScreen';
 import { AlarmListScreen } from '../features/alarms/AlarmListScreen';
 import { ChallengeScreen } from '../features/challenges/ChallengeScreen';
 import { AboutScreen } from '../features/settings/AboutScreen';
+import { LicensesScreen } from '../features/legal/LicensesScreen';
+import { PrivacyPolicyScreen } from '../features/legal/PrivacyPolicyScreen';
 import { SettingsScreen } from '../features/settings/SettingsScreen';
 import { StopwatchScreen } from '../features/stopwatch/StopwatchScreen';
 import { TutorialScreen } from '../features/onboarding/TutorialScreen';
@@ -127,6 +129,8 @@ export function RootNavigator({
       />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="About" component={AboutScreen} />
+      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
+      <Stack.Screen name="Licenses" component={LicensesScreen} />
       <Stack.Screen name="CityPicker" component={CityPickerScreen} />
       <Stack.Screen name="Tutorial" component={TutorialReplay} />
       <Stack.Screen
