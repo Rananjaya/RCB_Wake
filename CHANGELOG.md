@@ -4,6 +4,13 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] — 2026-11-22
+
+### Added
+- "At a glance" home-screen widget: a greeting that changes through the day (good morning,
+  afternoon, evening, night), the date with the current weather icon and temperature, and the next
+  calendar event. Uses the same weather, text-colour and place-name settings as the clock widget.
+
 ## [1.1.1] — 2026-11-22
 
 ### Changed

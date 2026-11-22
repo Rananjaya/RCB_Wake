@@ -58,4 +58,10 @@
     <string name="wx_drizzle">Chuvisco</string>
     <string name="wx_heavy_rain">Chuva forte</string>
     <string name="wx_sleet">Água-neve</string>
+    <string name="glance_widget_name">De relance</string>
+    <string name="glance_widget_description">Saudação, data, tempo e o próximo evento</string>
+    <string name="greeting_morning">Bom dia</string>
+    <string name="greeting_afternoon">Boa tarde</string>
+    <string name="greeting_evening">Boa noite</string>
+    <string name="greeting_night">Boa noite</string>
 </resources>

@@ -58,4 +58,10 @@
     <string name="wx_drizzle">霧雨</string>
     <string name="wx_heavy_rain">大雨</string>
     <string name="wx_sleet">みぞれ</string>
+    <string name="glance_widget_name">ひと目で</string>
+    <string name="glance_widget_description">あいさつ、日付、天気、次の予定</string>
+    <string name="greeting_morning">おはようございます</string>
+    <string name="greeting_afternoon">こんにちは</string>
+    <string name="greeting_evening">こんばんは</string>
+    <string name="greeting_night">おやすみなさい</string>
 </resources>

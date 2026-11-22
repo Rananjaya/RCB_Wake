@@ -58,4 +58,10 @@
     <string name="wx_drizzle">毛毛雨</string>
     <string name="wx_heavy_rain">大雨</string>
     <string name="wx_sleet">雨夹雪</string>
+    <string name="glance_widget_name">一览</string>
+    <string name="glance_widget_description">问候、日期、天气和下一个日程</string>
+    <string name="greeting_morning">早上好</string>
+    <string name="greeting_afternoon">下午好</string>
+    <string name="greeting_evening">晚上好</string>
+    <string name="greeting_night">晚安</string>
 </resources>

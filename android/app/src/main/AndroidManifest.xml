@@ -215,6 +215,18 @@
         </receiver>
 
         <receiver
+            android:name=".widget.GlanceWidgetProvider"
+            android:exported="false"
+            android:label="@string/glance_widget_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/glance_widget_info" />
+        </receiver>
+
+        <receiver
             android:name=".sleep.SleepReminderReceiver"
             android:directBootAware="true"
             android:exported="false" />

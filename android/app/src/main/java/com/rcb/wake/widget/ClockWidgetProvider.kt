@@ -104,7 +104,8 @@ class ClockWidgetProvider : AppWidgetProvider() {
         fun scheduleWeatherRefresh(context: Context) {
             val settings = SettingsStore.load(context)
             val hasWidget = AppWidgetManager.getInstance(context)
-                .getAppWidgetIds(ComponentName(context, ClockWidgetProvider::class.java)).isNotEmpty()
+                .getAppWidgetIds(ComponentName(context, ClockWidgetProvider::class.java)).isNotEmpty() ||
+                GlanceWidgetProvider.ids(context).isNotEmpty()
             val minutes = if (settings.weatherEnabled && hasWidget) settings.weatherRefreshMinutes else 0
             val state = AppStorage.state(context)
             val intent = Intent(context, ClockWidgetProvider::class.java).setAction(ACTION_REFRESH_WEATHER)
@@ -124,6 +125,8 @@ class ClockWidgetProvider : AppWidgetProvider() {
             val manager = AppWidgetManager.getInstance(context)
             val ids = manager.getAppWidgetIds(ComponentName(context, ClockWidgetProvider::class.java))
             if (ids.isNotEmpty()) render(context, manager, ids)
+            // Both widgets show the same next alarm, weather and settings.
+            GlanceWidgetProvider.updateAll(context)
         }
 
         /** Picks a layout for widget dimensions in dp (used before Android 12). */
