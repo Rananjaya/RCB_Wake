@@ -34,6 +34,7 @@ import { AppIconPicker } from './AppIconPicker';
 import { CalendarSettings } from './CalendarSettings';
 import { NfcTagSettings } from './NfcTagSettings';
 import { SleepReminderSettings } from './SleepReminderSettings';
+import { RemindersSettings } from './RemindersSettings';
 import { WeatherSettings } from './WeatherSettings';
 import { WidgetSettings } from './WidgetSettings';
 
@@ -187,6 +188,8 @@ function SettingsContent({ navigation }: Props) {
         </Card>
 
         <SleepReminderSettings />
+
+        <RemindersSettings />
 
         <NfcTagSettings />
 

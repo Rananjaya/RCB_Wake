@@ -123,12 +123,13 @@ object CalendarEvents {
     fun scheduleRefresh(context: Context, event: CalendarEvent?) {
         val alarmManager = context.getSystemService(AlarmManager::class.java)
         val ids = AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, ClockWidgetProvider::class.java))
+        val hasAnyWidget = ids.isNotEmpty() || GlanceWidgetProvider.ids(context).isNotEmpty()
         val intent = Intent(context, ClockWidgetProvider::class.java)
             .setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
             .putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         val pi = PendingIntent.getBroadcast(context, REFRESH_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         alarmManager.cancel(pi)
-        if (event == null || ids.isEmpty()) return
+        if (event == null || !hasAnyWidget) return
         // Inexact is fine: the line may linger up to a few minutes after the event ends.
         alarmManager.setAndAllowWhileIdle(AlarmManager.RTC, event.end + 30_000, pi)
     }

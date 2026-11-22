@@ -93,7 +93,6 @@ class GlanceWidgetProvider : AppWidgetProvider() {
 
         private const val ACTION_NEXT_PAGE = "com.rcb.wake.action.GLANCE_NEXT_PAGE"
         private const val ROTATE_MILLIS = 6_000
-        private const val DAY_MILLIS = 86_400_000
         private fun pageKey(id: Int) = "glance_page_$id"
 
         private fun render(context: Context, manager: AppWidgetManager, ids: IntArray) {
@@ -129,7 +128,9 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             id: Int,
             soon: Boolean,
         ): RemoteViews {
-            val views = RemoteViews(context.packageName, R.layout.widget_glance)
+            // A separate still layout, because a running flipper keeps its old interval.
+            val rotate = hasNext && settings.widgetRotatePages && !soon
+            val views = RemoteViews(context.packageName, if (rotate) R.layout.widget_glance else R.layout.widget_glance_static)
 
             // Page 1: greeting (optional), date with year, weather.
             views.setTextViewText(R.id.glance_next_title, c.getString(if (soon) R.string.glance_soon else R.string.glance_coming_up))
@@ -160,10 +161,7 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             listOf(R.id.glance_dots_1, R.id.glance_dots_2).forEach {
                 views.setViewVisibility(it, if (hasNext) View.VISIBLE else View.GONE)
             }
-            // Pages rotate on their own (autoStart in the layout). Only the interval is settable from
-            // a widget, so "off" — or nothing on page 2 — uses an interval of a day.
-            val rotate = hasNext && settings.widgetRotatePages && !soon
-            views.setInt(R.id.glance_pages, "setFlipInterval", if (rotate) ROTATE_MILLIS else DAY_MILLIS)
+            if (rotate) views.setInt(R.id.glance_pages, "setFlipInterval", ROTATE_MILLIS)
             applyTextColor(views, content)
 
             // Every tap goes to WidgetTapActivity, which tells a single tap (next page) from a
@@ -210,6 +208,14 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             render(context, AppWidgetManager.getInstance(context), intArrayOf(id))
         }
 
+        private fun tintIcon(views: RemoteViews, color: Int) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                views.setColorStateList(R.id.glance_headphones_icon, "setImageTintList", android.content.res.ColorStateList.valueOf(color))
+            } else {
+                views.setInt(R.id.glance_headphones_icon, "setColorFilter", color)
+            }
+        }
+
         private fun applyTextColor(views: RemoteViews, content: WidgetContent) {
             val primary = listOf(R.id.glance_greeting)
             val primary2 = listOf(R.id.glance_next_title)
@@ -223,7 +229,13 @@ class GlanceWidgetProvider : AppWidgetProvider() {
                 content.textColor == "accent" -> {
                     val color = Color.parseColor(content.accentHex)
                     (primary + primary2 + secondary).forEach { views.setTextColor(it, color) }
-                    views.setInt(R.id.glance_headphones_icon, "setColorFilter", color)
+                    tintIcon(views, color)
+                }
+                // Explicit white: earlier Material You / accent colours would otherwise remain.
+                else -> {
+                    (primary + primary2).forEach { views.setTextColor(it, ClockWidgetProvider.WHITE) }
+                    secondary.forEach { views.setTextColor(it, ClockWidgetProvider.WHITE_SECONDARY) }
+                    tintIcon(views, ClockWidgetProvider.WHITE_SECONDARY)
                 }
             }
         }

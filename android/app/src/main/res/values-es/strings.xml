@@ -64,4 +64,8 @@
     <string name="headphones_bluetooth">Auriculares Bluetooth</string>
     <string name="glance_coming_up">Próximamente</string>
     <string name="glance_soon">En breve</string>
+    <string name="channel_upcoming_alarm">Próximas alarmas</string>
+    <string name="channel_event_reminder">Recordatorios de eventos</string>
+    <string name="reminder_alarm_title">Alarma en %1$d min</string>
+    <string name="reminder_event_title">%1$s en %2$d min</string>
 </resources>

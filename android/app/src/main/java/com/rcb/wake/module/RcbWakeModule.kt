@@ -346,6 +346,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         val ids = (0 until calendarIds.size()).map { calendarIds.getDouble(it).toLong() }
         CalendarEvents.save(context, enabled, ids)
         ClockWidgetProvider.updateAll(context)
+        com.rcb.wake.reminders.UpcomingReminders.reschedule(context)
         promise.resolve(null)
     }
 
@@ -691,6 +692,8 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 widgetShowHeadphones = settings.hasKey("widgetShowHeadphones") && settings.getBoolean("widgetShowHeadphones"),
                 widgetShowGreeting = !settings.hasKey("widgetShowGreeting") || settings.getBoolean("widgetShowGreeting"),
                 widgetRotatePages = !settings.hasKey("widgetRotatePages") || settings.getBoolean("widgetRotatePages"),
+                remindersEnabled = !settings.hasKey("remindersEnabled") || settings.getBoolean("remindersEnabled"),
+                reminderLeadMinutes = if (settings.hasKey("reminderLeadMinutes")) settings.getDouble("reminderLeadMinutes").toInt() else 10,
                 weatherProvider = settings.getString("weatherProvider") ?: SettingsStore.PROVIDER_OPEN_METEO,
                 openWeatherMapApiKey = settings.getString("openWeatherMapApiKey").orEmpty().trim(),
             ),
@@ -731,6 +734,8 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putBoolean("widgetShowHeadphones", s.widgetShowHeadphones)
         putBoolean("widgetShowGreeting", s.widgetShowGreeting)
         putBoolean("widgetRotatePages", s.widgetRotatePages)
+        putBoolean("remindersEnabled", s.remindersEnabled)
+        putInt("reminderLeadMinutes", s.reminderLeadMinutes)
         putString("weatherProvider", s.weatherProvider)
         putString("openWeatherMapApiKey", s.openWeatherMapApiKey)
     }

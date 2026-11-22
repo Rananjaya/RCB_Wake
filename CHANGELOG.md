@@ -4,6 +4,17 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.7.0] — 2026-11-22
+
+### Added
+- Reminders: a small notification before the next alarm (silent) and before timed calendar
+  events, 5, 10, 15 or 30 minutes ahead (Settings → Reminders; on by default, 10 minutes).
+
+### Fixed
+- Widget text colour now changes back to white after using Material You or the accent colour.
+- While an event or alarm is "soon", the My Day widget no longer keeps switching pages.
+- The calendar line refreshes when only the My Day widget is on the home screen.
+
 ## [1.6.0] — 2026-11-22
 
 ### Added

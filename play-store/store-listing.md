@@ -25,6 +25,7 @@ ALARMS
 • Built-in tones or your own audio file, vibration, gradual volume and snooze length
 • Full-screen ringing screen shown over the lock screen
 • "Next alarm" shown in the status bar while an alarm is set
+• Optional reminder notification before alarms and calendar events
 
 WAKE-UP CHALLENGE
 • Solve easy, medium or hard math questions before the alarm can be dismissed
@@ -101,6 +102,14 @@ on: widget weather sends rounded coordinates to Open-Meteo (or, with the user's 
 OpenWeatherMap); place search sends the typed text to Open-Meteo; "Use my location" may use
 Android's geocoder for the place name. Camera images (QR challenge) and calendar events never leave
 the device. Full policy: PRIVACY_POLICY.md.
+
+## What's new in 1.7.0
+
+<en-US>
+• New: a small reminder before your next alarm and calendar events (choose 5–30 minutes)
+• Fixed: widget text colour now switches back to white
+• My Day stays on "Soon" while an event or alarm is close
+</en-US>
 
 ## What's new in 1.6.0
 

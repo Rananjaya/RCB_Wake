@@ -214,6 +214,11 @@ export const si: Strings = {
     'Villages and suburbs are searched online at Open-Meteo (place data © GeoNames, CC BY 4.0); only what you type is sent.',
   weatherNotYet: 'පළමු යාවත්කාලීනය බලාපොරොත්තුවෙන්…',
   weatherAttribution: 'කාලගුණ දත්ත Open-Meteo.com (CC BY 4.0) මගින්',
+  remindersSection: 'Reminders',
+  remindersToggle: 'Notify before alarms and events',
+  remindersHint:
+    'A small notification before your next alarm (silent) and before timed events from the calendars chosen under Widget calendar.',
+  remindersLead: 'How early',
   widgetSection: 'Home-screen widget',
   widgetAdd: 'Add to home screen',
   widgetClockName: 'Clock',

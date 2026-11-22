@@ -68,4 +68,8 @@
     <string name="headphones_bluetooth">蓝牙耳机</string>
     <string name="glance_coming_up">接下来</string>
     <string name="glance_soon">即将开始</string>
+    <string name="channel_upcoming_alarm">即将响起的闹钟</string>
+    <string name="channel_event_reminder">日程提醒</string>
+    <string name="reminder_alarm_title">%1$d 分钟后响铃</string>
+    <string name="reminder_event_title">%2$d 分钟后：%1$s</string>
 </resources>

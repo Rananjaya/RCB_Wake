@@ -41,6 +41,8 @@ const defaults = {
   widgetShowHeadphones: false,
   widgetShowGreeting: true,
   widgetRotatePages: true,
+  remindersEnabled: true,
+  reminderLeadMinutes: 10,
   weatherProvider: 'openmeteo',
   openWeatherMapApiKey: '',
 };

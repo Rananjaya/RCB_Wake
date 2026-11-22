@@ -68,4 +68,8 @@
     <string name="headphones_bluetooth">බ්ලූටූත් හෙඩ්ෆෝන්</string>
     <string name="glance_coming_up">ඉදිරියට</string>
     <string name="glance_soon">ළඟදීම</string>
+    <string name="channel_upcoming_alarm">ඉදිරි එලාම්</string>
+    <string name="channel_event_reminder">සිදුවීම් සිහිකැඳවීම්</string>
+    <string name="reminder_alarm_title">මිනිත්තු %1$d කින් එලාම්</string>
+    <string name="reminder_event_title">මිනිත්තු %2$d කින් %1$s</string>
 </resources>

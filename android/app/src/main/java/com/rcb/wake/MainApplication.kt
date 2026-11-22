@@ -20,6 +20,7 @@ import com.rcb.wake.alarm.AlarmController
 import com.rcb.wake.module.EngineEvents
 import com.rcb.wake.module.RcbWakePackage
 import com.rcb.wake.notification.WakeNotifications
+import com.rcb.wake.reminders.UpcomingReminders
 import com.rcb.wake.sleep.SleepReminder
 import com.rcb.wake.storage.SettingsStore
 import com.rcb.wake.widget.ClockWidgetProvider
@@ -42,6 +43,7 @@ class MainApplication : Application(), ReactApplication {
             if (type == EngineEvents.ALARMS_CHANGED || type == EngineEvents.SETTINGS_CHANGED) {
                 ClockWidgetProvider.updateAll(this)
                 SleepReminder.reschedule(this)
+                UpcomingReminders.reschedule(this)
                 WakeNotifications.updateNextAlarm(this, AlarmController(this).nextAlarm())
             }
         }

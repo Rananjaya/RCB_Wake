@@ -97,6 +97,10 @@ stops.
   focus-gain callback never arrives).
 - Vibration is started one pattern cycle at a time, so a notification vibration that replaces it
   (older Android versions) only interrupts one cycle.
+- `UpcomingReminders` keeps one inexact `RTC_WAKEUP` alarm for the earliest upcoming reminder: a
+  silent notification (channel `upcoming_alarm`) N minutes before the next alarm and a normal one
+  (channel `event_reminder`) before the next timed calendar event. It is re-planned whenever
+  alarms, settings or calendars change, at boot and after it fires.
 - While an alarm is set, an ongoing silent notification on the `next_alarm` channel (low
   importance) shows the next alarm and keeps an alarm icon in the status bar. It is hidden while
   that alarm is snoozed (the snooze notification shows it) and can be turned off in the system

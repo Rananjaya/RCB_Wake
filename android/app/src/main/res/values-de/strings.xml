@@ -64,4 +64,8 @@
     <string name="headphones_bluetooth">Bluetooth-Kopfhörer</string>
     <string name="glance_coming_up">Als Nächstes</string>
     <string name="glance_soon">Gleich</string>
+    <string name="channel_upcoming_alarm">Anstehende Wecker</string>
+    <string name="channel_event_reminder">Terminerinnerungen</string>
+    <string name="reminder_alarm_title">Wecker in %1$d Min.</string>
+    <string name="reminder_event_title">%1$s in %2$d Min.</string>
 </resources>

@@ -64,4 +64,8 @@
     <string name="headphones_bluetooth">Bluetooth-наушники</string>
     <string name="glance_coming_up">Далее</string>
     <string name="glance_soon">Скоро</string>
+    <string name="channel_upcoming_alarm">Предстоящие будильники</string>
+    <string name="channel_event_reminder">Напоминания о событиях</string>
+    <string name="reminder_alarm_title">Будильник через %1$d мин</string>
+    <string name="reminder_event_title">%1$s через %2$d мин</string>
 </resources>

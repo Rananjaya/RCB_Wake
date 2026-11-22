@@ -38,6 +38,8 @@ class ClockWidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
         render(context, manager, ids)
+        GlanceWidgetProvider.updateAll(context)
+        com.rcb.wake.reminders.UpcomingReminders.reschedule(context)
         scheduleWeatherRefresh(context)
         refreshWeatherIfStale(context)
     }
@@ -262,8 +264,17 @@ class ClockWidgetProvider : AppWidgetProvider() {
                     layout.primaryText.forEach { views.setTextColor(it, color) }
                     layout.secondaryText.forEach { views.setTextColor(it, color) }
                 }
+                // White is set explicitly: launchers re-apply updates onto the existing views, so
+                // colours from an earlier Material You or accent choice would otherwise remain.
+                else -> {
+                    layout.primaryText.forEach { views.setTextColor(it, WHITE) }
+                    layout.secondaryText.forEach { views.setTextColor(it, WHITE_SECONDARY) }
+                }
             }
         }
+
+        const val WHITE = 0xFFFFFFFF.toInt()
+        const val WHITE_SECONDARY = 0xE6FFFFFF.toInt()
 
         /** TextClock uses format12 or format24 according to the device's live 12/24-hour setting. */
         private fun RemoteViews.setTimeFormat(viewId: Int, patterns: Pair<String, String>) {

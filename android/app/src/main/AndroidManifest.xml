@@ -226,6 +226,10 @@
                 android:resource="@xml/clock_widget_info" />
         </receiver>
 
+        <receiver
+            android:name=".reminders.UpcomingReminders$Receiver"
+            android:exported="false" />
+
         <!-- Exported only so the system can deliver these Bluetooth broadcasts. -->
         <receiver
             android:name=".widget.HeadphonesReceiver"

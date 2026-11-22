@@ -213,6 +213,11 @@ export const en = {
     'Villages and suburbs are searched online at Open-Meteo (place data © GeoNames, CC BY 4.0); only what you type is sent.',
   weatherNotYet: 'Waiting for the first update…',
   weatherAttribution: 'Weather data by Open-Meteo.com (CC BY 4.0)',
+  remindersSection: 'Reminders',
+  remindersToggle: 'Notify before alarms and events',
+  remindersHint:
+    'A small notification before your next alarm (silent) and before timed events from the calendars chosen under Widget calendar.',
+  remindersLead: 'How early',
   widgetSection: 'Home-screen widget',
   widgetAdd: 'Add to home screen',
   widgetClockName: 'Clock',

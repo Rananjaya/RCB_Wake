@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "My Day" widget, still version: used while something is soon or automatic switching is off.
+     Same pages as widget_glance.xml. Two pages that change automatically every few seconds and on tap
+     (launchers keep horizontal swipes for changing home screens, so widgets cannot use them):
+     1. optional greeting, date with year, weather;  2. next event, next alarm, earphones.
+     Frameless; the page dots show which page is visible. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/glance_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:gravity="center_vertical|start"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="4dp">
+
+    <ViewFlipper
+        android:id="@+id/glance_pages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoStart="false"
+        android:flipInterval="6000"
+        android:inAnimation="@android:anim/fade_in"
+        android:outAnimation="@android:anim/fade_out">
+        <include layout="@layout/widget_glance_page_today" />
+        <include layout="@layout/widget_glance_page_next" />
+    </ViewFlipper>
+
+</LinearLayout>

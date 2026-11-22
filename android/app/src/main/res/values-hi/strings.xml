@@ -68,4 +68,8 @@
     <string name="headphones_bluetooth">ब्लूटूथ हेडफ़ोन</string>
     <string name="glance_coming_up">आगे क्या है</string>
     <string name="glance_soon">जल्द ही</string>
+    <string name="channel_upcoming_alarm">आने वाले अलार्म</string>
+    <string name="channel_event_reminder">कार्यक्रम रिमाइंडर</string>
+    <string name="reminder_alarm_title">%1$d मिनट में अलार्म</string>
+    <string name="reminder_event_title">%2$d मिनट में %1$s</string>
 </resources>

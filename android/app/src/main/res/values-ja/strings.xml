@@ -68,4 +68,8 @@
     <string name="headphones_bluetooth">Bluetoothヘッドホン</string>
     <string name="glance_coming_up">この後の予定</string>
     <string name="glance_soon">まもなく</string>
+    <string name="channel_upcoming_alarm">次のアラーム</string>
+    <string name="channel_event_reminder">予定のリマインダー</string>
+    <string name="reminder_alarm_title">%1$d分後にアラーム</string>
+    <string name="reminder_event_title">%2$d分後に%1$s</string>
 </resources>

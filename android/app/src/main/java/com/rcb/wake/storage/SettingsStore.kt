@@ -39,6 +39,10 @@ data class WakeSettings(
     val widgetShowPlace: Boolean = true,
     /** Show the time-of-day greeting on the My Day widget. */
     val widgetShowGreeting: Boolean = true,
+    /** Small notification before the next alarm (silent) and the next timed calendar event. */
+    val remindersEnabled: Boolean = true,
+    /** How long before; one of [SettingsStore.REMINDER_LEADS]. */
+    val reminderLeadMinutes: Int = 10,
     /** Rotate the My Day widget pages automatically. */
     val widgetRotatePages: Boolean = true,
     /** Show connected earphones (name, Bluetooth battery) on the My Day widget. */
@@ -63,6 +67,7 @@ object SettingsStore {
     val THEMES = setOf(THEME_MIDNIGHT, THEME_PINK)
     val WIDGET_TEXT_COLORS = setOf("white", "material", "accent")
     val WEATHER_REFRESH_MINUTES = setOf(15, 30, 60, 180)
+    val REMINDER_LEADS = setOf(5, 10, 15, 30)
     const val PROVIDER_OPEN_METEO = "openmeteo"
     const val PROVIDER_OPEN_WEATHER_MAP = "openweathermap"
     val WEATHER_PROVIDERS = setOf(PROVIDER_OPEN_METEO, PROVIDER_OPEN_WEATHER_MAP)
@@ -111,6 +116,8 @@ object SettingsStore {
             widgetShowHeadphones = p.getBoolean("widgetShowHeadphones", false),
             widgetShowGreeting = p.getBoolean("widgetShowGreeting", true),
             widgetRotatePages = p.getBoolean("widgetRotatePages", true),
+            remindersEnabled = p.getBoolean("remindersEnabled", true),
+            reminderLeadMinutes = p.getInt("reminderLeadMinutes", 10),
             weatherProvider = p.getString("weatherProvider", PROVIDER_OPEN_METEO)!!,
             openWeatherMapApiKey = p.getString("openWeatherMapApiKey", "")!!,
             systemIs24Hour = DateFormat.is24HourFormat(context),
@@ -132,6 +139,7 @@ object SettingsStore {
         require(s.sleepGoalMinutes in 240..720) { "sleep goal 4-12 h" }
         require(s.sleepReminderLeadMinutes in 0..120) { "reminder lead 0-120 min" }
         require(s.widgetTextColor in WIDGET_TEXT_COLORS) { "widget text colour" }
+        require(s.reminderLeadMinutes in REMINDER_LEADS) { "reminder lead" }
         require(s.weatherRefreshMinutes in WEATHER_REFRESH_MINUTES) { "weather refresh interval" }
         require(s.weatherProvider in WEATHER_PROVIDERS) { "weather provider" }
         require(s.openWeatherMapApiKey.isEmpty() || API_KEY.matches(s.openWeatherMapApiKey)) { "API key" }
@@ -164,6 +172,8 @@ object SettingsStore {
             .putBoolean("widgetShowHeadphones", s.widgetShowHeadphones)
             .putBoolean("widgetShowGreeting", s.widgetShowGreeting)
             .putBoolean("widgetRotatePages", s.widgetRotatePages)
+            .putBoolean("remindersEnabled", s.remindersEnabled)
+            .putInt("reminderLeadMinutes", s.reminderLeadMinutes)
             .putString("weatherProvider", s.weatherProvider)
             .putString("openWeatherMapApiKey", s.openWeatherMapApiKey.trim())
             .commit()

@@ -32,6 +32,7 @@ class SystemEventReceiver : BroadcastReceiver() {
                 ClockWidgetProvider.scheduleWeatherRefresh(context)
                 WakeNotifications.updateNextAlarm(context, AlarmController(context).nextAlarm())
                 SleepReminder.reschedule(context)
+                com.rcb.wake.reminders.UpcomingReminders.reschedule(context)
             } finally {
                 pending.finish()
             }

@@ -215,6 +215,10 @@ export type Settings = {
   widgetTextColor: string;
   /** City / village name next to the widget temperature. */
   widgetShowPlace: boolean;
+  /** Small notification before the next alarm (silent) and timed calendar event. */
+  remindersEnabled: boolean;
+  /** 5 | 10 | 15 | 30 */
+  reminderLeadMinutes: number;
   /** My Day widget pages change automatically. */
   widgetRotatePages: boolean;
   /** Time-of-day greeting on the My Day widget. */
