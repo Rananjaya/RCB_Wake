@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   FlatList,
   Pressable,
@@ -18,6 +18,7 @@ import { useSettingsStore } from '../../storage/settingsStore';
 import { useWorldClockStore } from '../../storage/worldClockStore';
 import { useTheme } from '../../theme/useTheme';
 import { radius, spacing } from '../../theme/themes';
+import { searchPlaces, type Place } from '../../services/placeSearch';
 import { searchCities } from './cities';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CityPicker'>;
@@ -29,7 +30,50 @@ export function CityPickerScreen({ navigation, route }: Props) {
   const t = useT();
   const [query, setQuery] = useState('');
   const add = useWorldClockStore(s => s.add);
-  const results = useMemo(() => searchCities(query), [query]);
+  const language = useSettingsStore(s => s.settings.language);
+  const [online, setOnline] = useState<Place[]>([]);
+  const [searching, setSearching] = useState(false);
+
+  // Weather mode: also search villages and suburbs online (debounced, cancelled on new input).
+  useEffect(() => {
+    if (!weatherMode || query.trim().length < 2) {
+      setOnline([]);
+      return;
+    }
+    const controller = new AbortController();
+    const id = setTimeout(() => {
+      setSearching(true);
+      searchPlaces(query, language, controller.signal)
+        .then(setOnline)
+        .catch(() => setOnline([]))
+        .finally(() => setSearching(false));
+    }, 400);
+    return () => {
+      clearTimeout(id);
+      controller.abort();
+    };
+  }, [weatherMode, query, language]);
+
+  const results = useMemo(() => {
+    const local = searchCities(query).map(c => ({
+      key: `${c.name}|${c.zoneId}`,
+      name: c.name,
+      detail: c.country,
+      lat: c.lat,
+      lon: c.lon,
+      zoneId: c.zoneId,
+    }));
+    if (!weatherMode) return local;
+    const extra = online.map(p => ({
+      key: `${p.name}|${p.lat},${p.lon}`,
+      name: p.name,
+      detail: p.detail,
+      lat: p.lat,
+      lon: p.lon,
+      zoneId: '',
+    }));
+    return query.trim().length >= 2 ? [...extra, ...local] : local;
+  }, [query, online, weatherMode]);
 
   return (
     <SafeAreaView
@@ -52,15 +96,20 @@ export function CityPickerScreen({ navigation, route }: Props) {
           accessibilityLabel={t('searchCity')}
         />
       </View>
+      {weatherMode && (
+        <Text style={[styles.hint, { color: theme.colors.textSecondary }]}>
+          {t('placeSearchHint')}
+        </Text>
+      )}
       <FlatList
         data={results}
         keyboardShouldPersistTaps="handled"
-        keyExtractor={c => `${c.name}|${c.zoneId}`}
+        keyExtractor={c => c.key}
         ItemSeparatorComponent={Divider}
         contentContainerStyle={styles.list}
         ListEmptyComponent={
           <Text style={[styles.empty, { color: theme.colors.textSecondary }]}>
-            {t('noCityResults')}
+            {searching ? t('placeSearching') : t('noCityResults')}
           </Text>
         }
         renderItem={({ item }) => (
@@ -87,7 +136,7 @@ export function CityPickerScreen({ navigation, route }: Props) {
             <Text
               style={[styles.country, { color: theme.colors.textSecondary }]}
             >
-              {item.country}
+              {item.detail}
             </Text>
           </Pressable>
         )}
@@ -112,5 +161,10 @@ const styles = StyleSheet.create({
   row: { paddingVertical: spacing.md, minHeight: 56, justifyContent: 'center' },
   city: { fontSize: 17 },
   country: { fontSize: 13, marginTop: 2 },
+  hint: {
+    fontSize: 12,
+    marginHorizontal: spacing.xl,
+    marginTop: spacing.sm,
+  },
   empty: { textAlign: 'center', marginTop: spacing.xl },
 });

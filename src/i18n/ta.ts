@@ -202,6 +202,9 @@ export const ta: Strings = {
   weatherMatched: '{provider} matched it to {place}',
   weatherUpdated: 'Updated {time}',
   weatherRefreshNow: 'Refresh now',
+  placeSearching: 'Searching…',
+  placeSearchHint:
+    'Villages and suburbs are searched online at Open-Meteo; only what you type is sent.',
   weatherNotYet: 'முதல் புதுப்பிப்புக்காகக் காத்திருக்கிறது…',
   weatherAttribution: 'வானிலைத் தரவு Open-Meteo.com (CC BY 4.0)',
   widgetSection: 'Home-screen widget',
@@ -211,6 +214,9 @@ export const ta: Strings = {
   widgetColorWhite: 'White',
   widgetColorMaterial: 'Material You',
   widgetColorAccent: 'App accent',
+  widgetShowPlace: 'Show city or village',
+  widgetShowPlaceHint:
+    'Name of the weather location next to the temperature, on the wider widget sizes.',
   weatherRefresh: 'Update every',
   hoursShort: '{h} h',
   weatherProvider: 'Provider',

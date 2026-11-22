@@ -341,7 +341,7 @@ data class WidgetContent(
                 event = event,
                 eventText = eventText,
                 textColor = settings.widgetTextColor,
-                placeName = weather?.let {
+                placeName = weather?.takeIf { settings.widgetShowPlace }?.let {
                     if (it.city == WeatherRepository.LOCATION_KEY) DeviceLocation.placeName(context) else it.city
                 },
                 accentHex = SettingsStore.ACCENTS[settings.accentColor]?.darkPrimary

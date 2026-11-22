@@ -26,6 +26,7 @@ export const defaultSettings: Settings = {
   sleepReminderLeadMinutes: 30,
   widgetTextColor: 'white',
   weatherRefreshMinutes: 30,
+  widgetShowPlace: true,
   weatherProvider: 'openmeteo',
   openWeatherMapApiKey: '',
 };

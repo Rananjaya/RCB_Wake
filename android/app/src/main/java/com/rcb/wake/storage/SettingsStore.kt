@@ -35,6 +35,8 @@ data class WakeSettings(
     val sleepReminderLeadMinutes: Int,
     /** Widget text: `white`, `material` (Material You wallpaper colours, Android 12+) or `accent`. */
     val widgetTextColor: String = "white",
+    /** Show the city / village name next to the widget temperature. */
+    val widgetShowPlace: Boolean = true,
     /** How often the widget weather is refreshed; one of [SettingsStore.WEATHER_REFRESH_MINUTES]. */
     val weatherRefreshMinutes: Int = 30,
     /** `openmeteo` (default, no key) or `openweathermap` (user's own API key). */
@@ -99,6 +101,7 @@ object SettingsStore {
             sleepReminderLeadMinutes = p.getInt("sleepReminderLeadMinutes", 30),
             widgetTextColor = p.getString("widgetTextColor", "white")!!,
             weatherRefreshMinutes = p.getInt("weatherRefreshMinutes", 30),
+            widgetShowPlace = p.getBoolean("widgetShowPlace", true),
             weatherProvider = p.getString("weatherProvider", PROVIDER_OPEN_METEO)!!,
             openWeatherMapApiKey = p.getString("openWeatherMapApiKey", "")!!,
             systemIs24Hour = DateFormat.is24HourFormat(context),
@@ -148,6 +151,7 @@ object SettingsStore {
             .putInt("sleepReminderLeadMinutes", s.sleepReminderLeadMinutes)
             .putString("widgetTextColor", s.widgetTextColor)
             .putInt("weatherRefreshMinutes", s.weatherRefreshMinutes)
+            .putBoolean("widgetShowPlace", s.widgetShowPlace)
             .putString("weatherProvider", s.weatherProvider)
             .putString("openWeatherMapApiKey", s.openWeatherMapApiKey.trim())
             .commit()

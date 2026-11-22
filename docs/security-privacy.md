@@ -34,6 +34,10 @@ startup. The position is read with the platform `LocationManager` (no Google Pla
 while the app is open, rounded to ~1 km before it is stored, and deleted when the option is turned
 off. RCB Wake does not request background or fine location.
 
+When the user searches for a weather location, the typed text (only) is sent to
+`https://geocoding-api.open-meteo.com/v1/search` so villages and suburbs outside the bundled city
+list can be chosen; nothing is sent until at least two characters are typed.
+
 When the position changes, the place name shown with the weather (village or suburb, e.g.
 "Kosgama") is looked up with Android's built-in `Geocoder`. On devices with Google services the
 platform sends the coarse position to Google's geocoding service for this; only the resulting

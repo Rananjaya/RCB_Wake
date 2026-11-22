@@ -671,6 +671,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 sleepReminderLeadMinutes = settings.getDouble("sleepReminderLeadMinutes").toInt(),
                 widgetTextColor = if (settings.hasKey("widgetTextColor")) settings.getString("widgetTextColor").orEmpty() else "white",
                 weatherRefreshMinutes = if (settings.hasKey("weatherRefreshMinutes")) settings.getDouble("weatherRefreshMinutes").toInt() else 30,
+                widgetShowPlace = !settings.hasKey("widgetShowPlace") || settings.getBoolean("widgetShowPlace"),
                 weatherProvider = settings.getString("weatherProvider") ?: SettingsStore.PROVIDER_OPEN_METEO,
                 openWeatherMapApiKey = settings.getString("openWeatherMapApiKey").orEmpty().trim(),
             ),
@@ -707,6 +708,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putInt("sleepReminderLeadMinutes", s.sleepReminderLeadMinutes)
         putString("widgetTextColor", s.widgetTextColor)
         putInt("weatherRefreshMinutes", s.weatherRefreshMinutes)
+        putBoolean("widgetShowPlace", s.widgetShowPlace)
         putString("weatherProvider", s.weatherProvider)
         putString("openWeatherMapApiKey", s.openWeatherMapApiKey)
     }

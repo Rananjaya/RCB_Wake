@@ -1,6 +1,12 @@
 import React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import { Card, Chip, SectionTitle } from '../../components/ui';
+import {
+  Card,
+  Chip,
+  Divider,
+  SectionTitle,
+  ToggleRow,
+} from '../../components/ui';
 import { useT, type StringKey } from '../../i18n';
 import { useSettingsStore } from '../../storage/settingsStore';
 import { useTheme } from '../../theme/useTheme';
@@ -45,6 +51,15 @@ export function WidgetSettings() {
             {t('widgetTextColorHint')}
           </Text>
         )}
+        <Divider />
+        <ToggleRow
+          label={t('widgetShowPlace')}
+          hint={t('widgetShowPlaceHint')}
+          value={settings.widgetShowPlace}
+          onValueChange={v =>
+            update({ widgetShowPlace: v }).catch(() => undefined)
+          }
+        />
       </Card>
     </>
   );

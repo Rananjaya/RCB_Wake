@@ -24,7 +24,8 @@ All notable changes to RCB Wake are documented here. The format follows
 - Widget text colour: white, Material You (Android 12+) or the app accent.
 - "Next alarm" status-bar notification while an alarm is set.
 - Weather by location shows the village or suburb name, in Settings and on the wide and large widget;
-  Settings shows the exact coordinates sent to the weather provider and has a "Refresh now" button.
+  it can be turned off in Settings → Home-screen widget. Any village or suburb can be searched
+  (Open-Meteo geocoding) and chosen as the weather location. Settings shows the exact coordinates sent to the weather provider and has a "Refresh now" button.
 - Midnight Purple and Pink Dream themes, accent colours.
 - English, Sinhala, Tamil, German, Russian, Spanish, French, Portuguese, Hindi, Chinese
   (Simplified) and Japanese.

@@ -200,6 +200,9 @@ export const si: Strings = {
   weatherMatched: '{provider} matched it to {place}',
   weatherUpdated: 'Updated {time}',
   weatherRefreshNow: 'Refresh now',
+  placeSearching: 'Searching…',
+  placeSearchHint:
+    'Villages and suburbs are searched online at Open-Meteo; only what you type is sent.',
   weatherNotYet: 'පළමු යාවත්කාලීනය බලාපොරොත්තුවෙන්…',
   weatherAttribution: 'කාලගුණ දත්ත Open-Meteo.com (CC BY 4.0) මගින්',
   widgetSection: 'Home-screen widget',
@@ -209,6 +212,9 @@ export const si: Strings = {
   widgetColorWhite: 'White',
   widgetColorMaterial: 'Material You',
   widgetColorAccent: 'App accent',
+  widgetShowPlace: 'Show city or village',
+  widgetShowPlaceHint:
+    'Name of the weather location next to the temperature, on the wider widget sizes.',
   weatherRefresh: 'Update every',
   hoursShort: '{h} h',
   weatherProvider: 'Provider',

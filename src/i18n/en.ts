@@ -199,6 +199,9 @@ export const en = {
   weatherMatched: '{provider} matched it to {place}',
   weatherUpdated: 'Updated {time}',
   weatherRefreshNow: 'Refresh now',
+  placeSearching: 'Searching…',
+  placeSearchHint:
+    'Villages and suburbs are searched online at Open-Meteo; only what you type is sent.',
   weatherNotYet: 'Waiting for the first update…',
   weatherAttribution: 'Weather data by Open-Meteo.com (CC BY 4.0)',
   widgetSection: 'Home-screen widget',
@@ -208,6 +211,9 @@ export const en = {
   widgetColorWhite: 'White',
   widgetColorMaterial: 'Material You',
   widgetColorAccent: 'App accent',
+  widgetShowPlace: 'Show city or village',
+  widgetShowPlaceHint:
+    'Name of the weather location next to the temperature, on the wider widget sizes.',
   weatherRefresh: 'Update every',
   hoursShort: '{h} h',
   weatherProvider: 'Provider',

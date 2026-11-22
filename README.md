@@ -45,7 +45,8 @@ on your device and are excluded from cloud backup.
 The **only** network use is the optional widget weather, which is **off by default**. When you turn
 it on, the coordinates of the city you choose — or your approximate location (rounded to about
 1 km) if you allow it — are sent to [Open-Meteo](https://open-meteo.com), or, if you choose it, to
-[OpenWeatherMap](https://openweathermap.org) together with your own API key. Details:
+[OpenWeatherMap](https://openweathermap.org) together with your own API key. Searching for a
+village or suburb as the weather location sends only the typed text to Open-Meteo. Details:
 [docs/security-privacy.md](docs/security-privacy.md).
 
 ## Permissions
