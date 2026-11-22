@@ -115,6 +115,8 @@ export const FALLBACK_KEYS: StringKey[] = [
   'widgetColorAccent',
   'widgetShowPlace',
   'widgetShowPlaceHint',
+  'widgetShowGreeting',
+  'widgetShowGreetingHint',
   'widgetShowHeadphones',
   'widgetShowHeadphonesHint',
   'weatherRefresh',

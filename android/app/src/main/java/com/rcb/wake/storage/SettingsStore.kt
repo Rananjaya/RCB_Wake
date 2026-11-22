@@ -37,6 +37,8 @@ data class WakeSettings(
     val widgetTextColor: String = "white",
     /** Show the city / village name next to the widget temperature. */
     val widgetShowPlace: Boolean = true,
+    /** Show the time-of-day greeting on the My Day widget. */
+    val widgetShowGreeting: Boolean = true,
     /** Show connected earphones (name, Bluetooth battery) on the My Day widget. */
     val widgetShowHeadphones: Boolean = false,
     /** How often the widget weather is refreshed; one of [SettingsStore.WEATHER_REFRESH_MINUTES]. */
@@ -105,6 +107,7 @@ object SettingsStore {
             weatherRefreshMinutes = p.getInt("weatherRefreshMinutes", 30),
             widgetShowPlace = p.getBoolean("widgetShowPlace", true),
             widgetShowHeadphones = p.getBoolean("widgetShowHeadphones", false),
+            widgetShowGreeting = p.getBoolean("widgetShowGreeting", true),
             weatherProvider = p.getString("weatherProvider", PROVIDER_OPEN_METEO)!!,
             openWeatherMapApiKey = p.getString("openWeatherMapApiKey", "")!!,
             systemIs24Hour = DateFormat.is24HourFormat(context),
@@ -156,6 +159,7 @@ object SettingsStore {
             .putInt("weatherRefreshMinutes", s.weatherRefreshMinutes)
             .putBoolean("widgetShowPlace", s.widgetShowPlace)
             .putBoolean("widgetShowHeadphones", s.widgetShowHeadphones)
+            .putBoolean("widgetShowGreeting", s.widgetShowGreeting)
             .putString("weatherProvider", s.weatherProvider)
             .putString("openWeatherMapApiKey", s.openWeatherMapApiKey.trim())
             .commit()

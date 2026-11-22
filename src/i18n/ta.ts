@@ -229,6 +229,9 @@ export const ta: Strings = {
   widgetShowPlace: 'Show city or village',
   widgetShowPlaceHint:
     'Name of the weather location next to the temperature, on the wider widget sizes.',
+  widgetShowGreeting: 'Show greeting',
+  widgetShowGreetingHint:
+    'Good morning, afternoon, evening or night on the My Day widget. When off, the date is shown large instead.',
   widgetShowHeadphones: 'Show connected earphones',
   widgetShowHeadphonesHint:
     'Earphone name, and battery for Bluetooth earphones, on the My Day widget. Bluetooth details need the Nearby devices permission; nothing leaves your phone.',

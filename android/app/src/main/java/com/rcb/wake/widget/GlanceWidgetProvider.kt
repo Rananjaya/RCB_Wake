@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
 import com.rcb.wake.MainActivity
@@ -93,8 +94,12 @@ class GlanceWidgetProvider : AppWidgetProvider() {
             CalendarEvents.scheduleRefresh(context, content.event)
             val c = Localized.context(context)
             val views = RemoteViews(context.packageName, R.layout.widget_glance)
+            val settings = SettingsStore.load(context)
             val hour = LocalDateTime.now().hour
             views.setTextViewText(R.id.glance_greeting, c.getString(greetingFor(hour).res))
+            // Without the greeting, the date becomes the headline, as on a Pixel "At a Glance".
+            views.setViewVisibility(R.id.glance_greeting, if (settings.widgetShowGreeting) View.VISIBLE else View.GONE)
+            views.setTextViewTextSize(R.id.glance_date, TypedValue.COMPLEX_UNIT_SP, if (settings.widgetShowGreeting) 16f else 24f)
 
             val weather = content.weather
             views.setViewVisibility(R.id.glance_weather, if (weather != null) View.VISIBLE else View.GONE)
@@ -106,7 +111,7 @@ class GlanceWidgetProvider : AppWidgetProvider() {
                     content.placeName?.let { "${content.temperatureText} · $it" } ?: content.temperatureText,
                 )
             }
-            val headphones = if (SettingsStore.load(context).widgetShowHeadphones) Headphones.current(context) else null
+            val headphones = if (settings.widgetShowHeadphones) Headphones.current(context) else null
             views.setViewVisibility(R.id.glance_headphones, if (headphones != null) View.VISIBLE else View.GONE)
             headphones?.let { views.setTextViewText(R.id.glance_headphones_text, it.label()) }
             views.setViewVisibility(R.id.glance_event, if (content.eventText != null) View.VISIBLE else View.GONE)

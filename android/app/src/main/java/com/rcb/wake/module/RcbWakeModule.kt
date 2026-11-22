@@ -689,6 +689,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
                 weatherRefreshMinutes = if (settings.hasKey("weatherRefreshMinutes")) settings.getDouble("weatherRefreshMinutes").toInt() else 30,
                 widgetShowPlace = !settings.hasKey("widgetShowPlace") || settings.getBoolean("widgetShowPlace"),
                 widgetShowHeadphones = settings.hasKey("widgetShowHeadphones") && settings.getBoolean("widgetShowHeadphones"),
+                widgetShowGreeting = !settings.hasKey("widgetShowGreeting") || settings.getBoolean("widgetShowGreeting"),
                 weatherProvider = settings.getString("weatherProvider") ?: SettingsStore.PROVIDER_OPEN_METEO,
                 openWeatherMapApiKey = settings.getString("openWeatherMapApiKey").orEmpty().trim(),
             ),
@@ -727,6 +728,7 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         putInt("weatherRefreshMinutes", s.weatherRefreshMinutes)
         putBoolean("widgetShowPlace", s.widgetShowPlace)
         putBoolean("widgetShowHeadphones", s.widgetShowHeadphones)
+        putBoolean("widgetShowGreeting", s.widgetShowGreeting)
         putString("weatherProvider", s.weatherProvider)
         putString("openWeatherMapApiKey", s.openWeatherMapApiKey)
     }

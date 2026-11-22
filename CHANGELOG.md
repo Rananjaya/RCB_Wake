@@ -4,6 +4,11 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] — 2026-11-22
+
+### Added
+- Setting to turn the My Day greeting on or off; when off, the date is shown large instead.
+
 ## [1.3.0] — 2026-11-22
 
 ### Added

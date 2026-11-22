@@ -39,6 +39,7 @@ const defaults = {
   weatherRefreshMinutes: 30,
   widgetShowPlace: true,
   widgetShowHeadphones: false,
+  widgetShowGreeting: true,
   weatherProvider: 'openmeteo',
   openWeatherMapApiKey: '',
 };

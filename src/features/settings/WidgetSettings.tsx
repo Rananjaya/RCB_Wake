@@ -85,6 +85,15 @@ export function WidgetSettings() {
         />
         <Divider />
         <ToggleRow
+          label={t('widgetShowGreeting')}
+          hint={t('widgetShowGreetingHint')}
+          value={settings.widgetShowGreeting}
+          onValueChange={v =>
+            update({ widgetShowGreeting: v }).catch(() => undefined)
+          }
+        />
+        <Divider />
+        <ToggleRow
           label={t('widgetShowHeadphones')}
           hint={t('widgetShowHeadphonesHint')}
           value={settings.widgetShowHeadphones}
