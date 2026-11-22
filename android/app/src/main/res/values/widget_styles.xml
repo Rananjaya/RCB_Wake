@@ -11,11 +11,14 @@
     <style name="WidgetText.Time">
         <item name="android:textStyle">bold</item>
     </style>
+    <!-- Date, temperature, place, alarm and event: medium weight of the system font. -->
     <style name="WidgetText.Detail">
         <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
     <style name="WidgetText.Small">
         <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">#E6FFFFFF</item>
     </style>
 </resources>

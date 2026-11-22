@@ -4,6 +4,12 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.1] — 2026-11-22
+
+### Changed
+- Widget date, temperature, place name, next alarm and next event use a slightly bolder (medium)
+  weight of the system font for better readability.
+
 ## [1.1.0] — 2026-11-22
 
 ### Changed
