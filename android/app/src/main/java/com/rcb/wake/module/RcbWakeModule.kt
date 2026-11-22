@@ -342,10 +342,23 @@ class RcbWakeModule(private val context: ReactApplicationContext) : NativeRcbWak
         )
     }
 
+    /** Requests a calendar sync, then re-reads events for the widgets and reminders (twice, as syncs take a moment). */
+    override fun refreshCalendar(promise: Promise) = guard(promise) {
+        CalendarEvents.requestSync(context)
+        val refresh = {
+            ClockWidgetProvider.updateAll(context)
+            com.rcb.wake.reminders.UpcomingReminders.reschedule(context)
+        }
+        refresh()
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({ refresh() }, 8_000)
+        promise.resolve(null)
+    }
+
     override fun saveCalendarSettings(enabled: Boolean, calendarIds: ReadableArray, promise: Promise) = guard(promise) {
         val ids = (0 until calendarIds.size()).map { calendarIds.getDouble(it).toLong() }
         CalendarEvents.save(context, enabled, ids)
         ClockWidgetProvider.updateAll(context)
+        ClockWidgetProvider.scheduleWeatherRefresh(context)
         com.rcb.wake.reminders.UpcomingReminders.reschedule(context)
         promise.resolve(null)
     }

@@ -4,6 +4,17 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.8.0] — 2026-11-22
+
+### Added
+- MET Norway (api.met.no) as a weather provider — free, no API key, data CC BY 4.0.
+- "Refresh events" in Settings → Widget calendar: asks synced calendars (e.g. Google) to sync
+  now and updates the widgets and reminders.
+
+### Fixed
+- New or changed calendar events now show up automatically: the calendar is re-read every
+  30 minutes (or at the weather interval when weather is on), without waking the phone.
+
 ## [1.7.1] — 2026-11-22
 
 ### Changed

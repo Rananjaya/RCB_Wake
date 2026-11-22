@@ -45,7 +45,14 @@ class ClockWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == ACTION_REFRESH_WEATHER) refreshWeatherIfStale(context) else super.onReceive(context, intent)
+        if (intent.action == ACTION_REFRESH_WEATHER) {
+            // Periodic refresh: re-read the calendar (new or changed events) and, if on, the weather.
+            updateAll(context)
+            com.rcb.wake.reminders.UpcomingReminders.reschedule(context)
+            refreshWeatherIfStale(context)
+        } else {
+            super.onReceive(context, intent)
+        }
     }
 
     override fun onDisabled(context: Context) = scheduleWeatherRefresh(context)
@@ -97,6 +104,8 @@ class ClockWidgetProvider : AppWidgetProvider() {
 
     companion object {
         const val ACTION_REFRESH_WEATHER = "com.rcb.wake.action.REFRESH_WEATHER"
+        /** Calendar re-read interval when weather is off (with weather on, its interval is used). */
+        private const val CALENDAR_REFRESH_MINUTES = 30
         private const val SCHEDULED_KEY = "weather_refresh_scheduled_minutes"
 
         /**
@@ -108,7 +117,12 @@ class ClockWidgetProvider : AppWidgetProvider() {
             val hasWidget = AppWidgetManager.getInstance(context)
                 .getAppWidgetIds(ComponentName(context, ClockWidgetProvider::class.java)).isNotEmpty() ||
                 GlanceWidgetProvider.ids(context).isNotEmpty()
-            val minutes = if (settings.weatherEnabled && hasWidget) settings.weatherRefreshMinutes else 0
+            val minutes = when {
+                !hasWidget -> 0
+                settings.weatherEnabled -> settings.weatherRefreshMinutes
+                CalendarEvents.isEnabled(context) -> CALENDAR_REFRESH_MINUTES
+                else -> 0
+            }
             val state = AppStorage.state(context)
             val intent = Intent(context, ClockWidgetProvider::class.java).setAction(ACTION_REFRESH_WEATHER)
             val existing = PendingIntent.getBroadcast(context, 901, intent, PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE)

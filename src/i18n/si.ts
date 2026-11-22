@@ -245,6 +245,8 @@ export const si: Strings = {
   hoursShort: '{h} h',
   weatherProvider: 'Provider',
   providerOpenMeteo: 'Open-Meteo',
+  providerMetNorway: 'MET Norway',
+  metNorwayAttribution: 'Weather data from MET Norway (CC BY 4.0)',
   providerOpenWeatherMap: 'OpenWeatherMap',
   owmApiKey: 'OpenWeatherMap API key',
   owmApiKeyHint:
@@ -268,6 +270,10 @@ export const si: Strings = {
   widgetCalendarToggle: 'Show the next event on the clock widget',
   widgetCalendarHint:
     'Reads events from calendars on this device, such as Google Calendar or RCB Calendar. Events never leave your phone.',
+  calendarRefresh: 'Refresh events',
+  calendarRefreshing: 'Refreshing…',
+  calendarRefreshed:
+    'Synced and updated at {time}. New events also appear automatically every 30 minutes.',
   widgetCalendarNone: 'No calendars found on this device',
 
   tutorialSkip: 'මඟ හරින්න',

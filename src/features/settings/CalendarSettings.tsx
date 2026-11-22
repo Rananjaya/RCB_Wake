@@ -7,7 +7,13 @@ import {
   View,
 } from 'react-native';
 import { Icon } from '../../components/Icon';
-import { Card, Divider, SectionTitle, ToggleRow } from '../../components/ui';
+import {
+  Button,
+  Card,
+  Divider,
+  SectionTitle,
+  ToggleRow,
+} from '../../components/ui';
 import { useT } from '../../i18n';
 import {
   engine,
@@ -31,6 +37,8 @@ export function CalendarSettings() {
   const theme = useTheme();
   const t = useT();
   const [model, setModel] = useState<Model | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshedAt, setRefreshedAt] = useState<Date | null>(null);
 
   const reload = useCallback(
     async () => setModel(await engine.getCalendarSettings()),
@@ -148,6 +156,38 @@ export function CalendarSettings() {
                 ))}
               </View>
             ))}
+            <Divider />
+            <View style={styles.refresh}>
+              <Button
+                label={
+                  refreshing ? t('calendarRefreshing') : t('calendarRefresh')
+                }
+                icon="reset"
+                variant="secondary"
+                disabled={refreshing}
+                onPress={async () => {
+                  setRefreshing(true);
+                  try {
+                    await engine.refreshCalendar();
+                    setRefreshedAt(new Date());
+                  } finally {
+                    setRefreshing(false);
+                  }
+                }}
+              />
+              {refreshedAt && (
+                <Text
+                  style={[styles.empty, { color: theme.colors.textSecondary }]}
+                >
+                  {t('calendarRefreshed', {
+                    time: refreshedAt.toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    }),
+                  })}
+                </Text>
+              )}
+            </View>
           </>
         )}
       </Card>
@@ -156,6 +196,7 @@ export function CalendarSettings() {
 }
 
 const styles = StyleSheet.create({
+  refresh: { paddingVertical: 12, gap: 4 },
   card: { paddingVertical: spacing.xs },
   empty: { fontSize: 14, paddingVertical: spacing.md },
   account: {

@@ -43,4 +43,23 @@ class WeatherCodesTest {
         assertEquals(WeatherCondition.SLEET, WeatherCodes.openWeatherCondition(611))
         assertEquals(WeatherCondition.CLOUDY, WeatherCodes.openWeatherCondition(804))
     }
+
+    @Test
+    fun mapsMetNorwaySymbols() {
+        assertEquals(WeatherCondition.CLEAR, WeatherCodes.metNorwayCondition("clearsky_day"))
+        assertEquals(WeatherCondition.MOSTLY_CLEAR, WeatherCodes.metNorwayCondition("fair_night"))
+        assertEquals(WeatherCondition.PARTLY_CLOUDY, WeatherCodes.metNorwayCondition("partlycloudy_day"))
+        assertEquals(WeatherCondition.CLOUDY, WeatherCodes.metNorwayCondition("cloudy"))
+        assertEquals(WeatherCondition.FOG, WeatherCodes.metNorwayCondition("fog"))
+        assertEquals(WeatherCondition.DRIZZLE, WeatherCodes.metNorwayCondition("lightrain"))
+        assertEquals(WeatherCondition.RAIN, WeatherCodes.metNorwayCondition("rain"))
+        assertEquals(WeatherCondition.HEAVY_RAIN, WeatherCodes.metNorwayCondition("heavyrain"))
+        assertEquals(WeatherCondition.SHOWERS, WeatherCodes.metNorwayCondition("rainshowers_day"))
+        assertEquals(WeatherCondition.HEAVY_RAIN, WeatherCodes.metNorwayCondition("heavyrainshowers_night"))
+        assertEquals(WeatherCondition.SLEET, WeatherCodes.metNorwayCondition("lightsleetshowers_day"))
+        assertEquals(WeatherCondition.SNOW_SHOWERS, WeatherCodes.metNorwayCondition("snowshowers_day"))
+        assertEquals(WeatherCondition.SNOW, WeatherCodes.metNorwayCondition("heavysnow"))
+        assertEquals(WeatherCondition.THUNDERSTORM, WeatherCodes.metNorwayCondition("rainandthunder"))
+        assertEquals(WeatherCondition.THUNDERSTORM, WeatherCodes.metNorwayCondition("heavyrainshowersandthunder_day"))
+    }
 }

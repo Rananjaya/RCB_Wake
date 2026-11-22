@@ -227,7 +227,7 @@ export type Settings = {
   widgetShowHeadphones: boolean;
   /** 15 | 30 | 60 | 180 */
   weatherRefreshMinutes: number;
-  /** `openmeteo` (default, no key) | `openweathermap` (user's own API key) */
+  /** `openmeteo` (default, no key) | `metno` (MET Norway, no key) | `openweathermap` (own key) */
   weatherProvider: string;
   openWeatherMapApiKey: string;
 };
@@ -288,6 +288,8 @@ export interface Spec extends TurboModule {
   getCalendarSettings(): Promise<CalendarSettings>;
   /** Empty calendarIds means all visible calendars. */
   saveCalendarSettings(enabled: boolean, calendarIds: number[]): Promise<void>;
+  /** Asks synced calendars (e.g. Google) to sync now and refreshes the widgets and reminders. */
+  refreshCalendar(): Promise<void>;
 
   // NFC dismiss challenge
   getNfcStatus(): Promise<NfcStatus>;

@@ -25,7 +25,7 @@ data class WeatherSnapshot(
 
 /**
  * Opt-in current weather from Open-Meteo (https://open-meteo.com, data CC BY 4.0, no key) or, if the
- * user chooses it, OpenWeatherMap with their own API key. Only rounded coordinates (and that key)
+ * user chooses it, MET Norway (api.met.no, CC BY 4.0, no key) or OpenWeatherMap with their own API key. Only rounded coordinates (and that key)
  * are sent. When weather is disabled in Settings this class performs no network access.
  */
 object WeatherRepository {
@@ -35,6 +35,7 @@ object WeatherRepository {
     private const val EARLY_SLACK_MILLIS = 2 * 60_000L
     /** Snapshot key used when weather comes from the device location. */
     const val LOCATION_KEY = "@location"
+    private val USER_AGENT = "RCBWake/${com.rcb.wake.BuildConfig.VERSION_NAME} (+https://github.com/Rananjaya/RCB_Wake)"
 
     fun cached(context: Context): WeatherSnapshot? {
         val settings = SettingsStore.load(context)
@@ -87,6 +88,7 @@ object WeatherRepository {
             val sent = Coordinates(round2(coordinates.latitude), round2(coordinates.longitude))
             val snapshot = when (settings.weatherProvider) {
                 SettingsStore.PROVIDER_OPEN_WEATHER_MAP -> fetchOpenWeatherMap(sent, settings.openWeatherMapApiKey, key)
+                SettingsStore.PROVIDER_MET_NORWAY -> fetchMetNorway(sent, key)
                 else -> fetchOpenMeteo(sent, key)
             } ?: return null
             save(context, snapshot, settings.weatherProvider)
@@ -147,11 +149,42 @@ object WeatherRepository {
         )
     }
 
+    /**
+     * MET Norway Locationforecast 2.0 (api.met.no, data CC BY 4.0). No key; its terms require a
+     * User-Agent that identifies the app, which is set in [get]. Uses the first time step.
+     */
+    private fun fetchMetNorway(c: Coordinates, key: String): WeatherSnapshot? {
+        val body = get(
+            String.format(
+                Locale.ROOT,
+                "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=%.2f&lon=%.2f",
+                c.latitude,
+                c.longitude,
+            ),
+        ) ?: return null
+        val now = JSONObject(body).getJSONObject("properties").getJSONArray("timeseries").getJSONObject(0)
+        val data = now.getJSONObject("data")
+        val symbol = data.optJSONObject("next_1_hours")?.optJSONObject("summary")?.optString("symbol_code")
+            ?: data.optJSONObject("next_6_hours")?.optJSONObject("summary")?.optString("symbol_code")
+            ?: "cloudy"
+        return WeatherSnapshot(
+            temperatureCelsius = data.getJSONObject("instant").getJSONObject("details").getDouble("air_temperature"),
+            condition = WeatherCodes.metNorwayCondition(symbol),
+            isDay = !symbol.endsWith("_night"),
+            fetchedAt = System.currentTimeMillis(),
+            city = key,
+            latitude = c.latitude,
+            longitude = c.longitude,
+        )
+    }
+
     private fun get(url: String): String? {
         val connection = (URL(url).openConnection() as HttpURLConnection).apply {
             connectTimeout = 10_000
             readTimeout = 10_000
             setRequestProperty("Accept", "application/json")
+            // Identifies the app (required by MET Norway's terms); no user or device data.
+            setRequestProperty("User-Agent", USER_AGENT)
         }
         try {
             if (connection.responseCode != 200) {

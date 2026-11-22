@@ -55,7 +55,7 @@ submitting — you are responsible for the final declaration):
 
 | Data type | Collected? | Shared? | Notes |
 | --- | --- | --- | --- |
-| Location → Approximate location | Yes, optional | No | Rounded coordinates sent to Open-Meteo or OpenWeatherMap for widget weather. Processed ephemerally; purpose: App functionality. |
+| Location → Approximate location | Yes, optional | No | Rounded coordinates sent to Open-Meteo, MET Norway or OpenWeatherMap for widget weather. Processed ephemerally; purpose: App functionality. |
 | App activity → In-app search history | Yes, optional | No | Place-search text sent to Open-Meteo geocoding. Ephemeral; App functionality. |
 | Personal info, financial, health, messages, photos/videos, audio, files, calendar, contacts, device IDs | No | No | Calendar events and camera frames are processed on the device only. |
 

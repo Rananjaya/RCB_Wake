@@ -120,6 +120,26 @@ object CalendarEvents {
     }
 
     /** Re-render the widget when [event] ends so the next event replaces it. */
+    /**
+     * Asks the accounts behind the chosen calendars (e.g. Google) to sync now. Syncing runs in the
+     * calendar app's own sync adapter; this only requests it. Local calendars need no sync.
+     */
+    fun requestSync(context: Context) {
+        val selected = selectedIds(context)
+        calendars(context)
+            .filter { selected.isEmpty() || it.id in selected }
+            .filter { it.accountType != CalendarContract.ACCOUNT_TYPE_LOCAL && it.accountName.isNotBlank() }
+            .map { android.accounts.Account(it.accountName, it.accountType) }
+            .distinct()
+            .forEach { account ->
+                val extras = android.os.Bundle().apply {
+                    putBoolean(android.content.ContentResolver.SYNC_EXTRAS_MANUAL, true)
+                    putBoolean(android.content.ContentResolver.SYNC_EXTRAS_EXPEDITED, true)
+                }
+                runCatching { android.content.ContentResolver.requestSync(account, CalendarContract.AUTHORITY, extras) }
+            }
+    }
+
     fun scheduleRefresh(context: Context, event: CalendarEvent?) {
         val alarmManager = context.getSystemService(AlarmManager::class.java)
         val ids = AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, ClockWidgetProvider::class.java))

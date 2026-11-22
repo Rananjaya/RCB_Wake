@@ -46,7 +46,7 @@ BEDTIME REMINDER
 HOME-SCREEN WIDGET
 • Frameless, resizable clock with date and next alarm
 • Text in white, Material You colours (Android 12+) or the app's accent colour
-• Optional current weather from Open-Meteo, or from OpenWeatherMap with your own API key,
+• Optional current weather from Open-Meteo or MET Norway, or from OpenWeatherMap with your own API key,
   updated at the interval you choose
 • Optional next calendar event from the calendars you pick
 • Second widget, "My Day": a greeting that changes through the day, the date, weather and
@@ -102,6 +102,13 @@ on: widget weather sends rounded coordinates to Open-Meteo (or, with the user's 
 OpenWeatherMap); place search sends the typed text to Open-Meteo; "Use my location" may use
 Android's geocoder for the place name. Camera images (QR challenge) and calendar events never leave
 the device. Full policy: PRIVACY_POLICY.md.
+
+## What's new in 1.8.0
+
+<en-US>
+• New weather provider: MET Norway — free, no key needed
+• "Refresh events" button, and new calendar events now appear on the widget automatically
+</en-US>
 
 ## What's new in 1.7.1
 

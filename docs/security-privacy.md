@@ -16,6 +16,7 @@ Off by default. When the user enables it in Settings → Widget weather:
 | What is sent | To | When |
 | --- | --- | --- |
 | Latitude and longitude rounded to 2 decimals (~1 km) — of the chosen city, or of the device's coarse location if "Use my location" is on | `https://api.open-meteo.com/v1/forecast` (default) | When enabled, when the city or location changes, and at the user's refresh interval (15 min, 30 min, 1 h or 3 h; default 30 min) while a widget is on the home screen |
+| The same rounded coordinates, with a User-Agent naming the app, version and project website (required by MET Norway) | `https://api.met.no/weatherapi/locationforecast/2.0/compact` — only if the user picks MET Norway | Same as above |
 | The same rounded coordinates **and the user's own API key** | `https://api.openweathermap.org/data/2.5/weather` — only if the user picks OpenWeatherMap as the provider | Same as above |
 
 With Open-Meteo no identifiers, API keys, cookies or account data are sent. With OpenWeatherMap the

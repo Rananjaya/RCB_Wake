@@ -41,6 +41,26 @@ object WeatherCodes {
         else -> WeatherCondition.CLOUDY
     }
 
+    /** MET Norway symbol codes (e.g. `partlycloudy_day`, `heavyrainshowers_night`, `lightsleet`). */
+    fun metNorwayCondition(symbol: String): WeatherCondition {
+        val s = symbol.substringBefore('_')
+        return when {
+            "thunder" in s -> WeatherCondition.THUNDERSTORM
+            "sleet" in s -> WeatherCondition.SLEET
+            "snowshowers" in s -> WeatherCondition.SNOW_SHOWERS
+            "snow" in s -> WeatherCondition.SNOW
+            s.startsWith("heavyrain") -> WeatherCondition.HEAVY_RAIN
+            "rainshowers" in s -> WeatherCondition.SHOWERS
+            s == "lightrain" -> WeatherCondition.DRIZZLE
+            "rain" in s -> WeatherCondition.RAIN
+            s == "fog" -> WeatherCondition.FOG
+            s == "clearsky" -> WeatherCondition.CLEAR
+            s == "fair" -> WeatherCondition.MOSTLY_CLEAR
+            s == "partlycloudy" -> WeatherCondition.PARTLY_CLOUDY
+            else -> WeatherCondition.CLOUDY
+        }
+    }
+
     fun celsiusToFahrenheit(c: Double): Double = c * 9.0 / 5.0 + 32.0
 
     fun formatTemperature(celsius: Double, unit: String): String {

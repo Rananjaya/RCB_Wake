@@ -32,6 +32,7 @@ export const PRIVACY_POLICY_SECTIONS: PolicySection[] = [
     paragraphs: [
       'If you turn on weather for the home-screen widget, the app requests the current weather for one location at the interval you choose (15 minutes to 3 hours) while a widget is on your home screen, and when you change the location.',
       'Open-Meteo (open-meteo.com) is the default provider. The app sends only the latitude and longitude of the chosen location, rounded to two decimal places (about 1 km). No identifier or key is sent.',
+      'If you choose MET Norway (api.met.no) instead, the app sends the same rounded coordinates and identifies itself as RCB Wake (app name, version and project website, as MET Norway requires); no key or personal data is sent.',
       'If you choose OpenWeatherMap (openweathermap.org) instead, the app sends the same rounded coordinates together with the API key you entered. Your key is stored only on your phone and is sent only to OpenWeatherMap; OpenWeather may associate requests with your OpenWeather account under its own privacy policy.',
       'Like any web service, the weather provider can see your device’s IP address. The latest weather reading is cached on the phone. Turning weather off stops all weather requests and deletes the cached reading.',
     ],
@@ -96,7 +97,7 @@ export const PRIVACY_POLICY_SECTIONS: PolicySection[] = [
   {
     title: 'Third-party services',
     paragraphs: [
-      'The optional features above use: Open-Meteo (weather and place search; open-meteo.com/en/terms), OpenWeather (weather, only with your own key; openweather.co.uk/privacy-policy) and, for place names on phones with Google services, Google’s geocoding through Android (policies.google.com/privacy). Their own privacy policies apply to the requests they receive.',
+      'The optional features above use: Open-Meteo (weather and place search; open-meteo.com/en/terms), MET Norway (weather; api.met.no/doc/TermsOfService), OpenWeather (weather, only with your own key; openweather.co.uk/privacy-policy) and, for place names on phones with Google services, Google’s geocoding through Android (policies.google.com/privacy). Their own privacy policies apply to the requests they receive.',
     ],
   },
   {

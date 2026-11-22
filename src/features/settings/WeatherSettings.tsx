@@ -178,8 +178,13 @@ export function WeatherSettings() {
             <View style={styles.chips}>
               <Chip
                 label={t('providerOpenMeteo')}
-                selected={!owm}
+                selected={!owm && settings.weatherProvider === 'openmeteo'}
                 onPress={() => chooseProvider('openmeteo')}
+              />
+              <Chip
+                label={t('providerMetNorway')}
+                selected={!owm && settings.weatherProvider === 'metno'}
+                onPress={() => chooseProvider('metno')}
               />
               <Chip
                 label={t('providerOpenWeatherMap')}
@@ -289,7 +294,11 @@ export function WeatherSettings() {
                 { color: theme.colors.textSecondary },
               ]}
             >
-              {owm ? t('owmAttribution') : t('weatherAttribution')}
+              {owm
+                ? t('owmAttribution')
+                : settings.weatherProvider === 'metno'
+                ? t('metNorwayAttribution')
+                : t('weatherAttribution')}
             </Text>
           </>
         )}

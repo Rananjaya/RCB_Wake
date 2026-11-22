@@ -283,6 +283,7 @@ const engine = {
   openNfcSettings: () => {},
   openQrScanner: () => {},
   pinWidget: async () => false,
+  refreshCalendar: async () => {},
   getWeather: async () => null,
   updateLocation: async () => false,
   refreshWeather: async () => null,

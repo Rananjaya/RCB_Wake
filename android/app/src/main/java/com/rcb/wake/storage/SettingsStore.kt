@@ -49,7 +49,7 @@ data class WakeSettings(
     val widgetShowHeadphones: Boolean = false,
     /** How often the widget weather is refreshed; one of [SettingsStore.WEATHER_REFRESH_MINUTES]. */
     val weatherRefreshMinutes: Int = 30,
-    /** `openmeteo` (default, no key) or `openweathermap` (user's own API key). */
+    /** `openmeteo` (default, no key), `metno` (MET Norway, no key) or `openweathermap` (own key). */
     val weatherProvider: String = "openmeteo",
     /** User-supplied OpenWeatherMap key; stays on the device and is only sent to OpenWeatherMap. */
     val openWeatherMapApiKey: String = "",
@@ -70,7 +70,8 @@ object SettingsStore {
     val REMINDER_LEADS = setOf(5, 10, 15, 30)
     const val PROVIDER_OPEN_METEO = "openmeteo"
     const val PROVIDER_OPEN_WEATHER_MAP = "openweathermap"
-    val WEATHER_PROVIDERS = setOf(PROVIDER_OPEN_METEO, PROVIDER_OPEN_WEATHER_MAP)
+    const val PROVIDER_MET_NORWAY = "metno"
+    val WEATHER_PROVIDERS = setOf(PROVIDER_OPEN_METEO, PROVIDER_OPEN_WEATHER_MAP, PROVIDER_MET_NORWAY)
     private val API_KEY = Regex("^[A-Za-z0-9]{16,64}$")
     val LANGUAGES = setOf("en", "si", "ta", "de", "ru", "es", "fr", "pt", "hi", "zh", "ja")
 
