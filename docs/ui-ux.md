@@ -91,7 +91,8 @@ the time between them). Each page carries its own vertical page dots on the righ
 before a timed calendar event or an alarm until it starts (events: until they end), the widget
 jumps once to "Soon" on page 2 with only the item(s) that are soon (plus connected earphones);
 pages then switch automatically even if that setting is off, taps keep working, and "Soon" (and
-its automatic switching) ends when the item is over. Launchers use horizontal swipes to change home-screen pages and widgets cannot receive them,
+its automatic switching) ends when the item is over. When earphones connect (and "Show connected
+earphones" is on), the widget likewise jumps once to page 2, where they are listed. Launchers use horizontal swipes to change home-screen pages and widgets cannot receive them,
 so a tap is used instead of a swipe. If page 2 has nothing to show, the widget has one page and a
 tap opens the app. The greeting is refreshed at each boundary by an inexact `RTC` alarm.
 

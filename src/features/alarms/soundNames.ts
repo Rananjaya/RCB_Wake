@@ -5,6 +5,14 @@ const BUILT_IN_NAME_KEYS: Record<string, StringKey> = {
   'builtin:chime': 'soundChime',
   'builtin:pulse': 'soundPulse',
   'builtin:classic': 'soundClassic',
+  'builtin:sunrise': 'soundSunrise',
+  'builtin:birdsong': 'soundBirdsong',
+  'builtin:marimba': 'soundMarimba',
+  'builtin:bells': 'soundBells',
+  'builtin:ripple': 'soundRipple',
+  'builtin:ascend': 'soundAscend',
+  'builtin:beacon': 'soundBeacon',
+  'builtin:siren': 'soundSiren',
   'system:default': 'systemDefaultSound',
 };
 

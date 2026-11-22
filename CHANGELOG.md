@@ -4,6 +4,16 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.9.0] — 2026-11-22
+
+### Added
+- Eight new alarm sounds, all synthesised (no recordings or third-party audio): Sunrise,
+  Birdsong, Marimba, Bells, Ripple, Ascend, Beacon and Siren (an air-raid style wail).
+- When earphones connect, the My Day widget shows its second page once (taps still switch).
+
+### Fixed
+- The earphones line on My Day page 2 no longer gets cut off: it now sits beside the title.
+
 ## [1.8.4] — 2026-11-22
 
 ### Changed

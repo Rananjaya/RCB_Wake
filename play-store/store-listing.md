@@ -103,6 +103,13 @@ OpenWeatherMap); place search sends the typed text to Open-Meteo; "Use my locati
 Android's geocoder for the place name. Camera images (QR challenge) and calendar events never leave
 the device. Full policy: PRIVACY_POLICY.md.
 
+## What's new in 1.9.0
+
+<en-US>
+• 8 new alarm sounds: Sunrise, Birdsong, Marimba, Bells, Ripple, Ascend, Beacon and Siren
+• My Day shows your earphones when they connect, and no longer cuts off their name
+</en-US>
+
 ## What's new in 1.8.4
 
 <en-US>

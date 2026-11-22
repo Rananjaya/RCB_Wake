@@ -95,6 +95,7 @@ class GlanceWidgetProvider : AppWidgetProvider() {
         private const val ROTATE_MILLIS = 6_000
         private fun pageKey(id: Int) = "glance_page_$id"
         private fun soonKey(id: Int) = "glance_soon_$id"
+        private fun earphonesKey(id: Int) = "glance_earphones_$id"
 
         private fun render(context: Context, manager: AppWidgetManager, ids: IntArray) {
             val content = WidgetContent.load(context)
@@ -112,6 +113,13 @@ class GlanceWidgetProvider : AppWidgetProvider() {
                 // When something becomes soon, jump to "Soon" once; after that, taps still switch.
                 if (soon && state.getLong(soonKey(id), 0L) != soonEnd) {
                     state.edit().putLong(soonKey(id), soonEnd!!).putInt(pageKey(id), 1).apply()
+                }
+                // When earphones connect, show the second page once (where they are listed); taps still switch.
+                val connected = headphones?.name
+                if (connected != state.getString(earphonesKey(id), null)) {
+                    val edit = state.edit().putString(earphonesKey(id), connected)
+                    if (connected != null) edit.putInt(pageKey(id), 1)
+                    edit.apply()
                 }
                 val page = if (hasNext) state.getInt(pageKey(id), 0).coerceIn(0, 1) else 0
                 manager.updateAppWidget(id, build(context, c, content, settings, headphones, hasNext, page, id, soon))
