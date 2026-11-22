@@ -59,7 +59,7 @@
     <string name="wx_drizzle">Drizzle</string>
     <string name="wx_heavy_rain">Heavy rain</string>
     <string name="wx_sleet">Sleet</string>
-    <string name="glance_widget_name">At a glance</string>
+    <string name="glance_widget_name">My Day</string>
     <string name="glance_widget_description">Greeting, date, weather and your next event</string>
     <string name="greeting_morning">Good morning</string>
     <string name="greeting_afternoon">Good afternoon</string>

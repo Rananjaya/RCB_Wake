@@ -54,7 +54,7 @@
     <string name="wx_drizzle">Морось</string>
     <string name="wx_heavy_rain">Сильный дождь</string>
     <string name="wx_sleet">Мокрый снег</string>
-    <string name="glance_widget_name">Коротко</string>
+    <string name="glance_widget_name">Мой день</string>
     <string name="glance_widget_description">Приветствие, дата, погода и следующее событие</string>
     <string name="greeting_morning">Доброе утро</string>
     <string name="greeting_afternoon">Добрый день</string>

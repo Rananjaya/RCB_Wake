@@ -32,7 +32,7 @@ timer, a stopwatch, a world clock and a home-screen clock widget. Offline-first 
 - **Bedtime reminder.** A nudge to go to bed based on your next alarm and sleep goal.
 - **Home-screen widget.** Frameless, resizable clock with date, next alarm, text colour (white,
   Material You or accent), optional weather (Open-Meteo, or OpenWeatherMap with your own key, at an
-  interval you choose) and next calendar event — plus an "At a glance" widget with a time-of-day greeting, date, weather and
+  interval you choose) and next calendar event — plus an "My Day" widget with a time-of-day greeting, date, weather and
   next event (Google Calendar, RCB Calendar or any calendar on the device).
 - **Themes.** Midnight Purple (default) and Pink Dream, plus accent colours.
 - **Languages.** English, Sinhala, Tamil, German, Russian, Spanish, French, Portuguese, Hindi,

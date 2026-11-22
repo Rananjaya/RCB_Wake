@@ -7,14 +7,14 @@ All notable changes to RCB Wake are documented here. The format follows
 ## [Unreleased]
 
 ### Added
-- At a glance widget can show connected wired or Bluetooth earphones, with the Bluetooth battery
+- My Day widget can show connected wired or Bluetooth earphones, with the Bluetooth battery
   level (opt-in; uses the Nearby devices permission on Android 12+).
 - "Add to home screen" buttons for both widgets in Settings.
 
 ## [1.2.0] — 2026-11-22
 
 ### Added
-- "At a glance" home-screen widget: a greeting that changes through the day (good morning,
+- "My Day" home-screen widget: a greeting that changes through the day (good morning,
   afternoon, evening, night), the date with the current weather icon and temperature, and the next
   calendar event. Uses the same weather, text-colour and place-name settings as the clock widget.
 

@@ -58,7 +58,7 @@
     <string name="wx_drizzle">தூறல்</string>
     <string name="wx_heavy_rain">கனமழை</string>
     <string name="wx_sleet">பனிக்கலப்பு மழை</string>
-    <string name="glance_widget_name">ஒரே பார்வையில்</string>
+    <string name="glance_widget_name">என் நாள்</string>
     <string name="glance_widget_description">வாழ்த்து, தேதி, வானிலை மற்றும் அடுத்த நிகழ்வு</string>
     <string name="greeting_morning">காலை வணக்கம்</string>
     <string name="greeting_afternoon">மதிய வணக்கம்</string>

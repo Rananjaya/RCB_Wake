@@ -54,7 +54,7 @@
     <string name="wx_drizzle">Nieselregen</string>
     <string name="wx_heavy_rain">Starkregen</string>
     <string name="wx_sleet">Schneeregen</string>
-    <string name="glance_widget_name">Auf einen Blick</string>
+    <string name="glance_widget_name">Mein Tag</string>
     <string name="glance_widget_description">Begrüßung, Datum, Wetter und nächster Termin</string>
     <string name="greeting_morning">Guten Morgen</string>
     <string name="greeting_afternoon">Guten Tag</string>

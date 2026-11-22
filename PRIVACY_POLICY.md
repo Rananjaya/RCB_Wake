@@ -46,7 +46,7 @@ If you choose to show your next event on the widget and grant calendar permissio
 
 ## Optional earphones on the widget
 
-If you turn on “Show connected earphones”, the At a glance widget shows the name of connected wired or Bluetooth earphones and, for Bluetooth earphones, their battery level. With the Nearby devices permission the app reads this from Android on your phone; it is only displayed and is never stored or sent anywhere.
+If you turn on “Show connected earphones”, the My Day widget shows the name of connected wired or Bluetooth earphones and, for Bluetooth earphones, their battery level. With the Nearby devices permission the app reads this from Android on your phone; it is only displayed and is never stored or sent anywhere.
 
 ## Optional QR-code wake-up challenge
 

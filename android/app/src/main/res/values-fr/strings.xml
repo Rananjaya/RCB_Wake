@@ -54,7 +54,7 @@
     <string name="wx_drizzle">Bruine</string>
     <string name="wx_heavy_rain">Forte pluie</string>
     <string name="wx_sleet">Neige fondue</string>
-    <string name="glance_widget_name">En un coup d’œil</string>
+    <string name="glance_widget_name">Ma journée</string>
     <string name="glance_widget_description">Salutation, date, météo et prochain événement</string>
     <string name="greeting_morning">Bonjour</string>
     <string name="greeting_afternoon">Bon après-midi</string>

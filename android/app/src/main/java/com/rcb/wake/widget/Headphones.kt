@@ -12,7 +12,7 @@ import android.os.Build
 import com.rcb.wake.R
 import com.rcb.wake.notification.Localized
 
-/** Connected earphones for the At a glance widget: a name and, for Bluetooth, the battery level. */
+/** Connected earphones for the My Day widget: a name and, for Bluetooth, the battery level. */
 data class HeadphonesInfo(val name: String, val batteryPercent: Int?) {
     fun label(): String = if (batteryPercent != null) "$name · $batteryPercent%" else name
 }

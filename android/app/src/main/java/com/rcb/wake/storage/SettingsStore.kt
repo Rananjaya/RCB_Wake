@@ -37,7 +37,7 @@ data class WakeSettings(
     val widgetTextColor: String = "white",
     /** Show the city / village name next to the widget temperature. */
     val widgetShowPlace: Boolean = true,
-    /** Show connected earphones (name, Bluetooth battery) on the At a glance widget. */
+    /** Show connected earphones (name, Bluetooth battery) on the My Day widget. */
     val widgetShowHeadphones: Boolean = false,
     /** How often the widget weather is refreshed; one of [SettingsStore.WEATHER_REFRESH_MINUTES]. */
     val weatherRefreshMinutes: Int = 30,

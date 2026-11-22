@@ -77,7 +77,7 @@ layout chosen from the reported minimum width and height. Text colour (Settings 
 widget) is white, Material You (wallpaper `system_accent` tones, Android 12+, follows wallpaper
 changes live) or the app's accent colour.
 
-### At a glance widget
+### My Day widget
 
 A second, single-row widget (`GlanceWidgetProvider`): a greeting by time of day (morning 05–12,
 afternoon 12–17, evening 17–21, night 21–05), then the date with the weather icon, temperature

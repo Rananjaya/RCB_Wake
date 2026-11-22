@@ -54,7 +54,7 @@
     <string name="wx_drizzle">Llovizna</string>
     <string name="wx_heavy_rain">Lluvia intensa</string>
     <string name="wx_sleet">Aguanieve</string>
-    <string name="glance_widget_name">De un vistazo</string>
+    <string name="glance_widget_name">Mi día</string>
     <string name="glance_widget_description">Saludo, fecha, tiempo y tu próximo evento</string>
     <string name="greeting_morning">Buenos días</string>
     <string name="greeting_afternoon">Buenas tardes</string>

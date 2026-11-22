@@ -58,7 +58,7 @@
     <string name="wx_drizzle">बूंदाबांदी</string>
     <string name="wx_heavy_rain">भारी बारिश</string>
     <string name="wx_sleet">बर्फ़ मिश्रित बारिश</string>
-    <string name="glance_widget_name">एक नज़र में</string>
+    <string name="glance_widget_name">मेरा दिन</string>
     <string name="glance_widget_description">अभिवादन, तारीख, मौसम और अगला कार्यक्रम</string>
     <string name="greeting_morning">सुप्रभात</string>
     <string name="greeting_afternoon">शुभ दोपहर</string>

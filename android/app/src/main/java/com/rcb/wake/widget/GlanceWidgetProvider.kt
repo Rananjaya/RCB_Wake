@@ -19,7 +19,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 /**
- * "At a glance" widget: a time-of-day greeting, the date with the current weather, and the next
+ * "My Day" widget: a time-of-day greeting, the date with the current weather, and the next
  * calendar event. Uses the same data and settings (weather, text colour, place name) as the clock
  * widget. The greeting is re-rendered at each boundary by an inexact, non-waking alarm.
  */

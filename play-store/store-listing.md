@@ -48,7 +48,7 @@ HOME-SCREEN WIDGET
 • Optional current weather from Open-Meteo, or from OpenWeatherMap with your own API key,
   updated at the interval you choose
 • Optional next calendar event from the calendars you pick
-• Second widget, "At a glance": a greeting that changes through the day, the date, weather and
+• Second widget, "My Day": a greeting that changes through the day, the date, weather and
   your next event
 
 MAKE IT YOURS
@@ -105,7 +105,7 @@ the device. Full policy: PRIVACY_POLICY.md.
 ## What's new in 1.2.0
 
 <en-US>
-• New "At a glance" widget: a friendly greeting, the date, weather and your next event
+• New "My Day" widget: a friendly greeting, the date, weather and your next event
 </en-US>
 
 ## What's new in 1.1.1

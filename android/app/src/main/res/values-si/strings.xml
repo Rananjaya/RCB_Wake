@@ -58,7 +58,7 @@
     <string name="wx_drizzle">පොද වැසි</string>
     <string name="wx_heavy_rain">තද වැසි</string>
     <string name="wx_sleet">හිම මිශ්‍ර වැසි</string>
-    <string name="glance_widget_name">බැල්මකින්</string>
+    <string name="glance_widget_name">මගේ දවස</string>
     <string name="glance_widget_description">සුබපැතුම, දිනය, කාලගුණය සහ ඊළඟ සිදුවීම</string>
     <string name="greeting_morning">සුබ උදෑසනක්</string>
     <string name="greeting_afternoon">සුබ දහවලක්</string>

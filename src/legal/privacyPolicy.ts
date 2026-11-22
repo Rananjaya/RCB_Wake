@@ -59,7 +59,7 @@ export const PRIVACY_POLICY_SECTIONS: PolicySection[] = [
   {
     title: 'Optional earphones on the widget',
     paragraphs: [
-      'If you turn on “Show connected earphones”, the At a glance widget shows the name of connected wired or Bluetooth earphones and, for Bluetooth earphones, their battery level. With the Nearby devices permission the app reads this from Android on your phone; it is only displayed and is never stored or sent anywhere.',
+      'If you turn on “Show connected earphones”, the My Day widget shows the name of connected wired or Bluetooth earphones and, for Bluetooth earphones, their battery level. With the Nearby devices permission the app reads this from Android on your phone; it is only displayed and is never stored or sent anywhere.',
     ],
   },
   {

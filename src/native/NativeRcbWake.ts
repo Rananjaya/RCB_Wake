@@ -215,7 +215,7 @@ export type Settings = {
   widgetTextColor: string;
   /** City / village name next to the widget temperature. */
   widgetShowPlace: boolean;
-  /** Connected earphones (name, Bluetooth battery) on the At a glance widget. */
+  /** Connected earphones (name, Bluetooth battery) on the My Day widget. */
   widgetShowHeadphones: boolean;
   /** 15 | 30 | 60 | 180 */
   weatherRefreshMinutes: number;
