@@ -3,11 +3,14 @@ package com.rcb.wake
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 import com.rcb.wake.alarm.AlarmSessionStore
+import com.rcb.wake.module.EngineEvents
 import com.rcb.wake.notification.WakeNotifications
 
 class MainActivity : ReactActivity() {
@@ -22,10 +25,27 @@ class MainActivity : ReactActivity() {
                 }
         }
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val sessionListener = EngineEvents.Listener { type ->
+        if (type == EngineEvents.SESSION_ENDED) handler.post { clearChallengeWindow() }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // React Native Screens restores fragments itself; passing state here would crash on restore.
         super.onCreate(null)
         applyChallengeWindow(intent)
+        EngineEvents.addListener(sessionListener)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // The alarm may have ended while the app was in the background.
+        if (AlarmSessionStore.load(this) == null) clearChallengeWindow()
+    }
+
+    override fun onDestroy() {
+        EngineEvents.removeListener(sessionListener)
+        super.onDestroy()
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -41,6 +61,14 @@ class MainActivity : ReactActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true)
             setTurnScreenOn(true)
+        }
+    }
+
+    /** Once the alarm is over, the app must no longer appear over the lock screen or wake the screen. */
+    private fun clearChallengeWindow() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(false)
+            setTurnScreenOn(false)
         }
     }
 }

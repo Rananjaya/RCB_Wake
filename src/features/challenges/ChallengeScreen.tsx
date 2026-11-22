@@ -13,6 +13,7 @@ import Animated, {
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
+import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../components/ui';
 import { useT } from '../../i18n';
@@ -36,6 +37,21 @@ const EMERGENCY_HOLD_MILLIS = 3000;
  */
 export function ChallengeScreen() {
   const session = useAlarmStore(s => s.session);
+  const navigation = useNavigation();
+  const [checked, setChecked] = useState(false);
+  // Re-read the session on open: the alarm may already be over (e.g. dismissed from the
+  // notification) and this screen must never linger after it.
+  useEffect(() => {
+    useAlarmStore
+      .getState()
+      .refreshSession()
+      .finally(() => setChecked(true));
+  }, []);
+  useEffect(() => {
+    if (checked && !session?.challengeRequired && navigation.canGoBack()) {
+      navigation.goBack();
+    }
+  }, [checked, session, navigation]);
   if (session?.challengeType === 'nfc') return <NfcChallenge />;
   if (session?.challengeType === 'qr') return <QrChallenge />;
   return <MathChallenge />;

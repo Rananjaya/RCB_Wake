@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import {
   AppState,
   PermissionsAndroid,
@@ -103,21 +103,27 @@ function useEngineBootstrap() {
   }, []);
 }
 
-/** Opens the challenge whenever a ringing session requires one, and closes it when the session ends. */
+/**
+ * Opens the challenge whenever a ringing session requires one, and closes it as soon as no
+ * challenge is active — also when the app was opened mid-alarm or the alarm ended while the app
+ * was in the background.
+ */
 function useChallengeRouting() {
   const session = useAlarmStore(s => s.session);
-  const wasActive = useRef(false);
   useEffect(() => {
     if (!navigationRef.isReady()) return;
     const current = navigationRef.getCurrentRoute()?.name;
     if (session?.challengeRequired) {
-      wasActive.current = true;
       if (current !== 'Challenge') navigationRef.navigate('Challenge');
-    } else if (wasActive.current && current === 'Challenge') {
-      wasActive.current = false;
-      navigationRef.goBack();
+    } else if (current === 'Challenge') {
+      closeChallenge();
     }
   }, [session]);
+}
+
+export function closeChallenge() {
+  if (navigationRef.canGoBack()) navigationRef.goBack();
+  else navigationRef.reset({ index: 0, routes: [{ name: 'Tabs' }] });
 }
 
 function OnboardingGate({ children }: { children: React.ReactNode }) {
