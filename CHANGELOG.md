@@ -4,6 +4,12 @@ All notable changes to RCB Wake are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [1.10.1] — 2026-11-26
+
+### Changed
+- Production Android builds now use R8 code shrinking, optimization and obfuscation, with
+  resource shrinking enabled. No app-wide keep rules were added.
+
 ## [1.10.0] — 2026-11-22
 
 ### Added

@@ -13,6 +13,7 @@ local.properties
 captures/
 
 # Signing material — never commit release keys or their passwords
+rcb-wake-signing.properties
 *.keystore
 !android/app/debug.keystore
 *.jks
